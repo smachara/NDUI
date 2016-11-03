@@ -25,13 +25,12 @@ class NetworkConfig
     private $id;
 
     /**
-     * @var NetworkFunction
-     *
      * @ORM\ManyToOne(targetEntity="NetworkFunction")
      * @ORM\JoinColumn(name="network_function_id", referencedColumnName="id")
-     * @ORM\Column(name="name", type="string", length=255, unique=false)
+     * @var String
      */
     private $network_function;
+
 
     /*******************************
     TREE ATTRIBUTES
@@ -350,7 +349,7 @@ class NetworkConfig
     /**
      * Get networkFunction
      *
-     * @return string
+     * @return NetworkFunction
      */
     public function getNetworkFunction()
     {

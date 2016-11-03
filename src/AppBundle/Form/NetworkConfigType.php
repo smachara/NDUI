@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +17,17 @@ class NetworkConfigType extends AbstractType
     {
         $builder
         
-            ->add('network_function', NetworkFunctionListType::class, ['label' => 'form.networkconfig.field.label.network_function', 'translation_domain' => 'networkconfig'])
-            ->add('parent', ParentType::class ,[
+            ->add('network_function', EntityType::class, [
+                'label' => 'form.networkconfig.field.label.network_function',
+                'translation_domain' => 'networkconfig',
+                'class' => 'AppBundle:NetworkFunction',
+                'choice_label' => 'name',
+                'placeholder' => 'form.networkconfig.field.placeholder.choose_a_function',
+                'empty_data'  => null
+            ])
+
+
+            ->add('parent', FunctionParentType::class ,[
                 'label' => 'form.networkconfig.field.label.parent',
                 'translation_domain' => 'networkconfig',
                 'expanded' => false,
@@ -26,6 +36,7 @@ class NetworkConfigType extends AbstractType
                 'placeholder' => 'form.networkconfig.field.placeholder.choose_a_parent',
                 'empty_data'  => null
             ])
+
         ;
     }
 

@@ -17,32 +17,9 @@
                 <th scope="row">
                     {{ 'form.networkconfig.field.label.network_function' |trans({}, 'networkconfig') }}
                 </th>
-                <td>{{ networkconfig.networkfunction }}</td>
+                <td>{{ networkconfig.networkfunction.name }}</td>
             </tr>
-            <tr>
-                <th scope="row">
-                    {{ 'form.networkconfig.field.label.lft' |trans({}, 'networkconfig') }}
-                </th>
-                <td>{{ networkconfig.lft }}</td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    {{ 'form.networkconfig.field.label.rgt' |trans({}, 'networkconfig') }}
-                </th>
-                <td>{{ networkconfig.rgt }}</td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    {{ 'form.networkconfig.field.label.root' |trans({}, 'networkconfig') }}
-                </th>
-                <td>{{ networkconfig.root }}</td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    {{ 'form.networkconfig.field.label.lvl' |trans({}, 'networkconfig') }}
-                </th>
-                <td>{{ networkconfig.lvl }}</td>
-            </tr>
+
         </tbody>
     </table>
 

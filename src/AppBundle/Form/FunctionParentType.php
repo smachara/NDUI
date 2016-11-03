@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ParentType extends AbstractType
+class FunctionParentType extends AbstractType
 {
     private $doctrine;
 
@@ -38,7 +38,7 @@ class ParentType extends AbstractType
 
     public function getName()
     {
-        return 'parent_choice';
+        return 'function_parent_choice';
     }
 
     private function getNodes(){
@@ -54,7 +54,8 @@ class ParentType extends AbstractType
         'childOpen' => '',
         'childClose' => '',
         'nodeDecorator' => function($node) {
-            return $node['network_function'].'*'.$node['lvl'].',';
+            //dump($node); die();
+            return $node['id'].'*'.$node['lvl'].',';
         }
         );
         $nodes = explode(',',$repo->childrenHierarchy(
@@ -64,10 +65,13 @@ class ParentType extends AbstractType
         $parentChoices = [];
 
         foreach ($nodes  as $n ){
+            //dump($nodes); die();
+
             $tmp = explode('*',$n);
             if ($tmp[0]){
-                $parentChoices[str_repeat('--',$tmp[1]).($tmp[0])]
-                    = $repo->findOneByNetworkFunction($tmp[0]);
+                $nc = $repo->findOneById($tmp[0]);
+                $parentChoices[str_repeat('--',$tmp[1]).($nc->getNetworkFunction()->getName())]
+                    = $nc;
             }
         }
         return $parentChoices;

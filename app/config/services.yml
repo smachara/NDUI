@@ -5,7 +5,7 @@ parameters:
 
 services:
     networkfunction.form.type.parent:
-            class: AppBundle\Form\ParentType
+            class: AppBundle\Form\FunctionParentType
             arguments:
                 - '@doctrine'
             tags:
