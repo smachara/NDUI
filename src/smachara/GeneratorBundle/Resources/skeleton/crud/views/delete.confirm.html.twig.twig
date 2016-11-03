@@ -1,0 +1,34 @@
+{{ '{% extends "' ~ layout ~ '" %}' }}
+{% if theme %}
+
+    {{ "{% form_theme edit_form '"~ theme ~"' %}" }}
+{% endif %}
+
+{{ "{% block title %}{{ 'form."~entity|lower~".title'|trans({}, '"~entity|lower~"') }} - {{ parent() }}{% endblock %}" }}
+
+{{ '{% block ' ~ bodyBlock ~ ' %}' }}
+    <h1>{{ "{{ 'form."~entity|lower~".delete.title'|trans({}, '"~entity|lower~"') }}" }}</h1>
+
+    <h3>{{"{{ 'action.delete.confirm'|trans({}, 'global') }}"}}</h3>
+    {{"{{ form_start(delete_form) }}"}}
+        {{"{{ form_widget(delete_form) }}"}}
+        <div align="center" class="alert-danger">
+            <p>{{"{{ 'action.delete.warning' |trans({}, 'global') }}"}}</p>
+            <p>{{"{{ 'action.delete.question'|trans({}, 'global') }}"}}</p>
+            {% if needSecurity %}
+            {{"{% if is_granted('ROLE_"~entity|upper~"_DELETE') %}"}}
+            {% endif %}
+            <button class="btn btn-danger" type="submit">
+               <i class="fa fa-trash-o"></i>
+               {{"{{ 'action.answer.yes'|trans({}, 'global') }}"}}
+            </button>
+            {% if needSecurity %}
+            {{"{% endif %}"}}
+            {% endif %}
+            <a class="btn btn-default" href={{"\"{{ path('"~entity|lower~"_show', {id: "~entity|lower~".id}) }}\""}}>
+                <i class="fa fa-trash-o"></i>
+                {{"{{ 'action.answer.no'|trans({}, 'global') }}"}}
+            </a>
+        </div>
+    {{"{{ form_end(delete_form) }}"}}
+{{"{% endblock %}"}}

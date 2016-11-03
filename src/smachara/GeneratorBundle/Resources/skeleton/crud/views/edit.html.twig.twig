@@ -1,0 +1,32 @@
+{{ '{% extends "' ~ layout ~ '" %}' }}
+{% if theme %}
+
+{{ "{% form_theme edit_form '"~ theme ~"' %}" }}
+{% endif %}
+
+{{ "{% block title %}{{ 'form."~entity|lower~".title'|trans({}, '"~entity|lower~"') }} - {{ parent() }}{% endblock %}" }}
+
+{{ '{% block ' ~ bodyBlock ~ ' %}' }}
+    <h1>{{ "{{ 'form."~entity|lower~".edit.title'|trans({}, '"~entity|lower~"') }}" }}</h1>
+
+    {{ "{{ form_start(edit_form) }}" }}
+        {{ "{{ form_widget(edit_form) }}" }}
+    {% if needSecurity %}
+        {{ "{% if is_granted('ROLE_"~entity|upper~"_EDIT') %}" }}
+    {% endif %}
+        <p>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-edit"></i>
+                {{ "{{ 'action.edit.submit'|trans({}, 'global') }}" }}
+            </button>
+        </p>
+    {% if needSecurity %}
+        {{ "{% endif %}" }}
+    {% endif %}
+
+    {{ "{{ form_end(edit_form) }}" }}
+
+    {% set hide_edit, hide_delete = true, false -%}
+    {%- include 'crud/views/others/record_actions.html.twig.twig' -%}
+
+{{ '{% endblock %}' }}

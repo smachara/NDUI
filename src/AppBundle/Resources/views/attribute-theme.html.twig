@@ -1,0 +1,24 @@
+{#  Este codigo ayuda a saber cual es el nombre de el bloque
+    {% for b in form.vars.block_prefixes %}
+        {{ dump(b) }}
+    {% endfor %}
+    {% for b in child.vars.block_prefixes %}
+        {{ dump(b) }}
+    {% endfor %}
+#}
+
+{% block format %}
+    {% spaceless %}
+        {{ form_widget(form.name,  { 'attr': { 'placeholder':   'form.networkfunction.field.label.attribute.name'|trans({}, 'networkfunction') }}) }}
+        {{ form_widget(form.datatype,  { 'attr': { 'placeholder':  'form.networkfunction.field.label.attribute.value'|trans({}, 'networkfunction') }}) }}
+        {{ form_widget(form.value,  { 'attr': { 'placeholder':  'form.networkfunction.field.label.attribute.value'|trans({}, 'networkfunction') }}) }}
+    {% endspaceless %}
+{% endblock %}
+
+
+{% block _networkfunction_attributes_entry_label %}{% endblock %}
+{% block _networkfunction_attributes_entry_errors %}{% endblock %}
+{% block _networkfunction_attributes_entry_widget %}
+    {{ block('format') }}
+{% endblock %}
+

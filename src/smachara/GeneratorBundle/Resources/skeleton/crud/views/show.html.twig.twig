@@ -1,0 +1,57 @@
+{{ '{% extends "' ~ layout ~ '" %}' }}
+
+{{ "{% block title %}{{ 'form."~entity|lower~".title'|trans({}, '"~entity|lower~"') }} - {{ parent() }}{% endblock %}" }}
+
+
+{{ '{% block ' ~ bodyBlock ~ ' %}' }}
+    <h1>{{ "{{ 'form."~entity|lower~".show.title'|trans({}, '"~entity|lower~"') }}" }}</h1>
+    <table class="table table-responsive table-striped table-hover table-bordered record_properties">
+        <tbody>
+        {%- for field, metadata in fields %}
+
+            <tr>
+                <th scope="row">
+                    {{ "{{ 'form."~entity|lower~".field.label."~field|lower~"' |trans({}, '"~entity|lower~"') }}" }}
+                </th>
+
+            {%- if metadata.type == 'date' %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d\') }}' }}</td>
+
+            {%- elseif metadata.type == 'datetime' %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s\') }}' }}</td>
+
+            {%- elseif metadata.type == 'datetimetz' %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s P\') }}' }}</td>
+
+            {%- elseif metadata.type == 'time' %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'H:i:s\') }}' }}</td>
+
+            {%- elseif metadata.type == 'relation_many' or metadata.type == 'array' or metadata.type == 'simple_array' %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|join(\', \') }}' }}</td>
+
+            {%- elseif metadata.type == 'boolean' %}
+
+                <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}' }}</td>
+
+            {%- else %}
+
+                <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+            {%- endif %}
+
+            </tr>
+
+        {%- endfor %}
+
+        </tbody>
+    </table>
+
+    {% set hide_edit, hide_delete = false, false -%}
+    {%- include 'crud/views/others/record_actions.html.twig.twig' -%}
+
+{{ '{% endblock %}' }}

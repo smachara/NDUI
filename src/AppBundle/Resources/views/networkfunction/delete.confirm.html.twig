@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'form.networkfunction.delete.title'|trans({}, 'networkfunction') }}</h1>
+
+    <h3>{{ 'action.delete.confirm'|trans({}, 'global') }}</h3>
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form) }}
+        <div align="center" class="alert-danger">
+            <p>{{ 'action.delete.warning' |trans({}, 'global') }}</p>
+            <p>{{ 'action.delete.question'|trans({}, 'global') }}</p>
+                        <button class="btn btn-danger" type="submit">
+               <i class="fa fa-trash-o"></i>
+               {{ 'action.answer.yes'|trans({}, 'global') }}
+            </button>
+                        <a class="btn btn-default" href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">
+                <i class="fa fa-trash-o"></i>
+                {{ 'action.answer.no'|trans({}, 'global') }}
+            </a>
+        </div>
+    {{ form_end(delete_form) }}
+{% endblock %}

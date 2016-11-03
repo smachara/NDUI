@@ -1,0 +1,40 @@
+    <div class="btn-group record_actions">
+    {% if needSecurity %}
+         {{ "{% if is_granted('ROLE_"~entity|upper~"_INDEX') %}" }}
+    {% endif %}
+            <a class="btn btn-info" href="{{ "{{ path('"~ route_name_prefix ~"') }}" }}">
+                <i class="fa fa-list"></i> {{ "{{ 'action.back_to_list'|trans({}, 'global') }}" }}
+            </a>
+    {% if needSecurity %}
+         {{ "{% endif %}" }}
+    {% endif %}
+
+{% if ('edit' in actions) and (not hide_edit) %}
+    {% if needSecurity %}
+        {{ "{% if is_granted('ROLE_"~entity|upper~"_EDIT') %}" }}
+    {% endif %}
+            <a class="btn btn-primary" href="{{ "{{ path('"~ route_name_prefix ~"_edit', {id: "~ entity|lower ~".id}) }}" }}">
+                <i class="fa fa-edit"></i>
+                {{ "{{ 'action.edit.submit'|trans({}, 'global') }}"}}
+            </a>
+    {% if needSecurity %}
+        {{ "{% endif %}" }}
+    {% endif %}
+{% endif -%}
+
+{%- if ('delete' in actions) and (not hide_delete) %}
+    {% if needSecurity %}
+        {{ "{% if is_granted('ROLE_"~entity|upper~"_DELETE') %}" }}
+    {% endif %}
+            <a class="btn btn-danger" href="{{ "{{ path('"~entity|lower~"_delete_confirmation', {id: "~entity|lower~".id}) }}" }}">
+                <i class="fa fa-trash-o"></i>
+                {{ "{{ 'action.delete.submit'|trans({}, 'global') }}" }}
+            </a>
+    {% if needSecurity %}
+        {{ "{% endif %}" }}
+    {% endif %}
+
+{% endif %}
+
+    </div>
+

@@ -1,0 +1,175 @@
+{{ '{% extends "' ~ layout ~ '" %}' }}
+
+{{ "{% block title %}{{ 'form."~entity|lower~".title'|trans({}, '"~entity|lower~"') }} - {{ parent() }}{% endblock %}" }}
+
+{%- if withSort %}
+
+{{ "{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'ASC'}) }}\">{{ label }} <i class=\"fa fa-sort-down\"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'DESC'}) }}\">{{ label }} <i class=\"fa fa-sort-up\"></i></a>
+            {% endif %}
+        {% else %}
+            <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'ASC'}) }}\">{{ label }} <i class=\"fa fa-sort\"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}" }}
+
+{{ "{% from _self import thead %}" }}
+
+{% endif %}
+
+{%- if 'new' in actions %}
+{{ '{% block boton_new %}' }}
+{% if needSecurity %}
+    {{ "{% if is_granted('ROLE_"~entity|upper~"_NEW') %}" }}
+{% endif %}
+    <ul class="new_entry list-unstyled">
+        <li>
+            <a class="btn btn-info" href="{{ "{{ path('"~ route_name_prefix ~"_new') }}" }}">
+                <i class="fa fa-plus"></i> {{ "{{ 'action.new.submit'|trans({}, 'global') }}" }}
+            </a>
+        </li>
+    </ul>
+{% if needSecurity %}
+    {{ "{% endif %}" }}
+{% endif%}
+{{ '{% endblock %}' }}
+{% endif %}
+
+{{ '{% block ' ~ bodyBlock ~ ' %}' }}
+    <h1>{{ "{{ 'form."~entity|lower~".index.title'|trans({}, '"~entity|lower~"') }}" }}</h1>
+
+
+    {%- if withFilter %}
+        {{ "{% include '"~bundle~":"~entity|lower~":filter.html.twig' with {form: form} %}" }}
+    {% endif %}
+
+    {%- if 'new' in actions %}
+        {{  "{{ block ('boton_new') }}" }}
+    {% endif %}
+
+    {% if usePaginator %}
+        {{ '{{ knp_pagination_render(entities) }}' }}
+        <br>
+        <select name="maxItemPerPage" id="maxItemPerPage">
+            <option id="0">{{ "{{ 'filter.select_items_per_page'|trans({}, 'global') }}" }}</option>
+            <option id="5">5</option>
+            <option id="10">10</option>
+            <option id="20">20</option>
+            <option id="50">50</option>
+            <option id="100">100</option>
+        </select>
+    {% endif -%}
+    <table class="table table-responsive table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+            {%- for field, metadata in fields %}
+
+                <th scope="col">
+                {%- if withSort -%}
+                {{ "{{ thead('"~ entity|lower ~"', '"~ field ~"', 'form."~ entity|lower ~".field.label."~ field ~"'|trans({}, '"~ entity|lower ~"')) }}" }}
+                {%- else -%}
+                {{ "{{ 'form."~ entity|lower ~".field.label."~ field ~"'|trans({}, '"~ entity|lower ~"') }}" }}
+                {%- endif -%}
+                </th>
+
+            {%- endfor %}
+
+                <th scope="col">{{ "{{ 'action.title'|trans({}, 'global') }}" }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ '{% for '~ entity|lower ~' in ' ~ (usePaginator ? 'entities' : 'entities') ~ ' %}' }}
+                <tr>
+
+            {%- for field, metadata in fields %}
+                {%- if loop.first and ('show' in actions) %}
+
+                    <td>
+                        {% if needSecurity %}
+                            {{ "{% if is_granted('ROLE_"~entity|upper~"_SHOW') %}" }}
+                        {% endif %}
+                                <a href="{{ "{{ path('"~ route_name_prefix ~"_show', {id: "~ entity|lower ~".id}) }}" }}">{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' }}' }}</a>
+                        {% if needSecurity %}
+                            {{ "{% else %}" }}
+                        {% endif %}
+                            {{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' }}' }}
+                        {% if needSecurity %}
+                            {{ "{% endif %}" }}
+                        {% endif %}
+                    </td>
+
+                {%- elseif metadata.type == 'date' %}
+
+                    <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type == 'datetime' %}
+
+                    <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type == 'datetimetz' %}
+
+                    <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s P\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type == 'time' %}
+
+                    <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type == 'relation_many' or metadata.type == 'array' or metadata.type == 'simple_array' %}
+
+                    <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~'|join(\', \') }}' }}</td>
+
+                {%- elseif metadata.type == 'boolean' %}
+
+                    <td>{{ '{% if '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}' }}</td>
+
+                {%- else %}
+
+                    <td>{{ '{{ '~ entity|lower ~'.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+                {%- endif %}
+
+                {%- if loop.last %}
+
+                    <td>
+                        {%- include "crud/views/others/actions.html.twig.twig" %}
+                    </td>
+
+                {%- endif %}
+            {%- endfor %}
+
+                </tr>
+            {{ '{% endfor %}' }}
+        </tbody>
+    </table>
+
+    {% if usePaginator %}
+        {{ '{{ knp_pagination_render(entities) }}' }}
+    {% endif -%}
+
+    {%- if 'new' in actions %}
+        {{  "{{ block ('boton_new') }}" }}
+    {% endif %}
+
+{{ '{% endblock %}' }}
+
+{% if usePaginator %}
+    {{ "{% block javascripts %}" }}
+        {{ "{{ parent() }}" }}
+            <script type="text/javascript">
+                //on select change, you navigate to indexAction and send the parameter maxItemPerPage
+                $('#maxItemPerPage').change(function(){
+
+                    {{ "var url = '{{ path('"~ route_name_prefix ~"', {maxItemPerPage: '_itemNum'}) }}';" }}
+
+                    var item = $('#maxItemPerPage').find(":selected").text();
+                    window.location.href = url.replace('_itemNum',item );
+                })
+            </script>
+    {{ "{% endblock %}" }}
+{% endif %}

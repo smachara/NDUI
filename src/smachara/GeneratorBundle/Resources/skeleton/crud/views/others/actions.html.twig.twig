@@ -1,0 +1,18 @@
+                        <div class="btn-group">
+                            {%- for action in record_actions %}
+
+                        {% if needSecurity %}
+                            {{ "{% if is_granted('ROLE_"~entity|upper~"_"~ action|upper ~"') %}" }}
+                        {% endif %}
+
+                            <a class="btn btn-default btn-sm" href="{{ "{{ path('"~ route_name_prefix ~"_"~ action ~"', {id: "~ entity|lower ~".id}) }}" }}">
+                                <i class="fa fa-{{ action == 'show' ? 'file-o' : action }}"></i>
+                                {{ "{{ 'action."~ action ~".submit'|trans({}, 'global') }}" }}
+                            </a>
+
+                        {% if needSecurity %}
+                            {{ "{% endif %}" }}
+                        {% endif %}
+
+                            {%- endfor %}
+                        </div>

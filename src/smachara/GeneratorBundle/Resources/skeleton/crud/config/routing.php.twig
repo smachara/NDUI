@@ -1,0 +1,75 @@
+<?php
+
+{% block use_statements %}
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+{% endblock use_statements %}
+
+{% block definition %}
+$collection = new RouteCollection();
+{% endblock definition %}
+
+{% block body %}
+{% if 'index' in actions %}
+$collection->add('{{ route_name_prefix }}', new Route('/', [
+    '_controller' => '{{ bundle }}:{{ entity }}:index',
+    ]));
+{% endif %}
+
+{% if 'sort' in actions %}
+$collection->add('{{ route_name_prefix }}_sort', new Route('/{field}/{type}/sort',
+    ['_controller' => '{{ bundle }}:{{ entity }}:sort'],
+    ['type' => 'DESC|ASC']
+    ));
+{% endif %}
+
+{% if 'show' in actions %}
+$collection->add('{{ route_name_prefix }}_show', new Route('/{id}/show', [
+    '_controller' => '{{ bundle }}:{{ entity }}:show',
+]));
+{% endif %}
+
+{% if 'new' in actions %}
+$collection->add('{{ route_name_prefix }}_new', new Route('/new', [
+    '_controller' => '{{ bundle }}:{{ entity }}:new',
+]));
+
+$collection->add('{{ route_name_prefix }}_create', new Route(
+    '/create',
+    ['_controller' => '{{ bundle }}:{{ entity }}:create'],
+    ['_method' => 'post']
+));
+{% endif %}
+
+{% if 'edit' in actions %}
+$collection->add('{{ route_name_prefix }}_edit', new Route('/{id}/edit', [
+    '_controller' => '{{ bundle }}:{{ entity }}:edit',
+]));
+
+$collection->add('{{ route_name_prefix }}_edit', new Route(
+    '/{id}/edit',
+    ['_controller' => '{{ bundle }}:{{ entity }}:edit'],
+    ['_method' => 'post|put']
+));
+{% endif %}
+
+{% if 'delete' in actions %}
+$collection->add('{{ route_name_prefix }}_delete', new Route(
+    '/{id}/delete',
+    ['_controller' => '{{ bundle }}:{{ entity }}:delete'],
+    ['_method' => 'post|delete']
+));
+
+$collection->add('{{ route_name_prefix }}_delete_confirmation', new Route(
+    '/{id}/delete-confirmation',
+    ['_controller' => '{{ bundle }}:{{ entity }}:deleteConfirmation'],
+    ['_method' => 'get']
+));
+
+
+{% endif %}
+{% endblock body %}
+
+{% block return %}
+return $collection;
+{% endblock return %}

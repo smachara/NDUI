@@ -1,0 +1,16 @@
+{% macro thead(class) %}
+    {% spaceless %}
+    <script type="text/javascript">
+        $('.{{class}}').collection({
+            init_with_n_elements: 0,
+            //min: 1,
+            //max: 3,
+            allow_up: false,
+            allow_down: false,
+            allow_duplicate: false,
+            add:     ' <a href="#" class="button button-add"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+            delete:  ' <a href="#" class="button button-del"><span class="glyphicon glyphicon-trash"></span></a>'
+            });
+    </script>
+    {% endspaceless %}
+{% endmacro %}

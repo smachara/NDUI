@@ -1,0 +1,60 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class {{ form_class }} extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        {% for field, metadata in fields -%}
+        {%- if metadata.type == 'relation' or metadata.type == 'relation_many' %}
+
+            ->add('{{ field }}', Type\EntityFilterType::class, ['class' => '{{ metadata.entity }}'], ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+        {%- elseif metadata.type == 'boolean' %}
+
+            ->add('{{ field }}', Type\BooleanFilterType::class, ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+        {%- elseif metadata.type == 'integer' and field != 'id' %}
+
+            ->add('{{ field }}', Type\NumberFilterType::class, ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+        {%- elseif metadata.type == 'date' or metadata.type == 'datetime' %}
+
+            ->add('{{ field }}', Type\DateFilterType::class, ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+        {%- elseif field != 'id' %}
+
+            ->add('{{ field }}', Type\TextFilterType::class, ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+        {%- endif %}
+        {%- endfor %}
+
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => '{{ bundle_namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}',
+            'csrf_protection' => false,
+            'validation_groups' => ['filter'],
+            'method' => 'GET',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return '{{ entity_class|lower }}_filter';
+    }
+}

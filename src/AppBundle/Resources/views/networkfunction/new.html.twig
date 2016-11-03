@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+
+
+    {% form_theme  form  with [
+    'AppBundle::jquery.collection.html.twig',
+    'AppBundle::attribute-theme.html.twig'
+    ]
+    %}
+
+
+    <h1>{{ 'form.networkfunction.new.title'|trans({}, 'networkfunction') }}</h1>
+
+    {{ form_start(form, {action: path('networkfunction_new')}) }}
+        {{ form_widget(form) }}
+        <p>
+            <button class="btn btn-primary" type="submit">{{ 'action.new.submit'|trans({}, 'global') }}</button>
+        </p>
+    {{ form_end(form) }}
+
+            <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('networkfunction') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+
+{% endblock %}
+
+{% from "AppBundle::macro.collection.js.twig" import thead as thead%}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/collection/jquery.collection.js') }}"></script>
+    {{ thead('networkfunctionAttributes')}}
+{% endblock %}

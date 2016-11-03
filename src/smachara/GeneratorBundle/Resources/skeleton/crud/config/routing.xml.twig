@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+{% block body %}
+    <route id="{{ route_name_prefix }}" path="/" methods="GET">
+        <default key="_controller">{{ bundle }}:{{ entity }}:index</default>
+    </route>
+
+    <route id="{{ route_name_prefix }}_show" path="/{id}/show" methods="GET">
+        <default key="_controller">{{ bundle }}:{{ entity }}:show</default>
+    </route>
+
+{% if 'sort' in actions %}
+    <route id="{{ route_name_prefix }}_sort" pattern="/{field}/{type}/sort">
+        <default key="_controller">{{ bundle }}:{{ entity }}:sort</default>
+        <requirement key="type">ASC|DESC</requirement>
+    </route>
+{% endif %}
+
+{% if 'new' in actions %}
+    <route id="{{ route_name_prefix }}_new" path="/new" methods="GET|POST">
+        <default key="_controller">{{ bundle }}:{{ entity }}:new</default>
+    </route>
+{% endif %}
+
+{% if 'edit' in actions %}
+    <route id="{{ route_name_prefix }}_edit" path="/{id}/edit" methods="GET|POST">
+        <default key="_controller">{{ bundle }}:{{ entity }}:edit</default>
+    </route>
+{% endif %}
+
+{% if 'delete' in actions %}
+    <route id="{{ route_name_prefix }}_delete" path="/{id}/delete" methods="DELETE">
+        <default key="_controller">{{ bundle }}:{{ entity }}:delete</default>
+    </route>
+
+    <route id="{{ route_name_prefix }}_delete_confirmation" path="/{id}/delete-confirmation" methods="GET">
+        <default key="_controller">{{ bundle }}:{{ entity }}:deleteConfirmation</default>
+    </route>
+{% endif %}
+{% endblock body %}
+
+</routes>
+
+{% endif %}

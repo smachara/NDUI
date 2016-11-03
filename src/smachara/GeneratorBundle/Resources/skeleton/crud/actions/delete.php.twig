@@ -1,0 +1,67 @@
+    /**
+{% if 'annotation' == format %}
+    * @Route("/{id}/delete-confirmation", name="{{ route_name_prefix }}_delete_confirmation")
+    * @Method("GET")
+{% endif %}
+{% if needSecurity %}
+    * @Security("has_role('ROLE_{{ entity|upper }}_DELETE')")
+{% endif %}
+    */
+    public function deleteConfirmationAction({{ entity }} ${{ entity|lower }})
+    {
+        $deleteForm = $this->createDeleteForm(${{ entity|lower }}->getId(), '{{ route_name_prefix }}_delete');
+
+        return $this->render('{{ bundle }}:{{ entity_class|lower }}:delete.confirm.html.twig', array(
+            '{{ entity|lower }}' => ${{ entity|lower }},
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+
+
+    /**
+     * Deletes a {{ entity }} entity.
+     *
+{% if 'annotation' == format %}
+     * @Route("/{id}/delete", name="{{ route_name_prefix }}_delete", requirements={"id"="\d+"})
+     * @Method("DELETE")
+{% endif %}
+{% if needSecurity %}
+     * @Security("has_role('ROLE_{{ entity|upper }}_DELETE')")
+{% endif %}
+     */
+    public function deleteAction({{ entity }} ${{ entity|lower }}, Request $request)
+    {
+        $form = $this->createDeleteForm(${{ entity|lower }}->getId(), '{{ route_name_prefix }}_delete');
+        if ($form->handleRequest($request)->isValid()) {
+            try{
+                $this->getDoctrine()->getManager()->remove(${{ entity|lower }});
+                $this->getDoctrine()->getManager()->flush();
+
+                $request->getSession()->getFlashBag()
+                  ->add('success', $this->get('translator')->trans('form.{{ entity|lower }}.delete.message.success', [], '{{ entity|lower }}'));
+
+            } catch(\Exception $e){
+                $request->getSession()->getFlashBag()
+                ->add('error',  $this->get('translator')->trans('form.{{ entity|lower }}.delete.message.error', [], '{{ entity|lower }}'));
+                $this->get('logger')->error($e->getMessage());
+            }
+        }
+        return $this->redirect($this->generateUrl('{{ route_name_prefix }}'));
+    }
+
+    /**
+     * Create Delete form
+     *
+     * @param integer                       $id
+     * @param string                        $route
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createDeleteForm($id, $route)
+    {
+        return $this->createFormBuilder(null, ['attr' => ['id' => 'delete']])
+            ->setAction($this->generateUrl($route, ['id' => $id]))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }

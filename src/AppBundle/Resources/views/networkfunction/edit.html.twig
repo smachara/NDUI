@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    {% form_theme  form  with [
+        'AppBundle::jquery.collection.html.twig',
+        'AppBundle::attribute-theme.html.twig'
+    ]%}
+
+    <h1>{{ 'form.networkfunction.edit.title'|trans({}, 'networkfunction') }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+            <p>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-edit"></i>
+                {{ 'action.edit.submit'|trans({}, 'global') }}
+            </button>
+        </p>
+    {{ form_end(form) }}
+
+    <div class="btn-group record_actions">
+        <a class="btn btn-success" href="{{ path('networkfunction_new') }}">
+            <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-info" href="{{ path('networkfunction') }}">
+            <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-danger" href="{{ path('networkfunction_delete_confirmation', {id: networkfunction.id}) }}">
+            <i class="fa fa-trash-o"></i>
+            {{ 'action.delete.submit'|trans({}, 'global') }}
+        </a>
+    </div>
+
+{% endblock %}
+
+{% from "AppBundle::macro.collection.js.twig" import thead as thead%}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/collection/jquery.collection.js') }}"></script>
+    {{ thead('networkfunctionAttributes')}}
+{% endblock %}

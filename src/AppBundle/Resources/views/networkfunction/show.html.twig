@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+    <h1>{{ 'form.networkfunction.show.title'|trans({}, 'networkfunction') }}</h1>
+    <table class="table table-responsive table-striped table-hover table-bordered record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunction.field.label.id' |trans({}, 'networkfunction') }}
+                </th>
+                <td>{{ networkfunction.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunction.field.label.name' |trans({}, 'networkfunction') }}
+                </th>
+                <td>{{ networkfunction.name }}</td>
+            </tr>
+            <tr>
+
+                <th scope="row">
+                    {{ 'form.networkfunction.field.label.attributes' |trans({}, 'networkfunction') }}
+
+                </th>
+                <td>{{ dump(networkfunction.attributes2) }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('networkfunction') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+                <a class="btn btn-primary" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
+                <i class="fa fa-edit"></i>
+                {{ 'action.edit.submit'|trans({}, 'global') }}
+            </a>
+                    <a class="btn btn-danger" href="{{ path('networkfunction_delete_confirmation', {id: networkfunction.id}) }}">
+                <i class="fa fa-trash-o"></i>
+                {{ 'action.delete.submit'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+{% endblock %}

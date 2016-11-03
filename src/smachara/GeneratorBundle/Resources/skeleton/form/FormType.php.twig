@@ -1,0 +1,48 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class {{ form_class }} extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        {% for field,info in fields -%}
+
+            {%- if field != 'id' %}
+
+            ->add('{{ field }}', null, ['label' => 'form.{{ entity_class|lower }}.field.label.{{ field }}', 'translation_domain' => '{{ entity_class|lower }}'])
+
+            {%- endif %}
+
+        {%- endfor %}
+
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => '{{ bundle_namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return '{{ entity_class|lower }}';
+    }
+}

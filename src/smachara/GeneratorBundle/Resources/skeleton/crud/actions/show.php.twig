@@ -1,0 +1,26 @@
+
+    /**
+     * Finds and displays a {{ entity }} entity.
+     *
+{% if 'annotation' == format %}
+     * @Route("/{id}/show", name="{{ route_name_prefix }}_show", requirements={"id"="\d+"})
+     * @Method("GET")
+{% endif %}
+{% if needSecurity %}
+     * @Security("has_role('ROLE_{{ entity|upper }}_SHOW')")
+{% endif %}
+
+     */
+    public function showAction({{ entity }} ${{ entity|lower }})
+    {
+{% if 'delete' in actions %}
+        $deleteForm = $this->createDeleteForm(${{ entity|lower }}->getId(), '{{ route_name_prefix }}_delete');
+{% endif %}
+
+        return $this->render('{{ bundle }}:{{ entity_class|lower }}:show.html.twig', [
+            '{{ entity|lower }}' => ${{ entity|lower }},
+{% if 'delete' in actions %}
+            'delete_form' => $deleteForm->createView(),
+{%- endif %}
+        ]);
+    }

@@ -1,0 +1,44 @@
+
+    /**
+     * Creates a new {{ entity }} entity.
+     *
+{% if 'annotation' == format %}
+     * @Route("/new", name="{{ route_name_prefix }}_new")
+     * @Method({"GET", "POST"})
+{% endif %}
+{% if needSecurity %}
+     * @Security("has_role('ROLE_{{ entity|upper }}_NEW')")
+{% endif %}
+
+     */
+    public function newAction(Request $request)
+    {
+        ${{ entity|lower }} = new {{ entity_class }}();
+        $form = $this->createForm({{ entity_class }}Type::class, ${{ entity|lower }});
+        if ($form->handleRequest($request)->isValid()) {
+            try{
+                $this->getDoctrine()->getManager()->persist(${{ entity|lower }});
+                $this->getDoctrine()->getManager()->flush();
+
+                $request->getSession()->getFlashBag()
+                ->add('success', $this->get('translator')->trans('form.{{ entity|lower }}.new.message.success', [], '{{ entity|lower }}'));
+
+            {% if 'show' in actions -%}
+                return $this->redirect($this->generateUrl('{{ route_name_prefix }}_show', ['id' => ${{ entity|lower }}->getId()]));
+            {%- else -%}
+                return $this->redirect($this->generateUrl('{{ route_name_prefix }}'));
+            {%- endif %}
+
+            } catch(\Exception $e){
+                $request->getSession()->getFlashBag()
+                ->add('error',  $this->get('translator')->trans('form.{{ entity|lower }}.new.message.error', [], '{{ entity|lower }}'));
+                $this->get('logger')->error($e->getMessage());
+            }
+        }
+
+        return $this->render('{{ bundle }}:{{ entity_class|lower }}:new.html.twig', [
+            '{{ entity|lower }}' => ${{ entity|lower }},
+            'form' => $form->createView(),
+        ]);
+    }
+

@@ -1,0 +1,84 @@
+
+    /**
+     * Lists all {{ entity }} entities.
+     *
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}")
+     * @Method("GET")
+{% endif %}
+{% if needSecurity %}
+     * @Security("has_role('ROLE_{{ entity|upper }}_INDEX')")
+{% endif %}
+     */
+    public function indexAction({% if usePaginator %}Request $request{% endif %})
+    {
+{% if withFilter %}
+        $form = $this->createForm({{ entity_class }}FilterType::class);
+        if (!is_null($response = $this->saveFilter($form, '{{ entity|lower }}', '{{ route_name_prefix }}'))) {
+            return $response;
+        }
+{% endif %}
+{% if usePaginator %}
+    // initialize a query builder
+    $filterBuilder = $this->get('doctrine.orm.entity_manager')
+        ->getRepository('{{ bundle }}:{{ entity }}')
+        ->createQueryBuilder('{{ entity|lower|slice(0, 1) }}');
+
+    if ($request->query->has($form->getName())) {
+        // manually bind values from the request
+        $form->submit($request->query->get($form->getName()));
+        // build the query from the given form object
+        $this->get('lexik_form_filter.query_builder_updater')
+            ->addFilterConditions($form, $filterBuilder);
+    }
+    $query = $filterBuilder->getQuery();
+    {%- if withSort %}
+        {%- if withFilter %}
+
+            $maxItemPerPage =$request->query->get('maxItemPerPage');;
+            if (!$maxItemPerPage){
+            $maxItemPerPage = 5;
+            }
+
+            $entities = $this->filter($form, $filterBuilder, '{{ entity|lower }}', $maxItemPerPage);
+        {% else %}
+            $this->addQueryBuilderSort($filterBuilder, '{{ entity|lower }}');
+            $entities = $this->get('knp_paginator')->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
+        {% endif %}
+    {%- else %}
+        {%- if withFilter %}
+
+            $maxItemPerPage =$request->query->get('maxItemPerPage');;
+            if (!$maxItemPerPage){
+            $maxItemPerPage = 5;
+            }
+
+            $entities = $this->filter($form, $filterBuilder, '{{ entity|lower }}', $maxItemPerPage);
+        {% else -%}
+            $entities = $this->get('knp_paginator')->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
+        {%- endif %}
+    {%- endif %}
+{% else -%}
+{#***************************************#}
+        {% if withSort %}
+        if (is_array($order = $this->getOrder('{{ entity|lower }}'))) {
+            $entities = $this->getDoctrine()->getRepository('{{ bundle }}:{{ entity }}')->findBy([], [$order['field'] => $order['type']]);
+        } else {
+            $entities = $this->getDoctrine()->getRepository('{{ bundle }}:{{ entity }}')->findAll();
+        }
+        {% else %}
+        $entities = $this->getDoctrine()->getRepository('{{ bundle }}:{{ entity }}')->findAll();
+        {% endif %}
+{% endif -%}
+
+        return $this->render('{{ bundle }}:{{ entity_class|lower }}:index.html.twig', [
+{% if withFilter %}
+            'form' => $form->createView(),
+{% endif %}
+{% if usePaginator %}
+            'entities' => $entities,
+{% else %}
+            'entities' => $entities,
+{% endif %}
+        ]);
+    }

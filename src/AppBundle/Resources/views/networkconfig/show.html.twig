@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+    <h1>{{ 'form.networkconfig.show.title'|trans({}, 'networkconfig') }}</h1>
+    <table class="table table-responsive table-striped table-hover table-bordered record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.id' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.network_function' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.networkfunction }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.lft' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.lft }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.rgt' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.rgt }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.root' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.root }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.lvl' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.lvl }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('networkconfig') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+                <a class="btn btn-primary" href="{{ path('networkconfig_edit', {id: networkconfig.id}) }}">
+                <i class="fa fa-edit"></i>
+                {{ 'action.edit.submit'|trans({}, 'global') }}
+            </a>
+                    <a class="btn btn-danger" href="{{ path('networkconfig_delete_confirmation', {id: networkconfig.id}) }}">
+                <i class="fa fa-trash-o"></i>
+                {{ 'action.delete.submit'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+{% endblock %}

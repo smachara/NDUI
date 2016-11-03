@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
+{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href="{{ path('networkfunction_sort', {field: field, type: 'ASC'}) }}">{{ label }} <i class="fa fa-sort-down"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href="{{ path('networkfunction_sort', {field: field, type: 'DESC'}) }}">{{ label }} <i class="fa fa-sort-up"></i></a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('networkfunction_sort', {field: field, type: 'ASC'}) }}">{{ label }} <i class="fa fa-sort"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% from _self import thead %}
+
+{% block boton_new %}
+    <ul class="new_entry list-unstyled">
+        <li>
+            <a class="btn btn-info" href="{{ path('networkfunction_new') }}">
+                <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'form.networkfunction.index.title'|trans({}, 'networkfunction') }}</h1>        {% include 'AppBundle:networkfunction:filter.html.twig' with {form: form} %}
+            {{ block ('boton_new') }}
+    
+            {{ knp_pagination_render(entities) }}
+        <br>
+        <select name="maxItemPerPage" id="maxItemPerPage">
+            <option id="0">{{ 'filter.select_items_per_page'|trans({}, 'global') }}</option>
+            <option id="5">5</option>
+            <option id="10">10</option>
+            <option id="20">20</option>
+            <option id="50">50</option>
+            <option id="100">100</option>
+        </select>
+    <table class="table table-responsive table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                <th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>
+                <th scope="col">{{ thead('networkfunction', 'name', 'form.networkfunction.field.label.name'|trans({}, 'networkfunction')) }}</th>
+                <th scope="col">{{ thead('networkfunction', 'attributes', 'form.networkfunction.field.label.attributes'|trans({}, 'networkfunction')) }}</th>
+                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for networkfunction in entities %}
+                <tr>
+                    <td>
+                                                        <a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>
+                                                    {{ networkfunction.id }}
+                                            </td>
+                    <td>{{ networkfunction.name }}</td>
+                    <td> {{dump(networkfunction.attributes2) }}</td>
+                    <td>                        <div class="btn-group">
+                        
+                            <a class="btn btn-default btn-sm" href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">
+                                <i class="fa fa-file-o"></i>
+                                {{ 'action.show.submit'|trans({}, 'global') }}
+                            </a>
+
+                        
+                        
+                            <a class="btn btn-default btn-sm" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
+                                <i class="fa fa-edit"></i>
+                                {{ 'action.edit.submit'|trans({}, 'global') }}
+                            </a>
+
+                                                </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+            {{ knp_pagination_render(entities) }}
+            {{ block ('boton_new') }}
+    
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+            <script type="text/javascript">
+                //on select change, you navigate to indexAction and send the parameter maxItemPerPage
+                $('#maxItemPerPage').change(function(){
+
+                    var url = '{{ path('networkfunction', {maxItemPerPage: '_itemNum'}) }}';
+
+                    var item = $('#maxItemPerPage').find(":selected").text();
+                    window.location.href = url.replace('_itemNum',item );
+                })
+            </script>
+    {% endblock %}
