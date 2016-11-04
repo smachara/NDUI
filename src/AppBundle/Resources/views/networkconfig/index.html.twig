@@ -149,47 +149,6 @@
 //                            "animationManager.duration": 800, // slightly longer than default (600ms) animation
 
                         });
-        // when the document is modified, add a "*" to the title and enable the "Save" button
-/*        myDiagram.addDiagramListener("Modified", function(e) {
-            var button = document.getElementById("SaveButton");
-            if (button) button.disabled = !myDiagram.isModified;
-            var idx = document.title.indexOf("*");
-            if (myDiagram.isModified) {
-                if (idx < 0) document.title += "*";
-            } else {
-                if (idx >= 0) document.title = document.title.substr(0, idx);
-            }
-        });
-*/
-
-        // define the Node templates for regular nodes
-
-        var lightText = 'whitesmoke';
-
-        myDiagram.nodeTemplateMap.add("",  // the default category
-                $(go.Node, "Spot", nodeStyle(),
-                        // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
-                        $(go.Panel, "Auto",
-                                $(go.Shape, "Rectangle",
-                                        { fill: "#00A9C9", stroke: null },
-                                        new go.Binding("figure", "figure")),
-                                $(go.TextBlock,
-                                        {
-                                            font: "bold 11pt Helvetica, Arial, sans-serif",
-                                            stroke: lightText,
-                                            margin: 8,
-                                            maxSize: new go.Size(160, NaN),
-                                            wrap: go.TextBlock.WrapFit,
-                                            editable: true
-                                        },
-                                        new go.Binding("text").makeTwoWay())
-                        ),
-                        // four named ports, one on each side:
-                        makePort("T", go.Spot.Top, false, true),
-                        makePort("L", go.Spot.Left, true, true),
-                        makePort("R", go.Spot.Right, true, true),
-                        makePort("B", go.Spot.Bottom, true, false)
-                ));
 
         // the template we defined earlier
         myDiagram.nodeTemplate =
@@ -227,22 +186,6 @@
             {{ (data|slice(0, (data|length)-1)) | raw}}
         ];
         myDiagram.model = myModel;
-
-        // initialize the Palette that is on the left side of the page
-        myPalette =
-                $(go.Palette, "myPaletteDiv",  // must name or refer to the DIV HTML element
-                        {
-                            "animationManager.duration": 800, // slightly longer than default (600ms) animation
-                            nodeTemplateMap: myDiagram.nodeTemplateMap,  // share the templates used by myDiagram
-                            model: new go.GraphLinksModel([  // specify the contents of the Palette
-                                { category: "Start", text: "Start" },
-                                { text: "Step" },
-                                { text: "???", figure: "Diamond" },
-                                { category: "End", text: "End" },
-                                { category: "Comment", text: "Comment" }
-                            ])
-                        });
-
     </script>
 
 {% endblock %}
