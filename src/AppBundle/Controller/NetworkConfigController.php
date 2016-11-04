@@ -87,7 +87,7 @@ class NetworkConfigController extends Controller
     {
 
         $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkConfig');
-        $entities = $repo->findAll();
+        $entities = $repo-> findAll([],['id'=>'asc']);
 
 
         $options = array(

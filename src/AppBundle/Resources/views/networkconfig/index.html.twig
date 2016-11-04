@@ -17,4 +17,232 @@
     {{ block ('boton_new') }}
     {{ nodes|replace({'HTTP/1.0 200 OK': '', 'Cache-Control: no-cache': '' })|raw}}
     {{ block ('boton_new') }}
+
+    <div style="width:100%">
+
+
+        <div id="myPaletteDiv" class="col-lg-9" style="width: 10%; height: 500px; border:dotted;" class="diagramStyling">
+
+        </div>
+        <div id="diagramDiv" class="col-lg-3"
+               style="width:90%; height: 500px;; background-color: #DAE4E4; border:dotted ">
+              <b>Diagram:</b><br />
+        </div>
+    </div>
+    <script>
+      /*  // initialize the main Diagram
+        var $ = go.GraphObject.make;
+        var myDiagram =
+                $(go.Diagram, "diagramSpan",
+                        {
+                            initialContentAlignment: go.Spot.Center, // center Diagram contents
+                            "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
+                            layout: $(go.TreeLayout, // specify a Diagram.layout that arranges trees
+                                    { angle: 90, layerSpacing: 35 })
+                        });
+
+        myDiagram.allowDrop = true;  // permit accepting drag-and-drops
+
+        myDiagram.nodeTemplate =
+                $(go.Node, "Auto",
+                        $(go.Shape, "RoundedRectangle",
+                                { fill: "white" },
+                                new go.Binding("fill", "color"),
+                                { portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer" }),
+                        $(go.TextBlock, { margin: 5 },
+                                new go.Binding("text", "key"))
+                );
+
+        // start off with no Parts
+        myDiagram.undoManager.isEnabled = true;
+
+        // create the Palette
+        var myPalette =
+                $(go.Palette, "myPaletteDiv");
+
+        // the Palette's node template is different from the main Diagram's
+        myPalette.nodeTemplate =
+                $(go.Node, "Horizontal",
+                        $(go.Shape,
+                                { width: 14, height: 14, fill: "white" },
+                                new go.Binding("fill", "color")),
+                        $(go.TextBlock,
+                                new go.Binding("text", "color"))
+                );
+
+        // the list of data to show in the Palette
+        myPalette.model.nodeDataArray = [
+            { key: "C", color: "cyan" },
+            { key: "LC", color: "lightcyan" },
+            { key: "A", color: "aquamarine" },
+            { key: "T", color: "turquoise" },
+            { key: "PB", color: "powderblue" },
+            { key: "LB", color: "lightblue" },
+            { key: "LSB", color: "lightskyblue" },
+            { key: "DSB", color: "deepskyblue" }
+        ];
+
+        // create the Palette
+        var myPalette2 =
+                $(go.Palette, "myPaletteDiv2",
+                        { // customize the GridLayout to align the centers of the locationObjects
+                            layout: $(go.GridLayout, { alignment: go.GridLayout.Location })
+                        });
+
+        // the Palette's node template is different from the main Diagram's
+        myPalette2.nodeTemplate =
+                $(go.Node, "Vertical",
+                        { locationObjectName: "TB", locationSpot: go.Spot.Center },
+                        $(go.Shape,
+                                { width: 20, height: 20, fill: "white" },
+                                new go.Binding("fill", "color")),
+                        $(go.TextBlock, { name: "TB" },
+                                new go.Binding("text", "color"))
+                );
+
+        // the list of data to show in the Palette
+        myPalette2.model.nodeDataArray = [
+            { key: "IR", color: "indianred" },
+            { key: "LC", color: "lightcoral" },
+            { key: "S", color: "salmon" },
+            { key: "DS", color: "darksalmon" },
+            { key: "LS", color: "lightsalmon" }
+        ];
+
+*/
+    </script>
+
+    {#
+    {% for e in entities %}
+        {{ dump(e.networkfunction.name) }}
+        {{ dump(e.parent) }}
+
+        {% if e.parent %}
+            {{ dump(e.parent.networkfunction.name) }}
+        {% else %}
+            {{ dump(e.parent) }}
+        {% endif %}
+
+        {{ dump(e.parent ? '{ parent: "'~e.parent.networkfunction.name~'"}'  : 'null' ) }}
+
+    {% endfor %}
+    #}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+     <script src="{{ asset('bundles/app/js/go-debug.js') }}"></script>
+    <script>
+        var $ = go.GraphObject.make;
+        var myDiagram =
+                $(go.Diagram, "diagramDiv",
+                        {
+                            initialContentAlignment: go.Spot.Center, // center Diagram contents
+                            "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
+                            layout: $(go.TreeLayout, // specify a Diagram.layout that arranges trees
+                                    { angle: 90, layerSpacing: 35 }),
+                            allowDrop: true  // must be true to accept drops from the Palette
+//                            "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
+//                            "LinkRelinked": showLinkLabel,
+//                            "animationManager.duration": 800, // slightly longer than default (600ms) animation
+
+                        });
+        // when the document is modified, add a "*" to the title and enable the "Save" button
+/*        myDiagram.addDiagramListener("Modified", function(e) {
+            var button = document.getElementById("SaveButton");
+            if (button) button.disabled = !myDiagram.isModified;
+            var idx = document.title.indexOf("*");
+            if (myDiagram.isModified) {
+                if (idx < 0) document.title += "*";
+            } else {
+                if (idx >= 0) document.title = document.title.substr(0, idx);
+            }
+        });
+*/
+
+        // define the Node templates for regular nodes
+
+        var lightText = 'whitesmoke';
+
+        myDiagram.nodeTemplateMap.add("",  // the default category
+                $(go.Node, "Spot", nodeStyle(),
+                        // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
+                        $(go.Panel, "Auto",
+                                $(go.Shape, "Rectangle",
+                                        { fill: "#00A9C9", stroke: null },
+                                        new go.Binding("figure", "figure")),
+                                $(go.TextBlock,
+                                        {
+                                            font: "bold 11pt Helvetica, Arial, sans-serif",
+                                            stroke: lightText,
+                                            margin: 8,
+                                            maxSize: new go.Size(160, NaN),
+                                            wrap: go.TextBlock.WrapFit,
+                                            editable: true
+                                        },
+                                        new go.Binding("text").makeTwoWay())
+                        ),
+                        // four named ports, one on each side:
+                        makePort("T", go.Spot.Top, false, true),
+                        makePort("L", go.Spot.Left, true, true),
+                        makePort("R", go.Spot.Right, true, true),
+                        makePort("B", go.Spot.Bottom, true, false)
+                ));
+
+        // the template we defined earlier
+        myDiagram.nodeTemplate =
+                $(go.Node, "Horizontal",
+                        { background: "#44CCFF" },
+                        $(go.Picture,
+                                { margin: 10, width: 50, height: 50, background: "red" },
+                                new go.Binding("source")),
+                        $(go.TextBlock, "Default Text",
+                                { margin: 12, stroke: "white", font: "bold 16px sans-serif" },
+                                new go.Binding("text", "name"))
+                );
+
+        var myModel = $(go.TreeModel);
+
+        //var myModel = $(go.Model);
+
+        {% set data = '' %}
+        {% for e in entities %}
+        {%  set data = data ~('\n{'
+                ~'key: "'~e.networkfunction.id~'"'
+                ~(e.parent ?
+                    ', parent: "' ~e.parent.networkfunction.id~'"'
+                    :
+                    ''
+                )
+                ~', name: "'~e.networkfunction.name~'"'
+                ~', source: "'~''~'"'
+            ~'},')
+        %}
+        {% endfor %}
+
+
+        myModel.nodeDataArray = [
+            {{ (data|slice(0, (data|length)-1)) | raw}}
+        ];
+        myDiagram.model = myModel;
+
+        // initialize the Palette that is on the left side of the page
+        myPalette =
+                $(go.Palette, "myPaletteDiv",  // must name or refer to the DIV HTML element
+                        {
+                            "animationManager.duration": 800, // slightly longer than default (600ms) animation
+                            nodeTemplateMap: myDiagram.nodeTemplateMap,  // share the templates used by myDiagram
+                            model: new go.GraphLinksModel([  // specify the contents of the Palette
+                                { category: "Start", text: "Start" },
+                                { text: "Step" },
+                                { text: "???", figure: "Diamond" },
+                                { category: "End", text: "End" },
+                                { category: "Comment", text: "Comment" }
+                            ])
+                        });
+
+    </script>
+
 {% endblock %}
