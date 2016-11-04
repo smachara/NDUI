@@ -2,14 +2,20 @@
 
 namespace AppBundle\Controller;
 
+use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\NetworkConfig;
+use AppBundle\Model\NetworkConfigModel;
+
 use AppBundle\Form\NetworkConfigType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use JMS\Serializer\SerializerBuilder as Serializer;
+
 
 /**
  * NetworkConfig controller.
@@ -140,50 +146,18 @@ class NetworkConfigController extends Controller
      */
     public function ymlAction(NetworkConfig $networkconfig)
     {
-        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkConfig');
-
-        $options = [
-            'decorate' => true,
-            'rootOpen' => '',
-            'rootClose' => '',
-            'childOpen' => '',
-            'childClose' => '',
-            'nodeDecorator' => function($node) {
-                $em = $this->getDoctrine()->getManager();
-                $network_config = $em->getRepository(NetworkConfig::class)->findOneById($node["id"]);
-                return $network_config->getNetworkFunction()->getName().'*'.$node['lvl'].'*'.$node['id'].',';
-                    //$this->render('AppBundle:networkconfig:generate.yml.twig', ['nodes' => $network_config]);
-            }
-
-        ];
-
-
-        $nodes = $repo->childrenHierarchy(
-            $networkconfig,/* starting from root nodes */
-            false, /* false: load all children, true: only direct */
-            $options);
-
-        $elements = [];
-//        dump($nodes); die();
-        $node = explode(',',$nodes);
-
-        foreach ($node as $n ){
-            if ($node){
-                $tmp = explode('*',$n);
-                if ($tmp[0]){
-                    //dump($tmp);
-                    $nc = $repo->findOneById($tmp[2]);
-                    $elements[str_repeat('--',$tmp[1]).($tmp[0])]= $nc;
-                }
-            }
-        }//die();
-
-
-
+        $networkconfig_model = new NetworkConfigModel();
+        $networkconfig_model->cast($networkconfig_model, $networkconfig);
+        //$networkconfig_model->setNetworkFunction($networkconfig->getNetworkFunction());
+        //$networkconfig_model->setChildren((NetworkConfigModel::class)$networkconfig);
+        $serializer = SerializerBuilder::create()->build();
+        //dump($networkconfig);
+        //dump($serializer->serialize($networkconfig_model, 'yml'));
+        //die();
 
         return $this->render('AppBundle:networkconfig:yml.html.twig', [
-            'networkconfig' => $networkconfig,
-            'nodes' => $elements,
+            'networkconfig' => $networkconfig_model,
+            //'nodes' => $elements,
         ]);
     }
 

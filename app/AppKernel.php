@@ -22,8 +22,9 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         // S7 CRUD Generator
-              new smachara\GeneratorBundle\smacharaGeneratorBundle(),
+//              new smachara\GeneratorBundle\smacharaGeneratorBundle(),
 
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

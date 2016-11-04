@@ -1,8 +1,9 @@
-{% spaceless %}
-    {% for key in nodes|keys %}
-    {{ key }}:
-        {% for a in nodes[key].networkfunction.attributes %}
-            {{ nodes[key].lvl | }}- {{ a.name }}: {{ a.value }}
-        {% endfor %}
-    {% endfor %}
-{% endspaceless %}
+{{ networkconfig | serialize('yml') | raw}}
+{#{% spaceless %}#}
+    {#{% for key in nodes|keys %}#}
+    {#{{ key }}:#}
+        {#{% for a in nodes[key].networkfunction.attributes %}#}
+            {#{{ nodes[key].lvl | }}- {{ a.name }}: {{ a.value }}#}
+        {#{% endfor %}#}
+    {#{% endfor %}#}
+{#{% endspaceless %}#}

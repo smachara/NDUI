@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use AppBundle\Model\NetworkConfigModel;
 /**
  * NetworkConfig
  *
@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\Tree(type="nested")
  */
-class NetworkConfig
+class NetworkConfig  extends NetworkConfigModel
 {
     /**
      * @var int
@@ -22,14 +22,14 @@ class NetworkConfig
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="NetworkFunction")
      * @ORM\JoinColumn(name="network_function_id", referencedColumnName="id")
      * @var String
      */
-    private $network_function;
+    protected $network_function;
 
 
     /*******************************
@@ -61,17 +61,13 @@ class NetworkConfig
      * @ORM\Column(name="lvl", type="integer")
      */
     private $lvl;
+
     /**
      * @ORM\OneToMany(targetEntity="NetworkConfig", mappedBy="parent")
      */
-    private $children;
+    protected $children;
 
     /***********************************************************************************************************************/
-
-    public function __construct()
-    {
-        $this->attributes = array();
-    }
 
     /**
      * Get id
@@ -82,101 +78,6 @@ class NetworkConfig
     {
         return $this->id;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return NetworkConfig
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-/****************************/
-    public function setAttributes(array $attributes)
-    {
-        $this->attributes = $this->converter($attributes);
-        return $this;
-    }
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    public function getAttributes2()
-    {
-
-        return $this->format_parameters($this->attributes);
-    }
-
-    public function getAttribute($name, $default = null)
-    {
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        }
-
-        return $default;
-    }
-
-    public function setAttribute($name, $value)
-    {
-        $this->attributes[$name] = $value;
-
-        return $this;
-    }
-/************************************/
-    /*****************/
-    private function format_parameters($parameters){
-        $newParameters =[];
-        foreach($parameters as $parameter){
-            $newParameters[$parameter['name']] = $parameter['value'];
-        }
-        return $newParameters;
-    }
-    /*****************/
-    private function converter($parameters){
-        $i=0;
-        foreach($parameters as $parameter){
-            $parameters[$i++]['value'] = $this->castParameters($parameter['datatype'], $parameter['value']);
-        }
-        return $parameters ;
-
-    }
-
-    private function castParameters($type, $value){
-        if ($value){
-            switch ($type) {
-                case 'BooleanType::class':
-                    $value = $value === 'true' | $value = $value === '1' ? true : false;
-                    break;
-                case 'IntegerType::class':
-                    $value = intval($value);
-                    break;
-                case 'DecimalType::class':
-                    $value = floatval($value);
-                    break;
-                case 'DateTimeType::class':
-                    $value = date_create_from_format('d/M/Y:H:i:s', $value);
-                    break;
-            }
-        }
-        return $value;
-    }
-
 
     /**
      * Set lft
@@ -298,61 +199,61 @@ class NetworkConfig
         return $this->parent;
     }
 
-    /**
-     * Add child
-     *
-     * @param \AppBundle\Entity\NetworkConfig $child
-     *
-     * @return NetworkConfig
-     */
-    public function addChild(\AppBundle\Entity\NetworkConfig $child)
-    {
-        $this->children[] = $child;
-
-        return $this;
-    }
-
-    /**
-     * Remove child
-     *
-     * @param \AppBundle\Entity\NetworkConfig $child
-     */
-    public function removeChild(\AppBundle\Entity\NetworkConfig $child)
-    {
-        $this->children->removeElement($child);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set networkFunction
-     *
-     * @param string $networkFunction
-     *
-     * @return NetworkConfig
-     */
-    public function setNetworkFunction($networkFunction)
-    {
-        $this->network_function = $networkFunction;
-
-        return $this;
-    }
-
-    /**
-     * Get networkFunction
-     *
-     * @return NetworkFunction
-     */
-    public function getNetworkFunction()
-    {
-        return $this->network_function;
-    }
+//    /**
+//     * Add child
+//     *
+//     * @param \AppBundle\Entity\NetworkConfig $child
+//     *
+//     * @return NetworkConfig
+//     */
+//    public function addChild(\AppBundle\Entity\NetworkConfig $child)
+//    {
+//        $this->children[] = $child;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove child
+//     *
+//     * @param \AppBundle\Entity\NetworkConfig $child
+//     */
+//    public function removeChild(\AppBundle\Entity\NetworkConfig $child)
+//    {
+//        $this->children->removeElement($child);
+//    }
+//
+//    /**
+//     * Get children
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getChildren()
+//    {
+//        return $this->children;
+//    }
+//
+//    /**
+//     * Set networkFunction
+//     *
+//     * @param string $networkFunction
+//     *
+//     * @return NetworkConfig
+//     */
+//    public function setNetworkFunction($networkFunction)
+//    {
+//        $this->network_function = $networkFunction;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get networkFunction
+//     *
+//     * @return NetworkFunction
+//     */
+//    public function getNetworkFunction()
+//    {
+//        return $this->network_function;
+//    }
 }

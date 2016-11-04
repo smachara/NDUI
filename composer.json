@@ -32,7 +32,9 @@
         "knplabs/knp-paginator-bundle": "2.5.*",
         "lexik/form-filter-bundle": "v5.0.1",
 
-        "stof/doctrine-extensions-bundle": "^1.2"
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "symfony/serializer": "^3.1",
+        "jms/serializer-bundle": "^1.1"
 
     },
     "require-dev": {
