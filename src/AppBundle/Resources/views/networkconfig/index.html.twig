@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}{% block boton_new %}
+{% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
+
+{% block boton_new %}
     <ul class="new_entry list-unstyled">
         <li>
             <a class="btn btn-info" href="{{ path('networkconfig_new') }}">
@@ -11,42 +13,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'form.networkconfig.index.title'|trans({}, 'networkconfig') }}</h1>        {{ block ('boton_new') }}
-    
-    <table class="table table-responsive table-striped table-hover table-bordered records_list">
-        <thead>
-            <tr>
-                <th scope="col">{{ 'form.networkconfig.field.label.id'|trans({}, 'networkconfig') }}</th>
-                <th scope="col">{{ 'form.networkconfig.field.label.network_function'|trans({}, 'networkconfig') }}</th>
-                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for networkconfig in entities %}
-                <tr>
-                    <td>
-                        <a href="{{ path('networkconfig_show', {id: networkconfig.id}) }}">{{ networkconfig.id }}</a>
-                        {{ networkconfig.id }}
-                    </td>
-                    <td>{{ networkconfig.networkfunction.name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-default btn-sm" href="{{ path('networkconfig_show', {id: networkconfig.id}) }}">
-                                <i class="fa fa-file-o"></i>
-                                {{ 'action.show.submit'|trans({}, 'global') }}
-                            </a>
-                            <a class="btn btn-default btn-sm" href="{{ path('networkconfig_edit', {id: networkconfig.id}) }}">
-                                <i class="fa fa-edit"></i>
-                                {{ 'action.edit.submit'|trans({}, 'global') }}
-                            </a>
-                         </div>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-            {{ block ('boton_new') }}
-    
+    <h1>{{ 'form.networkconfig.index.title'|trans({}, 'networkconfig') }}</h1>
+    {{ block ('boton_new') }}
+    {{ nodes|replace({'HTTP/1.0 200 OK': '', 'Cache-Control: no-cache': '' })|raw}}
+    {{ block ('boton_new') }}
 {% endblock %}
-

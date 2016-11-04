@@ -19,6 +19,59 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class NetworkConfigController extends Controller
 {
     /**
+     * Finds and displays a category entity.
+     * @Route("/{id}/down", name="networkconfig_down")
+     * @Method("GET")
+     */
+    public function moveDownAction(NetworkConfig $network_config, Request $request )
+    {
+        $repo= $this->getDoctrine()->getRepository(NetworkConfig::class);
+        $node = $repo->findOneById($network_config->getId());
+
+        try{
+            $repo->moveDown($node, 1);
+            $this->getDoctrine()->getManager()->flush();
+            $request->getSession()->getFlashBag()
+                ->add('success', $this->get('translator')->trans('form.networkconfig.move_down.message.success', [], 'networkconfig'));
+
+
+        } catch(\Exception $e){
+            $request->getSession()->getFlashBag()
+                ->add('error',  $this->get('translator')->trans('form.networkconfig.move_down.message.error', [], 'networkconfig'));
+            $this->get('logger')->error($e->getMessage());
+        }
+        return $this->redirect($this->generateUrl('networkconfig'));
+
+    }
+
+    /**
+     * Finds and displays a NetworkConfig entity.
+     * @Route("/{id}/up", name="networkconfig_up")
+     * @Method("GET")
+     *
+     */
+    public function moveUpAction(NetworkConfig $network_config, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(NetworkConfig::class);
+        $node = $repo->findOneById($network_config->getId());
+
+        try{
+            $repo->moveUp($node, 1);
+            $this->getDoctrine()->getManager()->flush();
+
+            $request->getSession()->getFlashBag()
+                ->add('success', $this->get('translator')->trans('form.networkconfig.move_down.message.success', [], 'networkconfig'));
+
+
+        } catch(\Exception $e){
+            $request->getSession()->getFlashBag()
+                ->add('error',  $this->get('translator')->trans('form.networkconfig.move_down.message.error', [], 'networkconfig'));
+            $this->get('logger')->error($e->getMessage());
+        }
+        return $this->redirect($this->generateUrl('networkconfig'));
+    }
+
+    /**
      * Lists all NetworkConfig entities.
      *
      * @Route("/", name="networkconfig")
@@ -26,10 +79,40 @@ class NetworkConfigController extends Controller
      */
     public function indexAction()
     {
-                $entities = $this->getDoctrine()->getRepository('AppBundle:NetworkConfig')->findAll();
+
+        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkConfig');
+        $entities = $repo->findAll();
+
+
+        $options = array(
+            'decorate' => true,
+            'rootOpen' => '<ul>',
+            'rootClose' => '</ul>',
+            'childOpen' => '<li>',
+            'childClose' => '</li>',
+            'nodeDecorator' => function($node) {
+
+                $em = $this->getDoctrine()->getManager();
+                $network_config = $em->getRepository(NetworkConfig::class)->findOneById($node["id"]);
+
+
+                //dump($network_config); die();
+                return  $this->render('AppBundle:networkconfig:tree.html.twig', [
+                    'node' => $network_config]);
+            }
+        );
+
+        $nodes = $repo->childrenHierarchy(
+            null,/* starting from root nodes */
+            false, /* false: load all children, true: only direct */
+            $options);
+
         return $this->render('AppBundle:networkconfig:index.html.twig', [
             'entities' => $entities,
+            'nodes' => $nodes,
         ]);
+
+
     }
 
     /**
@@ -47,6 +130,63 @@ class NetworkConfigController extends Controller
             'networkconfig' => $networkconfig,
             'delete_form' => $deleteForm->createView(),        ]);
     }
+
+    /**
+     * Finds and displays a NetworkConfig entity.
+     *
+     * @Route("/{id}/yml", name="networkconfig_yml", requirements={"id"="\d+"})
+     * @Method("GET")
+
+     */
+    public function ymlAction(NetworkConfig $networkconfig)
+    {
+        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkConfig');
+
+        $options = [
+            'decorate' => true,
+            'rootOpen' => '',
+            'rootClose' => '',
+            'childOpen' => '',
+            'childClose' => '',
+            'nodeDecorator' => function($node) {
+                $em = $this->getDoctrine()->getManager();
+                $network_config = $em->getRepository(NetworkConfig::class)->findOneById($node["id"]);
+                return $network_config->getNetworkFunction()->getName().'*'.$node['lvl'].'*'.$node['id'].',';
+                    //$this->render('AppBundle:networkconfig:generate.yml.twig', ['nodes' => $network_config]);
+            }
+
+        ];
+
+
+        $nodes = $repo->childrenHierarchy(
+            $networkconfig,/* starting from root nodes */
+            false, /* false: load all children, true: only direct */
+            $options);
+
+        $elements = [];
+//        dump($nodes); die();
+        $node = explode(',',$nodes);
+
+        foreach ($node as $n ){
+            if ($node){
+                $tmp = explode('*',$n);
+                if ($tmp[0]){
+                    //dump($tmp);
+                    $nc = $repo->findOneById($tmp[2]);
+                    $elements[str_repeat('--',$tmp[1]).($tmp[0])]= $nc;
+                }
+            }
+        }//die();
+
+
+
+
+        return $this->render('AppBundle:networkconfig:yml.html.twig', [
+            'networkconfig' => $networkconfig,
+            'nodes' => $elements,
+        ]);
+    }
+
 
     /**
      * Creates a new NetworkConfig entity.
