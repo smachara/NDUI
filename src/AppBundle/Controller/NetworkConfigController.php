@@ -90,6 +90,7 @@ class NetworkConfigController extends Controller
         $entities = $repo-> findAll([],['id'=>'asc']);
 
 
+
         $options = array(
             'decorate' => true,
             'rootOpen' => '<ul>',
@@ -113,7 +114,14 @@ class NetworkConfigController extends Controller
             false, /* false: load all children, true: only direct */
             $options);
 
+
+
+        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkFunction');
+        $networkFunctions = $repo-> findAll([],['id'=>'asc']);
+
+
         return $this->render('AppBundle:networkconfig:index.html.twig', [
+            'networkFunctions' => $networkFunctions,
             'entities' => $entities,
             'nodes' => $nodes,
         ]);

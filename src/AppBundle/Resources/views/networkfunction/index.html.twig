@@ -92,7 +92,7 @@
                 //on select change, you navigate to indexAction and send the parameter maxItemPerPage
                 $('#maxItemPerPage').change(function(){
 
-                    var url = '{{ path('networkfunction', {maxItemPerPage: '_itemNum'}) }}';
+                    var url = '{{ path('networkconfig', {maxItemPerPage: '_itemNum'}) }}';
 
                     var item = $('#maxItemPerPage').find(":selected").text();
                     window.location.href = url.replace('_itemNum',item );
