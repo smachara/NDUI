@@ -38,6 +38,13 @@ class NetworkFunction
     protected $attributes = array();
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="NetworkFunctionRole", cascade={"persist"})
+     * @ORM\JoinColumn(name="NetworkFunctionRole_id", referencedColumnName="id")
+     * @var String
+     */
+    private $role;
+
     public function __construct()
     {
         $this->attributes = array();
@@ -145,4 +152,22 @@ class NetworkFunction
         }
         return $value;
     }
+
+    /**
+     * @return String
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param String $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+
 }

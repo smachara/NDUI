@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,13 @@ class NetworkFunctionType extends AbstractType
         $builder
         
             ->add('name', null, ['label' => 'form.networkfunction.field.label.name', 'translation_domain' => 'networkfunction'])
+            ->add('role', EntityType::class, array(
+                    'label' => 'form.networkfunction.field.label.role',
+                    'translation_domain' => 'networkfunction',
+                    'class' => 'AppBundle:NetworkFunctionRole',
+                    'choice_label' => 'name',
+                )
+            )
             ->add
             ('attributes', CollectionType::class, array
                 (

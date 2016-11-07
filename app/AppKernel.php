@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         // S7 CRUD Generator
-//              new smachara\GeneratorBundle\smacharaGeneratorBundle(),
+              new smachara\GeneratorBundle\smacharaGeneratorBundle(),
 
             new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
