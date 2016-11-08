@@ -72,24 +72,97 @@
                 // define the Node templates for regular nodes
 
                 var lightText = '#000000';
+                function virtualMachineInfoTextConverter(info) {
+                    var str = "";
+                    if (info.host_num_cpus     ) str += "host.num_cpus: " +    info.host_num_cpus;
+                    if (info.host_disk_size    ) str += "\n host.disk_size: " +    info.host_disk_size;
+                    if (info.host_mem_size     ) str += "\n host.mem_size: " +    info.host_mem_size;
+                    if (info.os_architecture   ) str += "\n os.architecture: " +    info.os_architecture;
+                    if (info.os_type           ) str += "\n os.type: " +    info.os_type;
+                    if (info.os_distribution   ) str += "\n os.distribution: " +    info.os_distribution;
+                    if (info.os_version        ) str += "\n os.version: " +    info.os_version;
+                    return str;
+                }
+
+                function networkInfoTextConverter(info) {
+                    var str = "";
+                   /* for(i in info){
+                        if ($i) str += $i +" : " +  $i[0];
+                    };*/
+
+                    if (info.ip_version     ) str += " ip_version: " +    info.ip_version;
+                    if (info.cidr    ) str += " cidr: " +    info.cidr;
+                    if (info.start_ip     ) str += " start_ip: " +    info.start_ip;
+                    if (info.end_ip   ) str += " os.end_ip: " +    info.end_ip;
+                    return str;
+                }
+                function portInfoTextConverter(info) {
+                    var str = "";
+                    if (info.binding     ) str += " binding: " +    info.binding;
+                    if (info.link    ) str += " link: " +    info.link;
+                    return str;
+                }
 
                 myDiagram.nodeTemplateMap.add("virtual_machine",  // the default category
                         $(go.Node, "Spot", nodeStyle(),
                                 // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
-                                $(go.Panel, "Auto",
+                                $(go.Panel, "Table",
+                                        { margin: 6, maxSize: new go.Size(200, NaN) },
+                                        // the two TextBlocks in column 0 both stretch in width
+                                        // but align on the left side
+                                        $(go.RowColumnDefinition,
+                                                {
+                                                    column: 0,
+                                                    stretch: go.GraphObject.Horizontal,
+                                                    alignment: go.Spot.Left
+                                                }),
+
                                         $(go.Shape, "Rectangle",
                                                 { fill: "#99ffb3", stroke: null },
                                                 new go.Binding("figure", "figure")),
+
                                         $(go.TextBlock,
                                                 {
-                                                    font: "bold 11pt Helvetica, Arial, sans-serif",
+                                                    row: 0, column: 0,
+                                                    maxSize: new go.Size(160, NaN), margin: 2,
+                                                    font: '500 16px Roboto, sans-serif',
+                                                    alignment: go.Spot.Top,
+                                                    stroke: lightText,
+                                                    wrap: go.TextBlock.WrapFit,
+                                                    maxSize: new go.Size(160, NaN),
+                                                    margin: 8,
+                                                    editable: true
+
+                                                    /* font: "bold 11pt Helvetica, Arial, sans-serif",
+
+
+
+
+                                                    */
+                                                },
+
+                                                new go.Binding("text").makeTwoWay()
+                                        ),
+
+                                        $(go.TextBlock,
+                                                {
+                                                    row: 1, column: 0, columnSpan: 2,
+                                                    font: "12px Roboto, sans-serif",
                                                     stroke: lightText,
                                                     margin: 8,
                                                     maxSize: new go.Size(160, NaN),
                                                     wrap: go.TextBlock.WrapFit,
+                                                    //fill: "#99ffb3",
                                                     editable: true
+                                                    /*font: "bold 8pt Helvetica, Arial, sans-serif",
+
+                                                    */
                                                 },
-                                                new go.Binding("text").makeTwoWay())
+
+                                                new go.Binding("text", "", virtualMachineInfoTextConverter).makeTwoWay()
+                                        )
+
+
                                 ),
                                 // four named ports, one on each side:
                                 makePort("T", go.Spot.Top, false, true),
@@ -114,7 +187,8 @@
                                                     wrap: go.TextBlock.WrapFit,
                                                     editable: true
                                                 },
-                                                new go.Binding("text").makeTwoWay())
+
+                                                new go.Binding("text", "", networkInfoTextConverter).makeTwoWay())
                                 ),
                                 // four named ports, one on each side:
                                 makePort("T", go.Spot.Top, false, true),
@@ -138,7 +212,8 @@
                                                     wrap: go.TextBlock.WrapFit,
                                                     editable: true
                                                 },
-                                                new go.Binding("text").makeTwoWay())
+
+                                                new go.Binding("text", "", portInfoTextConverter).makeTwoWay())
                                 ),
                                 // four named ports, one on each side:
                                 makePort("T", go.Spot.Top, false, true),
@@ -281,11 +356,17 @@
 
                                         {% set data = '' %}
                                         {% for e in networkFunctions %}
-                                        {%  set data = data ~('\n{'
-                                        ~'category: "'~e.role.name~'", '
-                                        ~'text: "'~e.name~'"'
-                                        ~'},')
-                                        %}
+                                            {%  set data = data ~('\n{'
+                                            ~'category: "'~e.role.name~'", '
+                                            ~'text: "'~e.name~'", ')%}
+                                            {% set attr = '' %}
+                                            {% for a in e.attributes %}
+
+                                                {%  set attr = attr ~(
+                                                    ''~a['name']~': "'~a['value']~'" ,'
+                                                )%}
+                                            {% endfor %}
+                                            {% set data = data ~ (attr|slice(0, (attr|length)-1)) ~ ('},') %}
                                         {% endfor %}
                                         {{ (data|slice(0, (data|length)-1)) | raw}}
                                         /*
