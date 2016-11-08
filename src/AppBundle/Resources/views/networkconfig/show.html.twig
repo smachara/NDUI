@@ -15,24 +15,35 @@
             </tr>
             <tr>
                 <th scope="row">
-                    {{ 'form.networkconfig.field.label.network_function' |trans({}, 'networkconfig') }}
+                    {{ 'form.networkconfig.field.label.name' |trans({}, 'networkconfig') }}
                 </th>
-                <td>{{ networkconfig.networkfunction.name }}</td>
+                <td>{{ networkconfig.name }}</td>
             </tr>
-
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.description' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.description }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkconfig.field.label.config_value' |trans({}, 'networkconfig') }}
+                </th>
+                <td>{{ networkconfig.configvalue }}</td>
+            </tr>
         </tbody>
     </table>
 
         <div class="btn-group record_actions">
-                <a class="btn btn-info" href="{{ path('networkconfig') }}">
+                <a class="btn btn-info" href="{{ path('nconfig') }}">
                 <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
             </a>
     
-                <a class="btn btn-primary" href="{{ path('networkconfig_edit', {id: networkconfig.id}) }}">
+                <a class="btn btn-primary" href="{{ path('nconfig_edit', {id: networkconfig.id}) }}">
                 <i class="fa fa-edit"></i>
                 {{ 'action.edit.submit'|trans({}, 'global') }}
             </a>
-                    <a class="btn btn-danger" href="{{ path('networkconfig_delete_confirmation', {id: networkconfig.id}) }}">
+                    <a class="btn btn-danger" href="{{ path('nconfig_delete_confirmation', {id: networkconfig.id}) }}">
                 <i class="fa fa-trash-o"></i>
                 {{ 'action.delete.submit'|trans({}, 'global') }}
             </a>

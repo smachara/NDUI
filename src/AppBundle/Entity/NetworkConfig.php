@@ -4,17 +4,25 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use AppBundle\Model\NetworkConfigModel;
+//use AppBundle\Model\NetworkConfigModel;
 /**
  * NetworkConfig
  *
  * @ORM\Table(name="network_config")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NetworkConfigRepository")
  *
- * @Gedmo\Tree(type="nested")
  */
-class NetworkConfig  extends NetworkConfigModel
+class NetworkConfig  //extends NetworkConfigModel
 {
+    private $data = <<<EOT
+              { "class": "go.GraphLinksModel",
+                    "linkFromPortIdProperty": "fromPort",
+                    "linkToPortIdProperty": "toPort",
+                    "nodeDataArray": [],
+                    "linkDataArray": []
+                }
+EOT;
+
     /**
      * @var int
      *
@@ -25,47 +33,31 @@ class NetworkConfig  extends NetworkConfigModel
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="NetworkFunction")
-     * @ORM\JoinColumn(name="network_function_id", referencedColumnName="id")
+     * @ORM\Column(type="string")
      * @var String
      */
-    protected $network_function;
-
-
-    /*******************************
-    TREE ATTRIBUTES
-     ******************************/
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(type="integer")
-     */
-    private $lft;
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(type="integer")
-     */
-    private $rgt;
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="NetworkConfig", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $parent;
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $root;
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
+    protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="NetworkConfig", mappedBy="parent")
+     * @ORM\Column(type="string")
+     * @var String
      */
-    protected $children;
+    protected $description;
+
+    /**
+     * @ORM\Column(type="text")
+     * @var String
+     */
+    protected $config_value;
+
+    /**
+     * NetworkConfig constructor.
+     * @param String $config_value
+     */
+    public function __construct()
+    {
+        $this->config_value = $this->data;
+    }
 
     /***********************************************************************************************************************/
 
@@ -80,180 +72,52 @@ class NetworkConfig  extends NetworkConfigModel
     }
 
     /**
-     * Set lft
-     *
-     * @param integer $lft
-     *
-     * @return NetworkConfig
+     * @return String
      */
-    public function setLft($lft)
+    public function getName()
     {
-        $this->lft = $lft;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get lft
-     *
-     * @return integer
+     * @param String $name
      */
-    public function getLft()
+    public function setName($name)
     {
-        return $this->lft;
+        $this->name = $name;
     }
 
     /**
-     * Set rgt
-     *
-     * @param integer $rgt
-     *
-     * @return NetworkConfig
+     * @return String
      */
-    public function setRgt($rgt)
+    public function getDescription()
     {
-        $this->rgt = $rgt;
-
-        return $this;
+        return $this->description;
     }
 
     /**
-     * Get rgt
-     *
-     * @return integer
+     * @param String $description
      */
-    public function getRgt()
+    public function setDescription($description)
     {
-        return $this->rgt;
+        $this->description = $description;
     }
 
     /**
-     * Set root
-     *
-     * @param integer $root
-     *
-     * @return NetworkConfig
+     * @return String
      */
-    public function setRoot($root)
+    public function getConfigValue()
     {
-        $this->root = $root;
-
-        return $this;
+        return $this->config_value;
     }
 
     /**
-     * Get root
-     *
-     * @return integer
+     * @param String $config_value
      */
-    public function getRoot()
+    public function setConfigValue($config_value)
     {
-        return $this->root;
+        $this->config_value = $config_value;
     }
 
-    /**
-     * Set lvl
-     *
-     * @param integer $lvl
-     *
-     * @return NetworkConfig
-     */
-    public function setLvl($lvl)
-    {
-        $this->lvl = $lvl;
 
-        return $this;
-    }
-
-    /**
-     * Get lvl
-     *
-     * @return integer
-     */
-    public function getLvl()
-    {
-        return $this->lvl;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \AppBundle\Entity\NetworkConfig $parent
-     *
-     * @return NetworkConfig
-     */
-    public function setParent(\AppBundle\Entity\NetworkConfig $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \AppBundle\Entity\NetworkConfig
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-//    /**
-//     * Add child
-//     *
-//     * @param \AppBundle\Entity\NetworkConfig $child
-//     *
-//     * @return NetworkConfig
-//     */
-//    public function addChild(\AppBundle\Entity\NetworkConfig $child)
-//    {
-//        $this->children[] = $child;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove child
-//     *
-//     * @param \AppBundle\Entity\NetworkConfig $child
-//     */
-//    public function removeChild(\AppBundle\Entity\NetworkConfig $child)
-//    {
-//        $this->children->removeElement($child);
-//    }
-//
-//    /**
-//     * Get children
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getChildren()
-//    {
-//        return $this->children;
-//    }
-//
-//    /**
-//     * Set networkFunction
-//     *
-//     * @param string $networkFunction
-//     *
-//     * @return NetworkConfig
-//     */
-//    public function setNetworkFunction($networkFunction)
-//    {
-//        $this->network_function = $networkFunction;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get networkFunction
-//     *
-//     * @return NetworkFunction
-//     */
-//    public function getNetworkFunction()
-//    {
-//        return $this->network_function;
-//    }
 }
