@@ -30,7 +30,7 @@ form:
                 role: role
 
         index:
-            title: Network Function List
+            title: Network Element List
 
         new:
             message:
@@ -42,4 +42,4 @@ form:
         show:
             title: Network Function Details
 
-        title: Network Function
+        title: Network Element Template

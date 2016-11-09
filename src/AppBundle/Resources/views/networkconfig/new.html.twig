@@ -11,11 +11,6 @@
     {{ form_start(form, {action: path('nconfig_new')}) }}
 
         <div class="btn-group record_actions">
-            <p>
-                <a class="btn btn-warning" href="{{ path('networkfunction') }}">
-                    <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
-                </a>
-            </p>
             <a class="btn btn-info" href="{{ path('nconfig') }}">
                 <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
             </a>

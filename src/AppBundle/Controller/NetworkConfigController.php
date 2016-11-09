@@ -10,6 +10,8 @@ use AppBundle\Form\NetworkConfigType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\Serializer\SerializerBuilder as Serializer;
+use AppBundle\Model\NetworkConfigModel;
 
 /**
  * NetworkConfig controller.
@@ -101,6 +103,15 @@ class NetworkConfigController extends Controller
         $editForm = $this->createForm(NetworkConfigType::class, $networkconfig, ['method' => 'PUT']);
         if ($editForm->handleRequest($request)->isValid()) {
             try{
+
+                $jsonData = $request->get('networkconfig')->getConfigValue();
+                $object = json_decode($jsonData);
+
+                $serializer = Serializer::create()->build();
+                $ymlData = $serializer->serialize($object, 'yml');
+
+                dump($object, $ymlData ); //die();
+
                 $this->getDoctrine()->getManager()->flush();
 
                 $request->getSession()->getFlashBag()

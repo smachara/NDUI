@@ -4,11 +4,12 @@ action:
         'yes': yes
 
     back_to_list: back to list
-
+    network_function_list: network function list
+    nconfig_list: network configuration list
     delete:
         confirm: action.delete.confirm   # FIXME
         question: action.delete.question   # FIXME
-        submit: action.delete.submit   # FIXME
+        submit: delete
         warning: action.delete.warning   # FIXME
 
     save:

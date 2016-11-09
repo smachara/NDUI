@@ -110,7 +110,7 @@
                                                     alignment: go.Spot.Bottom,
                                                     maxSize: new go.Size(160, NaN),
                                                     wrap: go.TextBlock.WrapFit,
-                                                    editable: false
+                                                    editable: true
                                                 },
                                                 new go.Binding("text", "", infoTextConverter).makeTwoWay())
                                 ),
@@ -290,7 +290,10 @@
                                 $(go.Shape,  // the link path shape
                                         { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
                                 $(go.Shape,  // the arrowhead
-                                        { toArrow: "standard", stroke: null, fill: "gray"}),
+                                        { toArrow: "",
+                                            stroke: null
+                                            , fill: "gray"
+                                        }),
                                 $(go.Panel, "Auto",  // the link label, normally not visible
                                         { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
                                         new go.Binding("visible", "visible").makeTwoWay(),
@@ -327,8 +330,6 @@
                                     "animationManager.duration": 800, // slightly longer than default (600ms) animation
                                     nodeTemplateMap: myDiagram.nodeTemplateMap,  // share the templates used by myDiagram
                                     model: new go.GraphLinksModel([  // specify the contents of the Palette
-
-
                                         {% set data = '' %}
                                         {% for e in networkFunctions %}
                                             {%  set data = data ~('\n{'
@@ -345,15 +346,6 @@
                                         {% endfor %}
                                         {% set data = data ~ '{ category: "Comment", text: "Comment" }' %}
                                         {{ (data) | raw}}
-
-                                        /*
-                                         { category: "Start", text: "Start" },
-                                         { text: "FW" },
-                                         { text: "Step" },
-                                         { text: "???", figure: "Diamond" },
-                                         { category: "End", text: "End" },
-                                         { category: "Comment", text: "Comment" }
-                                         */
                                     ])
                                 });
 

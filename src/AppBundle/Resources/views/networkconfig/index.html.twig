@@ -1,13 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}{% block boton_new %}
-    <ul class="new_entry list-unstyled">
-        <li>
-            <a class="btn btn-info" href="{{ path('nconfig_new') }}">
-                <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
-            </a>
-        </li>
-    </ul>
+    <div class="btn-group record_actions">
+        <a class="btn btn-warning" href="{{ path('networkfunction') }}">
+            <i class="fa fa-list"></i> {{ 'action.network_function_list'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-primary" href="{{ path('nconfig_new') }}">
+            <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block body %}

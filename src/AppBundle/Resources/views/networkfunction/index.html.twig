@@ -22,7 +22,7 @@
         <a class="btn btn-warning" href="{{ path('nconfig') }}">
             <i class="fa fa-list"></i> {{ 'action.nconfig_list'|trans({}, 'global') }}
         </a>
-        <a class="btn btn-info" href="{{ path('networkfunction_new') }}">
+        <a class="btn btn-primary" href="{{ path('networkfunction_new') }}">
             <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
         </a>
         {% include 'AppBundle:networkfunction:filter.html.twig' with {form: form} %}
@@ -33,7 +33,6 @@
     <h1>{{ 'form.networkfunction.index.title'|trans({}, 'networkfunction') }}</h1>
 
             {{ block ('boton_new') }}
-            {{ knp_pagination_render(entities) }}
         <br>
         <select name="maxItemPerPage" id="maxItemPerPage">
             <option id="0">{{ 'filter.select_items_per_page'|trans({}, 'global') }}</option>
@@ -81,8 +80,6 @@
     </table>
 
             {{ knp_pagination_render(entities) }}
-            {{ block ('boton_new') }}
-    
 {% endblock %}
 
 {% block javascripts %}
