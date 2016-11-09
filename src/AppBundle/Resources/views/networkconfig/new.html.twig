@@ -19,7 +19,7 @@
             <a class="btn btn-info" href="{{ path('nconfig') }}">
                 <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
             </a>
-            <button class="btn btn-primary" type="submit" onclick="save();"><i class="fa fa-plus"> </i>{{ 'action.new.submit'|trans({}, 'global') }}</button>
+            <button class="btn btn-primary" type="submit" onclick="save();"><i class="fa fa-plus"> </i>{{ 'action.save.submit'|trans({}, 'global') }}</button>
         </div>
         <hr>
         {{ form_widget(form) }}
@@ -41,7 +41,6 @@
 {% block javascripts %}
 
     {{ parent() }}
-
-    {% include 'AppBundle:networkconfig:config_editor.js.html.twig' with { 'networkFunctions' : networkFunctions } only %}
+    {% include 'AppBundle:networkconfig:config_editor.js.html.twig' with { 'networkFunctions' : networkFunctions, 'networkFunctionRoles' : networkFunctionRoles }  %}
 
 {% endblock %}

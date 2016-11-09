@@ -1,0 +1,30 @@
+action:
+    answer:
+        'no': no
+        'yes': yes
+
+    back_to_list: back to list
+
+    delete:
+        confirm: action.delete.confirm   # FIXME
+        question: action.delete.question   # FIXME
+        submit: action.delete.submit   # FIXME
+        warning: action.delete.warning   # FIXME
+
+    save:
+        submit: save
+    edit:
+        submit: edit
+    new:
+        submit: new
+
+    show:
+        submit: show
+
+    title: action.title
+
+filter:
+    reset: reset
+    select_items_per_page: select items per page
+    show_hide_btn: filter
+    submit: filter   # FIXME

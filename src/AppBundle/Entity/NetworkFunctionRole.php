@@ -28,6 +28,20 @@ class NetworkFunctionRole
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255, unique=false)
+     */
+    private $color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shape", type="string", length=255, unique=false)
+     */
+    private $shape;
+
 
     /**
      * Get id
@@ -62,5 +76,38 @@ class NetworkFunctionRole
     {
         return $this->name;
     }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShape()
+    {
+        return $this->shape;
+    }
+
+    /**
+     * @param string $shape
+     */
+    public function setShape($shape)
+    {
+        $this->shape = $shape;
+    }
+
 }
 

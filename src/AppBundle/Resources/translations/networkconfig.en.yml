@@ -1,0 +1,36 @@
+form:
+    networkconfig:
+        delete:
+            message:
+                error: form.networkconfig.delete.message.error   # FIXME
+                success: form.networkconfig.delete.message.success   # FIXME
+
+            title: form.networkconfig.delete.title   # FIXME
+
+        edit:
+            message:
+                success: form.networkconfig.edit.message.success   # FIXME
+
+            title: form.networkconfig.edit.title   # FIXME
+
+        field:
+            label:
+                config_value: form.networkconfig.field.label.config_value   # FIXME
+                description: form.networkconfig.field.label.description   # FIXME
+                id: form.networkconfig.field.label.id   # FIXME
+                name: form.networkconfig.field.label.name   # FIXME
+
+        index:
+            title: form.networkconfig.index.title   # FIXME
+
+        new:
+            message:
+                error: form.networkconfig.new.message.error   # FIXME
+                success: form.networkconfig.new.message.success   # FIXME
+
+            title: form.networkconfig.new.title   # FIXME
+
+        show:
+            title: form.networkconfig.show.title   # FIXME
+
+        title: form.networkconfig.title   # FIXME

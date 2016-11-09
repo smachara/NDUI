@@ -75,10 +75,14 @@ class NetworkConfigController extends Controller
             }
         }
 
+        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkFunctionRole');
+        $networkFunctionRoles = $repo-> findAll([],['role'=>'asc']);
+
         $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkFunction');
         $networkFunctions = $repo-> findAll([],['role'=>'asc']);
 
         return $this->render('AppBundle:networkconfig:new.html.twig', [
+            'networkFunctionRoles' => $networkFunctionRoles,
             'networkFunctions' => $networkFunctions ,
             'networkconfig' => $networkconfig,
             'form' => $form->createView(),
@@ -114,11 +118,15 @@ class NetworkConfigController extends Controller
 
         $deleteForm = $this->createDeleteForm($networkconfig->getId(), 'nconfig_delete');
 
+        $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkFunctionRole');
+        $networkFunctionRoles = $repo-> findAll([],['role'=>'asc']);
+
         $repo= $this->getDoctrine()->getRepository('AppBundle:NetworkFunction');
         $networkFunctions = $repo-> findAll([],['role'=>'asc']);
 
 
         return $this->render('AppBundle:networkconfig:edit.html.twig', [
+            'networkFunctionRoles' => $networkFunctionRoles,
             'networkFunctions' => $networkFunctions,
             'networkconfig' => $networkconfig,
             'edit_form' => $editForm->createView(),

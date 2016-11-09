@@ -25,6 +25,12 @@ class AppKernel extends Kernel
               new smachara\GeneratorBundle\smacharaGeneratorBundle(),
 
             new JMS\SerializerBundle\JMSSerializerBundle(),
+
+//Internationalization
+//            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+//            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+//            new JMS\AopBundle\JMSAopBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
