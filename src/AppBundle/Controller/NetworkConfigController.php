@@ -110,7 +110,7 @@ class NetworkConfigController extends Controller
                 $serializer = Serializer::create()->build();
                 $ymlData = $serializer->serialize($object, 'yml');
 
-                dump($object, $ymlData ); //die();
+                //dump($object, $ymlData ); //die();
 
                 $this->getDoctrine()->getManager()->flush();
 

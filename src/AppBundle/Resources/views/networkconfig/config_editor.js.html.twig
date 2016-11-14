@@ -1,4 +1,5 @@
 {% block javascript_grafic_editor %}
+    <script src="{{ asset('bundles/app/js/dataInspector.js') }}"></script>
     <script src="{{ asset('bundles/app/js/go-debug.js') }}"></script>
     <script id="code">
             function init() {
@@ -30,12 +31,18 @@
 
                 // helper definitions for node templates
 
-                function nodeStyle() {
+                function nodeStyle() {//1
                     return [
                         // The Node.location comes from the "loc" property of the node data,
                         // converted by the Point.parse static method.
                         // If the Node.location is changed, it updates the "loc" property of the node data,
                         // converting back using the Point.stringify static method.
+
+                        new go.Binding("location2", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+                        {
+                            resizable: true,
+                            resizeObjectName: "SHAPE"
+                        },
                         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
                         {
                             // the Node.location is at the center of each node
@@ -71,7 +78,7 @@
 
                 // define the Node templates for regular nodes
                 var lightText = '#000000';
-                function infoTextConverter(info) {
+              /*  function infoTextConverter(info) {
                     var str = "";
                     for($i in info){
                         if ( !$i.match("key|loc|__gohashid|text|category")) {
@@ -79,14 +86,19 @@
                         }
                     };
                     return str;
-                }
+                }*/
                 {% for nf in networkFunctions  %}
                     myDiagram.nodeTemplateMap.add("{{ nf.role.name }}",  // the default category
-                        $(go.Node, "Spot", nodeStyle(),
+                        $(go.Node, "Auto", nodeStyle(), //2
+
                                 // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
                                 $(go.Panel, "Auto",
                                         $(go.Shape, "{{ nf.role.shape }}",
-                                                { fill: "{{ nf.role.color }}", stroke: null },
+                                                {   name: "SHAPE",
+                                                    width: 70, height: 70,
+                                                    stroke: "#C2185B",
+                                                    strokeWidth: 3,
+                                                    fill: "{{ nf.role.color }}" },
                                                 new go.Binding("figure", "figure")),
 
                                         $(go.TextBlock,
@@ -100,8 +112,8 @@
                                                     editable: true
                                                 },
                                                 new go.Binding("text").makeTwoWay()
-                                        ),
-
+                                        )
+                                        {#,
                                         {% set str = '' %}
                                         {% set margin = 15 %}
                                         {% for a in nf.attributes %}
@@ -111,7 +123,7 @@
                                         {% endfor %}
                                         {% set str = str ~ (str|slice(0, (str|length)-1)) %}
                                         {{ str | raw}}
-
+                                        #}
                                 ),
                                 // four named ports, one on each side:
                                 makePort("T", go.Spot.Top, false, true),
@@ -122,7 +134,7 @@
                 {% endfor %}
 
                 myDiagram.nodeTemplateMap.add("Comment",
-                        $(go.Node, "Auto", nodeStyle(),
+                        $(go.Node, "Auto", nodeStyle(), //3
                                 $(go.Shape, "File",
                                         { fill: "#EFFAB4", stroke: null }),
                                 $(go.TextBlock,
@@ -220,6 +232,19 @@
                                     ])
                                 });
 
+                // support editing the properties of the selected person in HTML
+                if (window.Inspector) myInspector = new Inspector(
+                        'myInspector', myDiagram,
+                        {
+                            properties: {
+                                'key': { readOnly: true , show: false},
+                                'category': { readOnly: true , show: false},
+                                'loc': { readOnly: true , show: false}
+                            }
+                        }
+                );
+
+
             }
 
     // Make all ports on a node visible when the mouse is over the node
@@ -231,16 +256,6 @@
         });
     }
 
-    // support editing the properties of the selected person in HTML
-    if (window.Inspector) myInspector = new Inspector(
-        'myInspector', myDiagram,
-        {
-            properties: {
-                'key': { readOnly: true },
-                'comments': {}
-            }
-        }
-    );
 
     // Show the diagram's model in JSON format that the user may edit
     function save() {

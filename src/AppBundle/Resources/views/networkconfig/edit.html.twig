@@ -1,5 +1,11 @@
 {% extends "base.html.twig" %}
 
+{#{% block stylesheets %}
+    {{ parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/app/css/dataInspector.css') }}' />
+{% endblock %}
+#}
+
 {% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
 
 {% block body %}
