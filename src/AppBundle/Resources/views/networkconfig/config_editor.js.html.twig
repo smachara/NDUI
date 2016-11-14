@@ -37,8 +37,7 @@
                         // converted by the Point.parse static method.
                         // If the Node.location is changed, it updates the "loc" property of the node data,
                         // converting back using the Point.stringify static method.
-
-                        new go.Binding("location2", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+                        //new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
                         {
                             resizable: true,
                             resizeObjectName: "SHAPE"
@@ -77,16 +76,7 @@
 
 
                 // define the Node templates for regular nodes
-                var lightText = '#000000';
-              /*  function infoTextConverter(info) {
-                    var str = "";
-                    for($i in info){
-                        if ( !$i.match("key|loc|__gohashid|text|category")) {
-                            if ($i) str += "\n+" + $i +" : " +  info[$i];
-                        }
-                    };
-                    return str;
-                }*/
+
                 {% for nf in networkFunctions  %}
                     myDiagram.nodeTemplateMap.add("{{ nf.role.name }}",  // the default category
                         $(go.Node, "Auto", nodeStyle(), //2
@@ -96,15 +86,16 @@
                                         $(go.Shape, "{{ nf.role.shape }}",
                                                 {   name: "SHAPE",
                                                     width: 70, height: 70,
-                                                    stroke: "#C2185B",
+                                                    stroke: "{{ nf.role.stroke }}",
                                                     strokeWidth: 3,
                                                     fill: "{{ nf.role.color }}" },
-                                                new go.Binding("figure", "figure")),
-
+                                                new go.Binding("figure", "figure"),
+                                                new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)
+                                        ),
                                         $(go.TextBlock,
                                                 {
                                                     font: "bold 11pt Helvetica, Arial, sans-serif",
-                                                    stroke: lightText,
+                                                    stroke: '#000000',
                                                     margin: 1,
                                                     alignment: go.Spot.Top,
                                                     maxSize: new go.Size(160, NaN),
@@ -136,7 +127,8 @@
                 myDiagram.nodeTemplateMap.add("Comment",
                         $(go.Node, "Auto", nodeStyle(), //3
                                 $(go.Shape, "File",
-                                        { fill: "#EFFAB4", stroke: null }),
+                                        { fill: "#EFFAB4", stroke: null }
+                                ),
                                 $(go.TextBlock,
                                         {
                                             margin: 5,
@@ -147,7 +139,8 @@
                                             font: "bold 12pt Helvetica, Arial, sans-serif",
                                             stroke: '#454545'
                                         },
-                                        new go.Binding("text").makeTwoWay())
+                                        new go.Binding("text").makeTwoWay()),
+                                        new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)
                                 // no ports, because no links are allowed to connect with a comment
                         ));
 
@@ -238,8 +231,9 @@
                         {
                             properties: {
                                 'key': { readOnly: true , show: false},
-                                'category': { readOnly: true , show: false},
-                                'loc': { readOnly: true , show: false}
+                                'category': { readOnly: true },
+                                'loc': { readOnly: true , show: false},
+                                'size': { readOnly: true , show: false}
                             }
                         }
                 );

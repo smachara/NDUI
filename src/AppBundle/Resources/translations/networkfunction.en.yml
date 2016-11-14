@@ -30,16 +30,16 @@ form:
                 role: role
 
         index:
-            title: Network Element List
+            title: Network Services Catalog
 
         new:
             message:
                 error: form.networkfunction.new.message.error   # FIXME
                 success: form.networkfunction.new.message.success   # FIXME
 
-            title: Network Function (Create)
+            title: Network Service (New)
 
         show:
             title: Network Function Details
 
-        title: Network Element Template
+        title: Network Services Catalog

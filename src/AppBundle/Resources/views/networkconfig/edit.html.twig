@@ -14,12 +14,12 @@
         <div class="btn-group record_actions">
             <p>
                 <a class="btn btn-warning" href="{{ path('networkfunction') }}">
-                    <i class="fa fa-list"></i> {{ 'action.nfunction_to_list'|trans({}, 'global') }}
+                    <i class="fa fa-list"></i> {{ 'action.goToCatalog'|trans({}, 'global') }}
                 </a>
             </p>
 
             <a class="btn btn-info" href="{{ path('nconfig') }}">
-                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+                <i class="fa fa-list"></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
             </a>
             <button class="btn btn-primary" type="submit" onclick="save();" >
                 <i class="fa fa-edit"></i>

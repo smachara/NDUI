@@ -20,7 +20,7 @@
 {% block boton_new %}
     <div class="btn-group record_actions">
         <a class="btn btn-warning" href="{{ path('nconfig') }}">
-            <i class="fa fa-list"></i> {{ 'action.nconfig_list'|trans({}, 'global') }}
+            <i class=""></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
         </a>
         <a class="btn btn-primary" href="{{ path('networkfunction_new') }}">
             <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
@@ -45,7 +45,7 @@
     <table class="table table-responsive table-striped table-hover table-bordered records_list">
         <thead>
             <tr>
-                <th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>
+                {#<th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>#}
                 <th scope="col">{{ thead('networkfunction', 'name', 'form.networkfunction.field.label.name'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ thead('networkfunction', 'role', 'form.networkfunction.field.label.role'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ thead('networkfunction', 'attributes', 'form.networkfunction.field.label.attributes'|trans({}, 'networkfunction')) }}</th>
@@ -55,10 +55,10 @@
         <tbody>
             {% for networkfunction in entities %}
                 <tr>
-                    <td>
-                        <a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>
-                        {{ networkfunction.id }}
-                    </td>
+                    {#<td>#}
+                        {#<a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>#}
+                        {#{{ networkfunction.id }}#}
+                    {#</td>#}
                     <td>{{ networkfunction.name }}</td>
                     <td>{{ networkfunction.role.name }}</td>
                     <td> {{dump(networkfunction.attributes2) }}</td>

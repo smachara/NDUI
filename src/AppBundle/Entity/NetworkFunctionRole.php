@@ -35,6 +35,14 @@ class NetworkFunctionRole
      */
     private $color;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="stroke", type="string", length=255, unique=false)
+     */
+    private $stroke;
+
     /**
      * @var string
      *
@@ -91,6 +99,22 @@ class NetworkFunctionRole
     public function setColor($color)
     {
         $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStroke()
+    {
+        return $this->stroke;
+    }
+
+    /**
+     * @param string $stroke
+     */
+    public function setStroke($stroke)
+    {
+        $this->stroke = $stroke;
     }
 
     /**

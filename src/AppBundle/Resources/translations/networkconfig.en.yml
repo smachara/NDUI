@@ -11,7 +11,7 @@ form:
             message:
                 success: form.networkconfig.edit.message.success   # FIXME
 
-            title: form.networkconfig.edit.title   # FIXME
+            title: Network Service Descriptor (editor)
 
         field:
             label:
@@ -21,16 +21,16 @@ form:
                 name: form.networkconfig.field.label.name   # FIXME
 
         index:
-            title: form.networkconfig.index.title   # FIXME
+            title: Network Service Descriptor (list)   # FIXME
 
         new:
             message:
                 error: form.networkconfig.new.message.error   # FIXME
                 success: form.networkconfig.new.message.success   # FIXME
 
-            title: form.networkconfig.new.title   # FIXME
+            title: Network Service Descriptor (New)   # FIXME
 
         show:
             title: form.networkconfig.show.title   # FIXME
 
-        title: form.networkconfig.title   # FIXME
+        title: Network Service Descriptor   # FIXME
