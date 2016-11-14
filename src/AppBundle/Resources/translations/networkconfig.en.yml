@@ -15,10 +15,10 @@ form:
 
         field:
             label:
-                config_value: form.networkconfig.field.label.config_value   # FIXME
-                description: form.networkconfig.field.label.description   # FIXME
-                id: form.networkconfig.field.label.id   # FIXME
-                name: form.networkconfig.field.label.name   # FIXME
+                config_value: Diagram Editor
+                description: description
+                id: id
+                name: name
 
         index:
             title: Network Service Descriptor (list)   # FIXME
@@ -28,9 +28,9 @@ form:
                 error: form.networkconfig.new.message.error   # FIXME
                 success: form.networkconfig.new.message.success   # FIXME
 
-            title: Network Service Descriptor (New)   # FIXME
+            title: Network Service Descriptor (New)
 
         show:
             title: form.networkconfig.show.title   # FIXME
 
-        title: Network Service Descriptor   # FIXME
+        title: Network Service Descriptor
