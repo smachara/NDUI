@@ -10,8 +10,8 @@
                                 {
                                     initialContentAlignment: go.Spot.Center,
                                     allowDrop: true,  // must be true to accept drops from the Palette
-                                    "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
-                                    "LinkRelinked": showLinkLabel,
+                                    //"LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
+                                    //"LinkRelinked": showLinkLabel,
                                     "animationManager.duration": 800, // slightly longer than default (600ms) animation
                                     "undoManager.isEnabled": true  // enable undo & redo
                                     //validCycle: go.Diagram.CycleDestinationTree
@@ -37,7 +37,6 @@
                         // converted by the Point.parse static method.
                         // If the Node.location is changed, it updates the "loc" property of the node data,
                         // converting back using the Point.stringify static method.
-                        //new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
                         {
                             resizable: true,
                             resizeObjectName: "SHAPE"
@@ -65,7 +64,7 @@
                             {
                                 fill: "transparent",
                                 stroke: null,  // this is changed to "white" in the showPorts function
-                                desiredSize: new go.Size(8, 8),
+                                desiredSize: new go.Size(20, 20),
                                 alignment: spot, alignmentFocus: spot,  // align the port on the main Shape
                                 portId: name,  // declare this object to be a "port"
                                 fromSpot: spot, toSpot: spot,  // declare where links may connect at this port
@@ -73,10 +72,7 @@
                                 cursor: "pointer"  // show a different cursor to indicate potential link point
                             });
                 }
-
-
                 // define the Node templates for regular nodes
-
                 {% for nf in networkFunctions  %}
                     myDiagram.nodeTemplateMap.add("{{ nf.role.name }}",  // the default category
                         $(go.Node, "Auto", nodeStyle(), //2
@@ -90,7 +86,7 @@
                                                     strokeWidth: 3,
                                                     fill: "{{ nf.role.color }}" },
                                                 new go.Binding("figure", "figure"),
-                                                new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)
+                                                new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)//Save the size
                                         ),
                                         $(go.TextBlock,
                                                 {
@@ -166,23 +162,51 @@
                                 $(go.Shape,  // the link path shape
                                         { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
                                 $(go.Shape,  // the arrowhead
-                                        { toArrow: "",
-                                            stroke: null
+                                        { toArrow: "Standard",
+                                            stroke: "#60869f"
                                             , fill: "gray"
                                         }),
+
                                 $(go.Panel, "Auto",  // the link label, normally not visible
-                                        { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
-                                        new go.Binding("visible", "visible").makeTwoWay(),
+                                        new go.Binding("visible", "isSelected").ofObject(),
+                                        { //visible: true,
+                                            name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
+                                        //new go.Binding("visible", "visible").makeTwoWay(),
                                         $(go.Shape, "RoundedRectangle",  // the label shape
                                                 { fill: "#F8F8F8", stroke: null }),
-                                        $(go.TextBlock, "Yes",  // the label
+                                        $(go.TextBlock,
                                                 {
                                                     textAlign: "center",
                                                     font: "10pt helvetica, arial, sans-serif",
                                                     stroke: "#333333",
+                                                   // margin: 2,
+                                                   // minSize: new go.Size(10, NaN),
                                                     editable: true
                                                 },
-                                                new go.Binding("text").makeTwoWay())
+                                                new go.Binding("text", 'text' ,  function(v) {
+                                                    if (!v) {
+                                                        return "text";
+                                                    }else{
+                                                        return v;
+                                                    }
+                                                }).makeTwoWay()),
+
+                                        $(go.TextBlock,
+                                                {
+                                                    textAlign: "center",
+                                                    font: "10pt helvetica, arial, sans-serif",
+                                                    stroke: "#333333",
+                                                    margin: 2,
+                                                    minSize: new go.Size(20, NaN),
+                                                    editable: true
+                                                },
+                                                new go.Binding("text", 'blind' ,  function(v) {
+                                                    if (!v) {
+                                                        return "text";
+                                                    }else{
+                                                        return v;
+                                                    }
+                                                }).makeTwoWay())
                                 )
                         );
 

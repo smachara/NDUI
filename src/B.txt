@@ -1,0 +1,56 @@
+codigo
+myDiagram.linkTemplate =
+$(go.Link,  // the whole link panel
+{
+	routing: go.Link.AvoidsNodes,
+	curve: go.Link.JumpOver,
+	corner: 5,
+	toShortLength: 4
+	,
+	relinkableFrom: true,
+	relinkableTo: true,
+	reshapable: true,
+	resegmentable: true,
+	// mouse-overs subtly highlight links:
+	mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
+	mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; }
+},
+new go.Binding("points").makeTwoWay(),
+$(go.Shape,
+    {
+         isPanelMain: true,
+         strokeWidth: 8
+         ,
+         stroke: "transparent",
+         name: "HIGHLIGHT"
+     }
+ ),
+
+$(go.Shape, {
+        isPanelMain: true,
+        stroke: "gray",
+        strokeWidth: 2
+     }),
+$(go.Shape,
+{ toArrow: "",
+	stroke: null
+	, fill: "gray"
+}),
+$(go.Panel, "Auto",
+{ visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
+new go.Binding("visible", "visible").makeTwoWay(),
+$(go.Shape, "RoundedRectangle",
+{ fill: "#F8F8F8", stroke: null }),
+$(go.TextBlock,
+    "Yes",  // the label
+{
+	textAlign: "center",
+	font: "10pt helvetica, arial, sans-serif",
+	stroke: "#919191",
+	margin: 2,
+	minSize: new go.Size(10, NaN),
+	editable: true
+},
+new go.Binding("text").makeTwoWay())
+)
+);

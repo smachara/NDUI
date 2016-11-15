@@ -28,6 +28,12 @@ class NetworkConfigType extends AbstractType
                 'attr' => ['style' => 'display:none;'],
                 //'empty_data'  => $data,
                 ])
+            ->add('yml_value', TextareaType::class , [
+                'label' => 'form.networkconfig.field.label.yml_value',
+                'translation_domain' => 'networkconfig',
+                'attr' => ['style' => 'disabled:disabled;'],
+                //'empty_data'  => $data,
+            ])
         ;
     }
 

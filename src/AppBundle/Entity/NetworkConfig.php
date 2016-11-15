@@ -51,6 +51,12 @@ EOT;
     protected $config_value;
 
     /**
+     * @ORM\Column(type="text")
+     * @var String
+     */
+    protected $yml_value;
+
+    /**
      * NetworkConfig constructor.
      * @param String $config_value
      */
@@ -103,6 +109,8 @@ EOT;
         $this->description = $description;
     }
 
+
+
     /**
      * @return String
      */
@@ -117,6 +125,22 @@ EOT;
     public function setConfigValue($config_value)
     {
         $this->config_value = $config_value;
+    }
+
+    /**
+     * @return String
+     */
+    public function getYmlValue()
+    {
+        return $this->yml_value;
+    }
+
+    /**
+     * @param String $yml_value
+     */
+    public function setYmlValue($yml_value)
+    {
+        $this->yml_value = $yml_value;
     }
 
 

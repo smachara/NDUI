@@ -63,6 +63,9 @@ class NetworkConfigController extends Controller
         $form = $this->createForm(NetworkConfigType::class, $networkconfig);
         if ($form->handleRequest($request)->isValid()) {
             try{
+
+                $networkconfig->setYmlValue( $this->ymlGenerator($request) );
+
                 $this->getDoctrine()->getManager()->persist($networkconfig);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -91,7 +94,6 @@ class NetworkConfigController extends Controller
         ]);
     }
 
-
     /**
      * Edits an existing NetworkConfig entity.
      *
@@ -104,13 +106,8 @@ class NetworkConfigController extends Controller
         if ($editForm->handleRequest($request)->isValid()) {
             try{
 
-                $jsonData = $request->get('networkconfig')->getConfigValue();
-                $object = json_decode($jsonData);
-
-                $serializer = Serializer::create()->build();
-                $ymlData = $serializer->serialize($object, 'yml');
-
-                //dump($object, $ymlData ); //die();
+                //TODO: llama a la funcion:
+                $networkconfig->setYmlValue( $this->ymlGenerator($request) );
 
                 $this->getDoctrine()->getManager()->flush();
 
@@ -143,7 +140,19 @@ class NetworkConfigController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
-    }    /**
+    }
+
+
+    //TODO: generalizando la funcion
+    public function ymlGenerator(Request $request){
+        $jsonData = $request->get('networkconfig')->getConfigValue();
+        $object = json_decode($jsonData);
+        return($this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object])->getContent());
+    }
+
+
+
+    /**
     * @Route("/{id}/delete-confirmation", name="nconfig_delete_confirmation")
     * @Method("GET")
     */

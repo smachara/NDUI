@@ -1,0 +1,40 @@
+ejemplo
+myDiagram.linkTemplate =
+$(go.Link,  // the whole link panel
+{ selectable: true, selectionAdornmentTemplate: linkSelectionAdornmentTemplate },
+{ relinkableFrom: true, relinkableTo: true, reshapable: true },
+{
+	routing: go.Link.AvoidsNodes,
+	curve: go.Link.JumpOver,
+	corner: 5,
+	toShortLength: 4
+},
+new go.Binding("points").makeTwoWay(),
+$(go.Shape,
+{
+    isPanelMain: true,
+    strokeWidth: 8
+}
+),
+$(go.Shape,
+
+{ toArrow: "Standard",
+    stroke: null
+ }),
+$(go.Panel, "Auto",
+new go.Binding("visible", "isSelected").ofObject(),
+$(go.Shape, "RoundedRectangle",
+{ fill: "#F8F8F8", stroke: null }),
+
+$(go.TextBlock,
+{
+	textAlign: "center",
+	font: "10pt helvetica, arial, sans-serif",
+	stroke: "#919191",
+	margin: 2,
+	minSize: new go.Size(10, NaN),
+	editable: true
+},
+new go.Binding("text").makeTwoWay())
+)
+);

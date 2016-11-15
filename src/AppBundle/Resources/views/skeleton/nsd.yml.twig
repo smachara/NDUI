@@ -1,0 +1,146 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+description: example for a NSD.
+topology_template:
+    node_templates:
+{% for node in object.nodeDataArray %}
+    {% if node.category ==  'virtual_machine' %}
+
+        {{node.text}}:
+            type: tosca.nodes.Compute
+            capabilities:
+                # Host container properties
+                host:
+                    properties:
+                       num_cpus: {{ node.host_num_cpus  }}
+                       disk_size: {{ node.host_disk_size }}
+                       mem_size: {{ node.host_mem_size }}
+                # Guest Operating System properties
+                os:
+                    properties:
+                        architecture: {{ node.os_architecture }}
+                        type: {{ node.os_type }}
+                        distribution: {{ node.os_distribution }}
+                        version: {{ node.os_version }}
+    {% endif %}
+    {% if node.category ==  'network' %}
+
+        {{node.text}}:
+                type: tosca.nodes.network.Network
+                properties:
+                    ip_version: {{ node.ip_version }}
+                    cidr:   {{ node.cidr }}
+                    start_ip: {{ node.start_ip }}
+                    end_ip: {{ node.end_ip }}
+    {% endif %}
+{% endfor %}
+
+{% for link in object.linkDataArray %}
+
+        port1:
+            type: tosca.nodes.network.Port
+            requirements:
+                - binding:
+                    node: {{ link.from }}
+                - link:
+                    node: {{ link.to }}
+{% endfor %}
+
+    {#VNF1:#}
+      {#type: tosca.nodes.nfv.VNF#}
+      {#properties:#}
+      {#attributes:#}
+        {#type: dpi#}
+        {#address:#}
+        {#port: 40000#}
+        {#nsh_aware: true#}
+      {#requirements:#}
+        {#- host: vnf_container1#}
+    {#CP11:          #endpoints of VNF1 linked to VL1#}
+      {#type: tosca.nodes.nfv.CP#}
+      {#properties:#}
+      {#attributes:#}
+        {#IP_address:#}
+        {#interface: eth0#}
+        {#port: 30000#}
+      {#requirements:#}
+        {#- virtualBinding: VNF1#}
+        {#- virtualLink: VL1#}
+    {#VNF2:#}
+      {#type: tosca.nodes.nfv.VNF#}
+      {#properties:#}
+      {#attributes:#}
+        {#type: firewall#}
+        {#address:#}
+        {#port: 40000#}
+        {#nsh_aware: true#}
+      {#requirements:#}
+        {#- host: vnf_container2#}
+    {#CP21:          #endpoints of VNF2 linked to VL1#}
+      {#type: tosca.nodes.nfv.CP#}
+      {#properties:#}
+      {#attributes:#}
+        {#IP_address:#}
+        {#interface: eth0#}
+        {#port: 30000#}
+      {#requirements:#}
+        {#- virtualBinding: VNF2#}
+        {#- virtualLink: VL1#}
+    {#VNF3:#}
+      {#type: tosca.nodes.nfv.VNF#}
+      {#properties:#}
+      {#attributes:#}
+        {#type: nat#}
+        {#address:#}
+        {#port: 40000#}
+        {#nsh_aware: true#}
+      {#requirements:#}
+        {#- host: vnf_container3#}
+    {#CP31:          #endpoints of VNF3 linked to VL2#}
+      {#type: tosca.nodes.nfv.CP#}
+      {#properties:#}
+      {#attributes:#}
+        {#IP_address:#}
+        {#port: 30000#}
+        {#interface: eth0#}
+      {#requirements:#}
+        {#- virtualBinding: VNF3#}
+        {#- virtualLink: VL1#}
+    {#VL1:#}
+      {#type: tosca.nodes.nfv.VL#}
+      {#properties:#}
+        {#vendor: HP#}
+      {#attributes:#}
+        {#type: ip#}
+        {#transport_type: vxlan-gpe#}
+    {#Forwarding_path1:#}
+      {#type: tosca.nodes.nfv.FP#}
+      {#description: the path (CP11->CP21->CP31)#}
+      {#properties:#}
+        {#policy:#}
+      {#requirements:#}
+        {#- forwarder: CP11#}
+        {#- forwarder: CP21#}
+        {#- forwarder: CP31#}
+  {###################################################}
+  {## VNF Forwarding Graph nodes and the associated#}
+  {## Network Forwarding Paths#}
+  {###################################################}
+  {#groups:#}
+    {#VNF_FG1:#}
+      {#type: tosca.groups.nfv.VNFFG#}
+      {#description: VNF forwarding graph#}
+      {#properties:#}
+        {#vendor:#}
+        {#version:#}
+        {#connection_point: [ CP11, CP21, CP31 ]#}
+        {#dependent_virtual_link: [ VL1 ]#}
+        {#constituent_vnfs: [ VNF1, VNF2, VNF3 ]#}
+      {#members: [ Forwarding_path1 ]#}
+
+    outputs:
+{% for node in object.nodeDataArray %}
+    {% if node.category ==  'virtual_machine' %}
+    {{node.text}}_ip:
+            value: { get_attribute: [{{node.text}}, private_address] }
+    {% endif %}
+{% endfor %}
