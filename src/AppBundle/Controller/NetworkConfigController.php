@@ -16,7 +16,7 @@ use AppBundle\Model\NetworkConfigModel;
 /**
  * NetworkConfig controller.
  *
- * @Route("/nconfig")
+ * @Route("/nsd")
  */
 class NetworkConfigController extends Controller
 {

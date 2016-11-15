@@ -13,14 +13,19 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body {% block body_events %} onload="" {% endblock %}>
-        {% block flashbag %}
-            {% include 'flashbag.html.twig' %}
-        {% endblock %}
-        {% block body %}{% endblock %}
+        <div class="container-fluid">
+            <div class="col-lg-offset-1">
+            {% block flashbag %}
+                {% include 'flashbag.html.twig' %}
+            {% endblock %}
+
+            {% block body %}{% endblock %}
+            </div>
+        </div>
 
         {% block javascripts %}
-            <script src="//code.jquery.com/jquery-2.1.1.js"></script>
-            <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                <script src="//code.jquery.com/jquery-2.1.1.js"></script>
+                <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         {% endblock %}
     </body>
 </html>

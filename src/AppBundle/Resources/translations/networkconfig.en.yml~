@@ -1,0 +1,36 @@
+form:
+    networkconfig:
+        delete:
+            message:
+                error: form.networkconfig.delete.message.error   # FIXME
+                success: form.networkconfig.delete.message.success   # FIXME
+
+            title: form.networkconfig.delete.title   # FIXME
+
+        edit:
+            message:
+                success: form.networkconfig.edit.message.success   # FIXME
+
+            title: Network Service Descriptor (editor)
+
+        field:
+            label:
+                config_value: Diagram Editor
+                description: description
+                id: id
+                name: name
+
+        index:
+            title: Network Service Descriptor (list)   # FIXME
+
+        new:
+            message:
+                error: form.networkconfig.new.message.error   # FIXME
+                success: form.networkconfig.new.message.success   # FIXME
+
+            title: Network Service Descriptor (New)
+
+        show:
+            title: form.networkconfig.show.title   # FIXME
+
+        title: Network Service Descriptor

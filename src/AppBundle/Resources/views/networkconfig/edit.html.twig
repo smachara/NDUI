@@ -34,7 +34,9 @@
         {{ form_widget(edit_form) }}
 
         {% block grafic_editor %}
-            {% include 'AppBundle:networkconfig:config_editor.html.twig' %}
+
+                    {% include 'AppBundle:networkconfig:config_editor.html.twig' %}
+
         {% endblock %}
 
     {{ form_end(edit_form) }}

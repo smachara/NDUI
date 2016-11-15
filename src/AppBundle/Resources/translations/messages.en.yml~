@@ -1,0 +1,5 @@
+boolean: boolean   # FIXME
+datetime: datetime   # FIXME
+decimal: decimal   # FIXME
+integer: integer   # FIXME
+string: string   # FIXME

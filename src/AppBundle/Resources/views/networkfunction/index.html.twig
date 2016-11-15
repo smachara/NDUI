@@ -19,10 +19,15 @@
 
 {% block boton_new %}
     <div class="btn-group record_actions">
-        <a class="btn btn-warning" href="{{ path('nconfig') }}">
+
+        <a class="btn btn-info" href="{{ path('networkfunctionrole') }}">
+            <i class=""></i> {{ 'action.goToNsType'|trans({}, 'global') }}
+        </a>
+
+        <a class="btn btn-info" href="{{ path('nconfig') }}">
             <i class=""></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
         </a>
-        <a class="btn btn-primary" href="{{ path('networkfunction_new') }}">
+        <a class="btn btn-success" href="{{ path('networkfunction_new') }}">
             <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
         </a>
         {% include 'AppBundle:networkfunction:filter.html.twig' with {form: form} %}
@@ -59,21 +64,21 @@
                         {#<a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>#}
                         {#{{ networkfunction.id }}#}
                     {#</td>#}
-                    <td>{{ networkfunction.name }}</td>
-                    <td>{{ networkfunction.role.name }}</td>
-                    <td> {{dump(networkfunction.attributes2) }}</td>
                     <td>
                         <div class="btn-group">
                             {#<a class="btn btn-default btn-sm" href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">#}
-                                {#<i class="fa fa-file-o"></i>#}
-                                {#{{ 'action.show.submit'|trans({}, 'global') }}#}
+                            {#<i class="fa fa-file-o"></i>#}
+                            {#{{ 'action.show.submit'|trans({}, 'global') }}#}
                             {#</a>#}
-                            <a class="btn btn-default btn-sm" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
-                                <i class="fa fa-edit"></i>
+                            <a class="btn btn-warning btn-sm" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
+                                <i class="fa fa-2x fa-edit"></i>
                                 {{ 'action.edit.submit'|trans({}, 'global') }}
                             </a>
                         </div>
                     </td>
+                    <td>{{ networkfunction.name }}</td>
+                    <td>{{ networkfunction.role.name }}</td>
+                    <td> {{dump(networkfunction.attributes2) }}</td>
                 </tr>
             {% endfor %}
         </tbody>

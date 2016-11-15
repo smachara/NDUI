@@ -1,0 +1,18 @@
+form:
+  networkfunctionrole:
+    title:          Network Service Type #fixme
+    delete:
+        title:      Network Service Type (delete) #fixme
+    edit:
+        title:      Network Service Type (edit) #fixme
+    index:
+        title:      Network Service Type  #fixme
+    field:
+        label:
+            name:   name
+            color:  shape background color
+            stroke: shape border color
+            shape:  shape
+            id:     id
+    new.title:      Network Service Type (new)
+    show.title:     Network Service Type (show)

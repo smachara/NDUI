@@ -1,5 +1,1 @@
-form:
-    nconfig:
-        edit:
-            message:
-                error: form.nconfig.edit.message.error %description%  # FIXME
+form.nconfig.edit.message.error: 'form.nconfig.edit.message.error %description%'

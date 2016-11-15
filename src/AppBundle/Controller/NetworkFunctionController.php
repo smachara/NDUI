@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * NetworkFunction controller.
  *
- * @Route("/networkfunction")
+ * @Route("/ns")
  */
 class NetworkFunctionController extends Controller
 {

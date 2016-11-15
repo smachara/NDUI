@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkfunctionrole.title'|trans({}, 'networkfunctionrole') }} - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+    <h1>{{ 'form.networkfunctionrole.show.title'|trans({}, 'networkfunctionrole') }}</h1>
+    <table class="table table-responsive table-striped table-hover table-bordered record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunctionrole.field.label.id' |trans({}, 'networkfunctionrole') }}
+                </th>
+                <td>{{ networkfunctionrole.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunctionrole.field.label.name' |trans({}, 'networkfunctionrole') }}
+                </th>
+                <td>{{ networkfunctionrole.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunctionrole.field.label.color' |trans({}, 'networkfunctionrole') }}
+                </th>
+                <td>{{ networkfunctionrole.color }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunctionrole.field.label.stroke' |trans({}, 'networkfunctionrole') }}
+                </th>
+                <td>{{ networkfunctionrole.stroke }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.networkfunctionrole.field.label.shape' |trans({}, 'networkfunctionrole') }}
+                </th>
+                <td>{{ networkfunctionrole.shape }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('networkfunctionrole') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+                <a class="btn btn-primary" href="{{ path('networkfunctionrole_edit', {id: networkfunctionrole.id}) }}">
+                <i class="fa fa-edit"></i>
+                {{ 'action.edit.submit'|trans({}, 'global') }}
+            </a>
+                    <a class="btn btn-danger" href="{{ path('networkfunctionrole_delete_confirmation', {id: networkfunctionrole.id}) }}">
+                <i class="fa fa-trash-o"></i>
+                {{ 'action.delete.submit'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+{% endblock %}

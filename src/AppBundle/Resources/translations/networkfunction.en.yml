@@ -1,45 +1,20 @@
-form:
-    attribute:
-        name:  name
-        value: value
-
-    networkfunction:
-        delete:
-            message:
-                error: form.networkfunction.delete.message.error   # FIXME
-                success: form.networkfunction.delete.message.success   # FIXME
-
-            title: form.networkfunction.delete.title   # FIXME
-
-        edit:
-            message:
-                error: form.networkfunction.edit.message.error   # FIXME
-                success: form.networkfunction.edit.message.success   # FIXME
-
-            title: Network Function (Edit)
-
-        field:
-            label:
-                attribute:
-                    name: name
-                    value: value
-
-                attributes: attributes
-                id: id
-                name: name
-                role: role
-
-        index:
-            title: Network Services Catalog
-
-        new:
-            message:
-                error: form.networkfunction.new.message.error   # FIXME
-                success: form.networkfunction.new.message.success   # FIXME
-
-            title: Network Service (New)
-
-        show:
-            title: Network Function Details
-
-        title: Network Services Catalog
+form.attribute.name: name
+form.attribute.value: value
+form.networkfunction.delete.message.error: form.networkfunction.delete.message.error
+form.networkfunction.delete.message.success: form.networkfunction.delete.message.success
+form.networkfunction.delete.title: form.networkfunction.delete.title
+form.networkfunction.edit.message.error: form.networkfunction.edit.message.error
+form.networkfunction.edit.message.success: form.networkfunction.edit.message.success
+form.networkfunction.edit.title: 'Network Function (Edit)'
+form.networkfunction.field.label.attribute.name: name
+form.networkfunction.field.label.attribute.value: value
+form.networkfunction.field.label.attributes: attributes
+form.networkfunction.field.label.id: id
+form.networkfunction.field.label.name: name
+form.networkfunction.field.label.role: role
+form.networkfunction.index.title: 'Network Services Catalog'
+form.networkfunction.new.message.error: form.networkfunction.new.message.error
+form.networkfunction.new.message.success: form.networkfunction.new.message.success
+form.networkfunction.new.title: 'Network Service (New)'
+form.networkfunction.show.title: 'Network Function Details'
+form.networkfunction.title: 'Network Services Catalog'
