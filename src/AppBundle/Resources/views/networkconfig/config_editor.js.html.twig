@@ -140,82 +140,32 @@
                                 // no ports, because no links are allowed to connect with a comment
                         ));
 
-
-                // replace the default Link template in the linkTemplateMap
                 myDiagram.linkTemplate =
-                        $(go.Link,  // the whole link panel
-                                {
+                        $(go.Link,
+                                { toShortLength: 3, relinkableFrom: true, relinkableTo: true, // allow the user to relink existing links
+                                    //routing: go.Link.Orthogonal,
                                     routing: go.Link.AvoidsNodes,
                                     curve: go.Link.JumpOver,
                                     corner: 5, toShortLength: 4,
-                                    relinkableFrom: true,
-                                    relinkableTo: true,
-                                    reshapable: true,
-                                    resegmentable: true,
                                     // mouse-overs subtly highlight links:
                                     mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
                                     mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; }
                                 },
-                                new go.Binding("points").makeTwoWay(),
-                                $(go.Shape,  // the highlight shape, normally transparent
-                                        { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-                                $(go.Shape,  // the link path shape
-                                        { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
-                                $(go.Shape,  // the arrowhead
-                                        { toArrow: "Standard",
-                                            stroke: "#60869f"
-                                            , fill: "gray"
-                                        }),
-
-                                $(go.Panel, "Auto",  // the link label, normally not visible
-                                        new go.Binding("visible", "isSelected").ofObject(),
-                                        { //visible: true,
-                                            name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
-                                        //new go.Binding("visible", "visible").makeTwoWay(),
-                                        $(go.Shape, "RoundedRectangle",  // the label shape
-                                                { fill: "#F8F8F8", stroke: null }),
-                                        $(go.TextBlock,
-                                                {
-                                                    textAlign: "center",
-                                                    font: "10pt helvetica, arial, sans-serif",
-                                                    stroke: "#333333",
-                                                   // margin: 2,
-                                                   // minSize: new go.Size(10, NaN),
-                                                    editable: true
-                                                },
-                                                new go.Binding("text", 'text' ,  function(v) {
-                                                    if (!v) {
-                                                        return "text";
-                                                    }else{
-                                                        return v;
-                                                    }
-                                                }).makeTwoWay()),
-
-                                        $(go.TextBlock,
-                                                {
-                                                    textAlign: "center",
-                                                    font: "10pt helvetica, arial, sans-serif",
-                                                    stroke: "#333333",
-                                                    margin: 2,
-                                                    minSize: new go.Size(20, NaN),
-                                                    editable: true
-                                                },
-                                                new go.Binding("text", 'blind' ,  function(v) {
-                                                    if (!v) {
-                                                        return "text";
-                                                    }else{
-                                                        return v;
-                                                    }
-                                                }).makeTwoWay())
+                                $(go.Shape,
+                                        { strokeWidth: 2 }
+                                ),
+                                $(go.Shape,
+                                        { toArrow: "Standard", stroke: null }
                                 )
+
                         );
 
                 // Make link labels visible if coming out of a "conditional" node.
                 // This listener is called by the "LinkDrawn" and "LinkRelinked" DiagramEvents.
-                function showLinkLabel(e) {
+                /*function showLinkLabel(e) {
                     var label = e.subject.findObject("LABEL");
                     if (label !== null) label.visible = (e.subject.fromNode.data.figure === "Diamond");
-                }
+                }*/
 
                 // temporary links used by LinkingTool and RelinkingTool are also orthogonal:
                 myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
@@ -248,19 +198,44 @@
                                         {{ (data) | raw}}
                                     ])
                                 });
-
+                myDiagram.select(myDiagram.nodes.first());
                 // support editing the properties of the selected person in HTML
+                //var str = getFromInfo(-1);
                 if (window.Inspector) myInspector = new Inspector(
                         'myInspector', myDiagram,
                         {
                             properties: {
                                 'key': { readOnly: true , show: false},
-                                'category': { readOnly: true },
+                                'category': { readOnly: true ,  show: Inspector.showIfNode},
                                 'loc': { readOnly: true , show: false},
-                                'size': { readOnly: true , show: false}
+                                'size': { readOnly: true , show: false},
+                                'from':{readOnly: true, show: Inspector.showIfLink},
+                                'to':{readOnly: true, show: Inspector.showIfLink},
+                                "binding": { readOnly: true , show: Inspector.showIfLink},
+                                "link": { readOnly: true , show: Inspector.showIfLink},
+                                "latency": { readOnly: false , show: Inspector.showIfLink},
+                                "bandwidth": { readOnly: false , show: Inspector.showIfLink},
+
+                                'fromPort': {readOnly: true, show: false},
+                                'toPort': {readOnly: true, show: false}
+
                             }
+
                         }
                 );
+
+                function getFromInfo(info) {
+                    var str = "";
+                    //alert(info);
+                    if (typeof info === "number") {
+                        var fromInfo = myDiagram.model.findNodeDataForKey(info);
+                        //alert(fromInfo);
+                        if (fromInfo !== null) {
+                            str =  fromInfo.text;
+                        }
+                    }
+                    return str;
+                }
 
 
             }

@@ -36,7 +36,7 @@ topology_template:
 
 {% for link in object.linkDataArray %}
 
-        port1:
+        port{{ link.toPort }}{{ link.from }}{{ link.fromPort }}{{ link.to }}:
             type: tosca.nodes.network.Port
             requirements:
                 - binding:

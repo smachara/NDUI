@@ -106,8 +106,9 @@ class NetworkConfigController extends Controller
         if ($editForm->handleRequest($request)->isValid()) {
             try{
 
-                //TODO: llama a la funcion:
-                $networkconfig->setYmlValue( $this->ymlGenerator($request) );
+                $jsonData = $request->get('networkconfig')->getConfigValue();
+                $object = json_decode($jsonData);
+                $networkconfig->setYmlValue( $this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object])->getContent() );
 
                 $this->getDoctrine()->getManager()->flush();
 
@@ -145,7 +146,8 @@ class NetworkConfigController extends Controller
 
     //TODO: generalizando la funcion
     public function ymlGenerator(Request $request){
-        $jsonData = $request->get('networkconfig')->getConfigValue();
+
+        $jsonData = $request->get('networkconfig')["config_value"];//->getConfigValue();
         $object = json_decode($jsonData);
         return($this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object])->getContent());
     }
