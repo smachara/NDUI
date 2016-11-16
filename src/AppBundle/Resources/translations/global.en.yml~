@@ -1,0 +1,36 @@
+system:
+  title:  End-To-End SFC Orchestrator
+  sub-title: ETSO-UI
+action:
+    goToCatalog: Service Calalog
+    goToDescriptor: Network Service Descriptor
+    answer:
+        'no': no
+        'yes': yes
+
+    back_to_list: back to list
+    network_function_list: Service Catalog
+    nconfig_list: Network Service Descriptor List
+    delete:
+        question: Are you sure you want to delete this record?
+        submit: delete
+        confirm: action.delete.confirm   # FIXME
+        warning: action.delete.warning   # FIXME
+
+    save:
+        submit: save
+    edit:
+        submit: edit
+    new:
+        submit: new
+
+    show:
+        submit: show
+
+    title: actions
+
+filter:
+    reset: reset
+    select_items_per_page: select items per page
+    show_hide_btn: filter
+    submit: filter

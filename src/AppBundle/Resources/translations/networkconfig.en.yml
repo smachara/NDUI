@@ -1,0 +1,15 @@
+form.networkconfig.delete.message.error: form.networkconfig.delete.message.error
+form.networkconfig.delete.message.success: form.networkconfig.delete.message.success
+form.networkconfig.delete.title: form.networkconfig.delete.title
+form.networkconfig.edit.message.success: form.networkconfig.edit.message.success
+form.networkconfig.edit.title: 'Network Service Descriptor (editor)'
+form.networkconfig.field.label.config_value: 'Diagram Editor'
+form.networkconfig.field.label.description: description
+form.networkconfig.field.label.id: id
+form.networkconfig.field.label.name: name
+form.networkconfig.index.title: 'Network Service Descriptor (list)'
+form.networkconfig.new.message.error: form.networkconfig.new.message.error
+form.networkconfig.new.message.success: form.networkconfig.new.message.success
+form.networkconfig.new.title: 'Network Service Descriptor (New)'
+form.networkconfig.show.title: form.networkconfig.show.title
+form.networkconfig.title: 'Network Service Descriptor'

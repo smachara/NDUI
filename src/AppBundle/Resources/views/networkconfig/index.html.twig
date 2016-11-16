@@ -1,191 +1,58 @@
 {% extends "base.html.twig" %}
 
 {% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
-
 {% block boton_new %}
-    <ul class="new_entry list-unstyled">
-        <li>
-            <a class="btn btn-info" href="{{ path('networkconfig_new') }}">
-                <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
-            </a>
-        </li>
-    </ul>
+    <div class="btn-group record_actions">
+        <a class="btn btn-info" href="{{ path('networkfunction') }}">
+            <i class=""></i> {{ 'action.goToCatalog'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-success" href="{{ path('nconfig_new') }}">
+            <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'form.networkconfig.index.title'|trans({}, 'networkconfig') }}</h1>
-    {{ block ('boton_new') }}
-    {{ nodes|replace({'HTTP/1.0 200 OK': '', 'Cache-Control: no-cache': '' })|raw}}
-    {{ block ('boton_new') }}
+    <h1>{{ 'form.networkconfig.index.title'|trans({}, 'networkconfig') }}</h1>        {{ block ('boton_new') }}
+    
+    <table class="table table-responsive table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                {#<th scope="col">{{ 'form.networkconfig.field.label.id'|trans({}, 'networkconfig') }}</th>#}
+                <th scope="col">{{ 'form.networkconfig.field.label.name'|trans({}, 'networkconfig') }}</th>
+                <th scope="col">{{ 'form.networkconfig.field.label.description'|trans({}, 'networkconfig') }}</th>
+                {#<th scope="col">{{ 'form.networkconfig.field.label.config_value'|trans({}, 'networkconfig') }}</th>#}
+                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for networkconfig in entities %}
+                <tr>
+                    {#<td>#}
+                        {#<a href="{{ path('nconfig_show', {id: networkconfig.id}) }}">{{ networkconfig.id }}</a>#}
+                        {#&#123;&#35;{{ networkconfig.id }}&#35;&#125;#}
+                    {#</td>#}
+                    <td>
+                        <div class="btn-group">
+                            {#<a class="btn btn-default btn-sm" href="{{ path('nconfig_show', {id: networkconfig.id}) }}">#}
+                            {#<i class="fa fa-file-o"></i>#}
+                            {#{{ 'action.show.submit'|trans({}, 'global') }}#}
+                            {#</a>#}
+                            <a class="btn btn-warning btn-sm" href="{{ path('nconfig_edit', {id: networkconfig.id}) }}">
+                                <i class="fa fa-2x fa-edit"></i>
+                                {{ 'action.edit.submit'|trans({}, 'global') }}
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ networkconfig.name }}</td>
+                    <td>{{ networkconfig.description }}</td>
+                    {#<td>{{ networkconfig.configvalue }}</td>#}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <div style="width:100%">
-
-
-        <div id="myPaletteDiv" class="col-lg-9" style="width: 10%; height: 500px; border:dotted;" class="diagramStyling">
-
-        </div>
-        <div id="diagramDiv" class="col-lg-3"
-               style="width:90%; height: 500px;; background-color: #DAE4E4; border:dotted ">
-              <b>Diagram:</b><br />
-        </div>
-    </div>
-    <script>
-      /*  // initialize the main Diagram
-        var $ = go.GraphObject.make;
-        var myDiagram =
-                $(go.Diagram, "diagramSpan",
-                        {
-                            initialContentAlignment: go.Spot.Center, // center Diagram contents
-                            "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
-                            layout: $(go.TreeLayout, // specify a Diagram.layout that arranges trees
-                                    { angle: 90, layerSpacing: 35 })
-                        });
-
-        myDiagram.allowDrop = true;  // permit accepting drag-and-drops
-
-        myDiagram.nodeTemplate =
-                $(go.Node, "Auto",
-                        $(go.Shape, "RoundedRectangle",
-                                { fill: "white" },
-                                new go.Binding("fill", "color"),
-                                { portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer" }),
-                        $(go.TextBlock, { margin: 5 },
-                                new go.Binding("text", "key"))
-                );
-
-        // start off with no Parts
-        myDiagram.undoManager.isEnabled = true;
-
-        // create the Palette
-        var myPalette =
-                $(go.Palette, "myPaletteDiv");
-
-        // the Palette's node template is different from the main Diagram's
-        myPalette.nodeTemplate =
-                $(go.Node, "Horizontal",
-                        $(go.Shape,
-                                { width: 14, height: 14, fill: "white" },
-                                new go.Binding("fill", "color")),
-                        $(go.TextBlock,
-                                new go.Binding("text", "color"))
-                );
-
-        // the list of data to show in the Palette
-        myPalette.model.nodeDataArray = [
-            { key: "C", color: "cyan" },
-            { key: "LC", color: "lightcyan" },
-            { key: "A", color: "aquamarine" },
-            { key: "T", color: "turquoise" },
-            { key: "PB", color: "powderblue" },
-            { key: "LB", color: "lightblue" },
-            { key: "LSB", color: "lightskyblue" },
-            { key: "DSB", color: "deepskyblue" }
-        ];
-
-        // create the Palette
-        var myPalette2 =
-                $(go.Palette, "myPaletteDiv2",
-                        { // customize the GridLayout to align the centers of the locationObjects
-                            layout: $(go.GridLayout, { alignment: go.GridLayout.Location })
-                        });
-
-        // the Palette's node template is different from the main Diagram's
-        myPalette2.nodeTemplate =
-                $(go.Node, "Vertical",
-                        { locationObjectName: "TB", locationSpot: go.Spot.Center },
-                        $(go.Shape,
-                                { width: 20, height: 20, fill: "white" },
-                                new go.Binding("fill", "color")),
-                        $(go.TextBlock, { name: "TB" },
-                                new go.Binding("text", "color"))
-                );
-
-        // the list of data to show in the Palette
-        myPalette2.model.nodeDataArray = [
-            { key: "IR", color: "indianred" },
-            { key: "LC", color: "lightcoral" },
-            { key: "S", color: "salmon" },
-            { key: "DS", color: "darksalmon" },
-            { key: "LS", color: "lightsalmon" }
-        ];
-
-*/
-    </script>
-
-    {#
-    {% for e in entities %}
-        {{ dump(e.networkfunction.name) }}
-        {{ dump(e.parent) }}
-
-        {% if e.parent %}
-            {{ dump(e.parent.networkfunction.name) }}
-        {% else %}
-            {{ dump(e.parent) }}
-        {% endif %}
-
-        {{ dump(e.parent ? '{ parent: "'~e.parent.networkfunction.name~'"}'  : 'null' ) }}
-
-    {% endfor %}
-    #}
-
+            {{ block ('boton_new') }}
+    
 {% endblock %}
 
-
-{% block javascripts %}
-    {{ parent() }}
-     <script src="{{ asset('bundles/app/js/go-debug.js') }}"></script>
-    <script>
-        var $ = go.GraphObject.make;
-        var myDiagram =
-                $(go.Diagram, "diagramDiv",
-                        {
-                            initialContentAlignment: go.Spot.Center, // center Diagram contents
-                            "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
-                            layout: $(go.TreeLayout, // specify a Diagram.layout that arranges trees
-                                    { angle: 90, layerSpacing: 35 }),
-                            allowDrop: true  // must be true to accept drops from the Palette
-//                            "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
-//                            "LinkRelinked": showLinkLabel,
-//                            "animationManager.duration": 800, // slightly longer than default (600ms) animation
-
-                        });
-
-        // the template we defined earlier
-        myDiagram.nodeTemplate =
-                $(go.Node, "Horizontal",
-                        { background: "#44CCFF" },
-                        $(go.Picture,
-                                { margin: 10, width: 50, height: 50, background: "red" },
-                                new go.Binding("source")),
-                        $(go.TextBlock, "Default Text",
-                                { margin: 12, stroke: "white", font: "bold 16px sans-serif" },
-                                new go.Binding("text", "name"))
-                );
-
-        var myModel = $(go.TreeModel);
-
-        //var myModel = $(go.Model);
-
-        {% set data = '' %}
-        {% for e in entities %}
-        {%  set data = data ~('\n{'
-                ~'key: "'~e.networkfunction.id~'"'
-                ~(e.parent ?
-                    ', parent: "' ~e.parent.networkfunction.id~'"'
-                    :
-                    ''
-                )
-                ~', name: "'~e.networkfunction.name~'"'
-                ~', source: "'~''~'"'
-            ~'},')
-        %}
-        {% endfor %}
-
-
-        myModel.nodeDataArray = [
-            {{ (data|slice(0, (data|length)-1)) | raw}}
-        ];
-        myDiagram.model = myModel;
-    </script>
-
-{% endblock %}

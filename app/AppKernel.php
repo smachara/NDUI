@@ -21,10 +21,14 @@ class AppKernel extends Kernel
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-        // S7 CRUD Generator
-//              new smachara\GeneratorBundle\smacharaGeneratorBundle(),
 
             new JMS\SerializerBundle\JMSSerializerBundle(),
+
+//Internationalization
+//            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+//            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+//            new JMS\AopBundle\JMSAopBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
@@ -32,6 +36,9 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            // S7 CRUD Generator
+            $bundles[] = new smachara\GeneratorBundle\smacharaGeneratorBundle();
+
         }
 
         return $bundles;

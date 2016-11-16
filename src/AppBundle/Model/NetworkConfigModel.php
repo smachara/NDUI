@@ -1,130 +1,109 @@
 <?php
-namespace AppBundle\Model;
-
-//use AppBundle\Model\NetworkConfig;
-use AppBundle\Entity\NetworkFunction;
-
 /**
  * Created by PhpStorm.
  * User: machar_s
- * Date: 04/11/2016
- * Time: 09:32
+ * Date: 09/11/2016
+ * Time: 15:08
  */
+
+namespace AppBundle\Model;
+
 class NetworkConfigModel
 {
-    /**
-     * @var int
-    *
+    /*
+     * @var string
      */
-    protected $id;
+    protected $class2;
+    /*
+     * @var string
+     */
+    protected $linkFromPortIdProperty;
+    /*
+     * @var string
+     */
+    protected $linkToPortIdProperty;
+    protected $nodeDataArray = [];
+    protected $linkDataArray = [];
 
     /**
-     * @var \AppBundle\Entity\NetworkFunction
+     * @return mixed
      */
-    protected $network_function;
-
-    /**
-     * @var NetworkConfigModel
-     */
-    protected $children;
-
-
-
-
-    public function getId()
+    public function getClass()
     {
-        return $this->id;
+        return $this->class;
     }
 
     /**
-     * Set networkFunction
-     *
-     * @param string $networkFunction
-     *
-     * @return NetworkConfigModel
+     * @param mixed $class
      */
-    public function setNetworkFunction($networkFunction)
+    public function setClass($class)
     {
-        $this->network_function = $networkFunction;
-
-        return $this;
+        $this->class = $class;
     }
 
     /**
-     * Get networkFunction
-     *
-     * @return NetworkFunction
+     * @return mixed
      */
-    public function getNetworkFunction()
+    public function getLinkFromPortIdProperty()
     {
-        return $this->network_function;
+        return $this->linkFromPortIdProperty;
     }
 
     /**
-    * Add child
-    *
-    * @param NetworkConfigModel $child
-    *
-    * @return NetworkConfigModel
-    */
-    public function addChild(NetworkConfigModel $child)
+     * @param mixed $linkFromPortIdProperty
+     */
+    public function setLinkFromPortIdProperty($linkFromPortIdProperty)
     {
-        $this->children[] = $child;
-
-        return $this;
+        $this->linkFromPortIdProperty = $linkFromPortIdProperty;
     }
 
     /**
-     * Remove child
-     *
-     * @param NetworkConfigModel $child
+     * @return mixed
      */
-    public function removeChild(NetworkConfigModel $child)
+    public function getLinkToPortIdProperty()
     {
-        $this->children->removeElement($child);
+        return $this->linkToPortIdProperty;
     }
 
     /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param mixed $linkToPortIdProperty
      */
-    public function getChildren()
+    public function setLinkToPortIdProperty($linkToPortIdProperty)
     {
-        return $this->children;
+        $this->linkToPortIdProperty = $linkToPortIdProperty;
     }
 
     /**
-     * @param NetworkConfigModel $children
+     * @return array
      */
-    public function setChildren($children)
+    public function getNodeDataArray()
     {
-        $this->children = $children;
+        return $this->nodeDataArray;
     }
 
-
-    function cast($destination, $sourceObject)
+    /**
+     * @param array $nodeDataArray
+     */
+    public function setNodeDataArray($nodeDataArray)
     {
-        if (is_string($destination)) {
-            $destination = new $destination();
-        }
-        $sourceReflection = new \ReflectionObject($sourceObject);
-        $destinationReflection = new \ReflectionObject($destination);
-        $sourceProperties = $sourceReflection->getProperties();
-        foreach ($sourceProperties as $sourceProperty) {
-            $sourceProperty->setAccessible(true);
-            $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue($sourceObject);
-
-            if ($destinationReflection->hasProperty($name)) {
-                $propDest = $destinationReflection->getProperty($name);
-                $propDest->setAccessible(true);
-                $propDest->setValue($destination,$value);
-            } else {
-                $destination->$name = $value;
-            }
-        }
-        return $destination;
+        $this->nodeDataArray = $nodeDataArray;
     }
+
+    /**
+     * @return array
+     */
+    public function getLinkDataArray()
+    {
+        return $this->linkDataArray;
+    }
+
+    /**
+     * @param array $linkDataArray
+     */
+    public function setLinkDataArray($linkDataArray)
+    {
+        $this->linkDataArray = $linkDataArray;
+    }
+
 
 }

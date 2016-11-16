@@ -1,32 +1,52 @@
 {% extends "base.html.twig" %}
 
+{#{% block stylesheets %}
+    {{ parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/app/css/dataInspector.css') }}' />
+{% endblock %}
+#}
+
 {% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
 
 {% block body %}
     <h1>{{ 'form.networkconfig.edit.title'|trans({}, 'networkconfig') }}</h1>
-
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-            <p>
-            <button class="btn btn-primary" type="submit">
-                <i class="fa fa-edit"></i>
-                {{ 'action.edit.submit'|trans({}, 'global') }}
-            </button>
-        </p>
-    
-    {{ form_end(edit_form) }}
-
         <div class="btn-group record_actions">
-                <a class="btn btn-info" href="{{ path('networkconfig') }}">
-                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            <p>
+                <a class="btn btn-warning" href="{{ path('networkfunction') }}">
+                    <i class="fa fa-list"></i> {{ 'action.goToCatalog'|trans({}, 'global') }}
+                </a>
+            </p>
+
+            <a class="btn btn-info" href="{{ path('nconfig') }}">
+                <i class="fa fa-list"></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
             </a>
-    
-                <a class="btn btn-danger" href="{{ path('networkconfig_delete_confirmation', {id: networkconfig.id}) }}">
+            <button class="btn btn-primary" type="submit" onclick="save();" >
+                <i class="fa fa-edit"></i>
+                {{ 'action.save.submit'|trans({}, 'global') }}
+            </button>
+            <a class="btn btn-danger" href="{{ path('nconfig_delete_confirmation', {id: networkconfig.id}) }}">
                 <i class="fa fa-trash-o"></i>
                 {{ 'action.delete.submit'|trans({}, 'global') }}
             </a>
-    
+        </div>
+        <hr>
+        {{ form_widget(edit_form) }}
 
-    </div>
+        {% block grafic_editor %}
+
+                    {% include 'AppBundle:networkconfig:config_editor.html.twig' %}
+
+        {% endblock %}
+
+    {{ form_end(edit_form) }}
+{% endblock %}
+
+{% block body_events %} onload="init()" {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:networkconfig:config_editor.js.html.twig' with { 'networkFunctions': networkFunctions, 'networkFunctionRoles': networkFunctionRoles}  %}
 
 {% endblock %}

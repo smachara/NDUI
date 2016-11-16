@@ -1,5 +1,4 @@
 {% extends "base.html.twig" %}
-
 {% block title %}{{ 'form.networkfunction.title'|trans({}, 'networkfunction') }} - {{ parent() }}{% endblock %}
 {% macro thead(name, field, label) %}
     {% spaceless %}
@@ -19,20 +18,26 @@
 {% from _self import thead %}
 
 {% block boton_new %}
-    <ul class="new_entry list-unstyled">
-        <li>
-            <a class="btn btn-info" href="{{ path('networkfunction_new') }}">
-                <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
-            </a>
-        </li>
-    </ul>
+    <div class="btn-group record_actions">
+
+        <a class="btn btn-info" href="{{ path('networkfunctionrole') }}">
+            <i class=""></i> {{ 'action.goToNsType'|trans({}, 'global') }}
+        </a>
+
+        <a class="btn btn-info" href="{{ path('nconfig') }}">
+            <i class=""></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-success" href="{{ path('networkfunction_new') }}">
+            <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+        </a>
+        {% include 'AppBundle:networkfunction:filter.html.twig' with {form: form} %}
+    </div>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'form.networkfunction.index.title'|trans({}, 'networkfunction') }}</h1>        {% include 'AppBundle:networkfunction:filter.html.twig' with {form: form} %}
+    <h1>{{ 'form.networkfunction.index.title'|trans({}, 'networkfunction') }}</h1>
+
             {{ block ('boton_new') }}
-    
-            {{ knp_pagination_render(entities) }}
         <br>
         <select name="maxItemPerPage" id="maxItemPerPage">
             <option id="0">{{ 'filter.select_items_per_page'|trans({}, 'global') }}</option>
@@ -45,8 +50,9 @@
     <table class="table table-responsive table-striped table-hover table-bordered records_list">
         <thead>
             <tr>
-                <th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>
+                {#<th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>#}
                 <th scope="col">{{ thead('networkfunction', 'name', 'form.networkfunction.field.label.name'|trans({}, 'networkfunction')) }}</th>
+                <th scope="col">{{ thead('networkfunction', 'role', 'form.networkfunction.field.label.role'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ thead('networkfunction', 'attributes', 'form.networkfunction.field.label.attributes'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
             </tr>
@@ -54,48 +60,43 @@
         <tbody>
             {% for networkfunction in entities %}
                 <tr>
+                    {#<td>#}
+                        {#<a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>#}
+                        {#{{ networkfunction.id }}#}
+                    {#</td>#}
                     <td>
-                                                        <a href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">{{ networkfunction.id }}</a>
-                                                    {{ networkfunction.id }}
-                                            </td>
-                    <td>{{ networkfunction.name }}</td>
-                    <td> {{dump(networkfunction.attributes2) }}</td>
-                    <td>                        <div class="btn-group">
-                        
-                            <a class="btn btn-default btn-sm" href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">
-                                <i class="fa fa-file-o"></i>
-                                {{ 'action.show.submit'|trans({}, 'global') }}
-                            </a>
-
-                        
-                        
-                            <a class="btn btn-default btn-sm" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
-                                <i class="fa fa-edit"></i>
+                        <div class="btn-group">
+                            {#<a class="btn btn-default btn-sm" href="{{ path('networkfunction_show', {id: networkfunction.id}) }}">#}
+                            {#<i class="fa fa-file-o"></i>#}
+                            {#{{ 'action.show.submit'|trans({}, 'global') }}#}
+                            {#</a>#}
+                            <a class="btn btn-warning btn-sm" href="{{ path('networkfunction_edit', {id: networkfunction.id}) }}">
+                                <i class="fa fa-2x fa-edit"></i>
                                 {{ 'action.edit.submit'|trans({}, 'global') }}
                             </a>
-
-                                                </div>
+                        </div>
                     </td>
+                    <td>{{ networkfunction.name }}</td>
+                    <td>{{ networkfunction.role.name }}</td>
+                    <td> {{dump(networkfunction.attributes2) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
             {{ knp_pagination_render(entities) }}
-            {{ block ('boton_new') }}
-    
 {% endblock %}
 
-    {% block javascripts %}
-        {{ parent() }}
-            <script type="text/javascript">
-                //on select change, you navigate to indexAction and send the parameter maxItemPerPage
-                $('#maxItemPerPage').change(function(){
+{% block javascripts %}
+    {{ parent() }}
+        <script type="text/javascript">
+            //on select change, you navigate to indexAction and send the parameter maxItemPerPage
+            $('#maxItemPerPage').change(function(){
 
-                    var url = '{{ path('networkfunction', {maxItemPerPage: '_itemNum'}) }}';
+                var url = '{{ path('networkfunction', {maxItemPerPage: '_itemNum'}) }}';
 
-                    var item = $('#maxItemPerPage').find(":selected").text();
-                    window.location.href = url.replace('_itemNum',item );
-                })
-            </script>
-    {% endblock %}
+                var item = $('#maxItemPerPage').find(":selected").text();
+                window.location.href = url.replace('_itemNum',item );
+            })
+        </script>
+{% endblock %}

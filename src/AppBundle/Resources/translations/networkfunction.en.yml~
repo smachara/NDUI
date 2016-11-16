@@ -1,0 +1,45 @@
+form:
+    attribute:
+        name:  name
+        value: value
+
+    networkfunction:
+        delete:
+            message:
+                error: form.networkfunction.delete.message.error   # FIXME
+                success: form.networkfunction.delete.message.success   # FIXME
+
+            title: form.networkfunction.delete.title   # FIXME
+
+        edit:
+            message:
+                error: form.networkfunction.edit.message.error   # FIXME
+                success: form.networkfunction.edit.message.success   # FIXME
+
+            title: Network Function (Edit)
+
+        field:
+            label:
+                attribute:
+                    name: name
+                    value: value
+
+                attributes: attributes
+                id: id
+                name: name
+                role: role
+
+        index:
+            title: Network Services Catalog
+
+        new:
+            message:
+                error: form.networkfunction.new.message.error   # FIXME
+                success: form.networkfunction.new.message.success   # FIXME
+
+            title: Network Service (New)
+
+        show:
+            title: Network Function Details
+
+        title: Network Services Catalog

@@ -1,0 +1,5 @@
+boolean: boolean
+datetime: datetime
+decimal: decimal
+integer: integer
+string: string

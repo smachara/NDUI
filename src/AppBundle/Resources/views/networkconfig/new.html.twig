@@ -6,18 +6,36 @@
 
     <h1>{{ 'form.networkconfig.new.title'|trans({}, 'networkconfig') }}</h1>
 
-    {{ form_start(form, {action: path('networkconfig_new')}) }}
+
+
+    {{ form_start(form, {action: path('nconfig_new')}) }}
+
+        <div class="btn-group record_actions">
+            <a class="btn btn-info" href="{{ path('nconfig') }}">
+                <i class="fa fa-list"></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
+            </a>
+            <button class="btn btn-primary" type="submit" onclick="save();"><i class="fa fa-plus"> </i>{{ 'action.save.submit'|trans({}, 'global') }}</button>
+        </div>
+        <hr>
         {{ form_widget(form) }}
-        <p>
-            <button class="btn btn-primary" type="submit">{{ 'action.new.submit'|trans({}, 'global') }}</button>
-        </p>
+
+        {% block grafic_editor %}
+            {% include 'AppBundle:networkconfig:config_editor.html.twig' %}
+        {% endblock %}
     {{ form_end(form) }}
 
-            <div class="btn-group record_actions">
-                <a class="btn btn-info" href="{{ path('networkconfig') }}">
-                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
-            </a>
-    
 
-    </div>
+
+
+
+
+{% endblock %}
+
+{% block body_events %} onload="init()" {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:networkconfig:config_editor.js.html.twig' with { 'networkFunctions' : networkFunctions, 'networkFunctionRoles' : networkFunctionRoles }  %}
+
 {% endblock %}

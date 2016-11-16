@@ -17,7 +17,7 @@ class NetworkFunctionFilterType extends AbstractType
         $builder
         
             ->add('name', Type\TextFilterType::class, ['label' => 'form.networkfunction.field.label.name', 'translation_domain' => 'networkfunction'])
-            ->add('attributes', Type\TextFilterType::class, ['label' => 'form.networkfunction.field.label.attributes', 'translation_domain' => 'networkfunction'])
+//            ->add('attributes', Type\TextFilterType::class, ['label' => 'form.networkfunction.field.label.attributes', 'translation_domain' => 'networkfunction'])
         ;
     }
 

@@ -1,0 +1,24 @@
+system.title: 'End-To-End SFC Orchestrator'
+system.sub-title: ETSO-UI
+action.goToCatalog: 'Service Calalog'
+action.goToDescriptor: 'Network Service Descriptors'
+action.goToNsType: 'Network Service Types'
+
+action.answer.no: 'no'
+action.answer.yes: 'yes'
+action.back_to_list: 'back to list'
+action.network_function_list: 'Service Catalog'
+action.nconfig_list: 'Network Service Descriptor List'
+action.delete.question: 'Are you sure you want to delete this record?'
+action.delete.submit: delete
+action.delete.confirm: action.delete.confirm
+action.delete.warning: action.delete.warning
+action.save.submit: save
+action.edit.submit: edit
+action.new.submit: new
+action.show.submit: show
+action.title: actions
+filter.reset: reset
+filter.select_items_per_page: 'select items per page'
+filter.show_hide_btn: filter
+filter.submit: filter

@@ -2,41 +2,38 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NetworkConfigType extends AbstractType
 {
+
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
         
-            ->add('network_function', EntityType::class, [
-                'label' => 'form.networkconfig.field.label.network_function',
+            ->add('name', null, ['label' => 'form.networkconfig.field.label.name', 'translation_domain' => 'networkconfig'])
+            ->add('description', null, ['label' => 'form.networkconfig.field.label.description', 'translation_domain' => 'networkconfig'])
+            ->add('config_value', TextareaType::class , [
+                'label' => 'form.networkconfig.field.label.config_value',
                 'translation_domain' => 'networkconfig',
-                'class' => 'AppBundle:NetworkFunction',
-                'choice_label' => 'name',
-                'placeholder' => 'form.networkconfig.field.placeholder.choose_a_function',
-                'empty_data'  => null
-            ])
-
-
-            ->add('parent', FunctionParentType::class ,[
-                'label' => 'form.networkconfig.field.label.parent',
+                'attr' => ['style' => 'display:none;'],
+                //'empty_data'  => $data,
+                ])
+            ->add('yml_value', TextareaType::class , [
+                'label' => 'form.networkconfig.field.label.yml_value',
                 'translation_domain' => 'networkconfig',
-                'expanded' => false,
-                'multiple' => false,
-                'required'    => false,
-                'placeholder' => 'form.networkconfig.field.placeholder.choose_a_parent',
-                'empty_data'  => null
+                'attr' => ['style' => 'disabled:disabled;'],
+                //'empty_data'  => $data,
             ])
-
         ;
     }
 

@@ -16,19 +16,18 @@
     <h1>{{ 'form.networkfunction.new.title'|trans({}, 'networkfunction') }}</h1>
 
     {{ form_start(form, {action: path('networkfunction_new')}) }}
+        <div class="btn-group record_actions">
+            <a class="btn btn-info" href="{{ path('networkfunction') }}">
+                <i class="fa fa-list"></i> {{ 'action.goToCatalog'|trans({}, 'global') }}
+            </a>
+            <button class="btn btn-primary" type="submit">{{ 'action.save.submit'|trans({}, 'global') }}</button>
+        </div>
+        <hr>
         {{ form_widget(form) }}
-        <p>
-            <button class="btn btn-primary" type="submit">{{ 'action.new.submit'|trans({}, 'global') }}</button>
-        </p>
     {{ form_end(form) }}
 
-            <div class="btn-group record_actions">
-                <a class="btn btn-info" href="{{ path('networkfunction') }}">
-                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
-            </a>
-    
 
-    </div>
+
 
 
 {% endblock %}

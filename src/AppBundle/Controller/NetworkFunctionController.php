@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * NetworkFunction controller.
  *
- * @Route("/networkfunction")
+ * @Route("/ns")
  */
 class NetworkFunctionController extends Controller
 {
@@ -93,7 +93,7 @@ class NetworkFunctionController extends Controller
                 $request->getSession()->getFlashBag()
                 ->add('success', $this->get('translator')->trans('form.networkfunction.new.message.success', [], 'networkfunction'));
 
-            return $this->redirect($this->generateUrl('networkfunction_show', ['id' => $networkfunction->getId()]));
+            return $this->redirect($this->generateUrl('networkfunction_edit', ['id' => $networkfunction->getId()]));
             } catch(\Exception $e){
                 $request->getSession()->getFlashBag()
                 ->add('error',  $this->get('translator')->trans('form.networkfunction.new.message.error', [], 'networkfunction'));

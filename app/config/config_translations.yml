@@ -1,0 +1,31 @@
+parameters:
+    locale: en
+    app.locales: en
+    jms.locales: ['en']
+framework:
+    translator:  { fallbacks: ["%locale%"] }
+    default_locale:  "%locale%"
+####################################################################################
+##  Internationalization
+##           php bin/console translation:extract --config=AppBundle
+##			http://your-host/app_dev.php/_trans/
+####################################################################################
+##Translation Configuration
+##jms_i18n_routing:
+##    default_locale: en
+##    locales: ['en', 'fr', 'es']
+##    strategy: prefix_except_default
+jms_translation:
+  locales: "%jms.locales%"
+  source_language: "%locale%"
+  configs:
+      AppBundle:
+          dirs: ["%kernel.root_dir%", "%kernel.root_dir%/../src/AppBundle"]
+          output_dir: "%kernel.root_dir%/../src/AppBundle/Resources/translations"
+          excluded_names: ["*TestCase.php", "*Test.php"]
+          excluded_dirs: ["cache", "data", "logs"]
+ #         extractors: ["jms_i18n_routing"]
+          external_translations_dirs: ~
+          output_format: "yml"
+          default_output_format: "yaml"
+          keep: false

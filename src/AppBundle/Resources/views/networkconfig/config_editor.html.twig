@@ -1,0 +1,63 @@
+
+
+
+{#<button id="SaveButton" onclick="save()" disabled="disabled">Save</button>#}
+{#<button onclick="load()"></button>#}
+
+{#<button onclick="makeSVG()">Render as SVG</button>#}
+<div class="">
+<div class="row" style="width:100%; white-space:nowrap;">
+    <div class="col-lg-2">
+        {#<span style="display: inline-block; vertical-align: top; padding: 5px; width:210px">#}
+            {#<div id="myPaletteDiv" style="border: 1px solid gray; height: 720px; position: relative; cursor: auto;">#}
+            <div id="myPaletteDiv" style="border: 1px solid gray; height: 720px;; position: relative; cursor: auto;">
+                <canvas tabindex="0" style="position: absolute; top: 0px; left: 0px; z-index: 2; -moz-user-select: none;width: 98px;
+                        height: 720px; cursor: auto;" width="98" height="720">
+                    This text is displayed if your browser does not support the Canvas HTML element.
+                </canvas>
+                <div style="position: absolute; overflow: auto; width: 98px; height: 720px; z-index: 1;">
+                    <div style="position: absolute; width: 1px; height: 1px;">
+                    </div>
+                </div>
+            </div>
+        {#</span>#}
+    </div>
+    <div class="col-lg-7">
+        {#<span style="display: inline-block; vertical-align: top; padding: 5px; width:50%">#}
+            <div id="myDiagramDiv" style="border: 1px solid gray; height: 720px; position: relative; cursor: auto;">
+                <canvas tabindex="0" style="position: absolute; top: 0px; left: 0px; z-index: 2; -moz-user-select: none; width: 1204px;
+                        height: 720px; cursor: auto;" width="1204" height="720">
+                    This text is displayed if your browser does not support the Canvas HTML element.
+                </canvas>
+                <div style="position: absolute; overflow: auto; width: 1204px; height: 720px; z-index: 1;">
+                    <div style="position: absolute; width: 1px; height: 1px;">
+                    </div>
+                </div>
+            </div>
+        {#</span>#}
+    </div>
+    <div class="col-lg-3">
+        <span style="display: inline-block; vertical-align: top;">
+            <div id="myInspector" class="inspector"> </div>
+
+
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Mouse-over a Node to view its ports.
+                Drag from these ports to create new Links.
+                Selecting Links allows you to re-shape and re-link them.
+                Selecting a Node and then clicking its TextBlock will allow
+                you to edit text.
+            </p>
+            <p>
+                Select a node to edit/update node data values.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div id="SVGArea"></div>
