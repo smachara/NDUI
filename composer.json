@@ -16,7 +16,14 @@
             "Tests\\": "tests/"
         }
     },
+
+    "repositories":[
+        {"type": "composer", "url": "http://127.0.0.1:8082/repo/private/"},
+        {"type": "composer", "url": "http://127.0.0.1:8082/repo/packagist/"}
+
+    ],
     "require": {
+        "ikiwisi/html2pdfbundle": "master-dev",
         "php": ">=5.5.9",
         "symfony/symfony": "3.1.*",
         "doctrine/orm": "^2.5",
@@ -35,7 +42,6 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "symfony/serializer": "^3.1",
         "jms/serializer-bundle": "^1.1"
-
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -69,4 +75,5 @@
         },
         "branch-alias": null
     }
+
 }
