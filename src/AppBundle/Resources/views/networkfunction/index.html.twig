@@ -51,10 +51,11 @@
         <thead>
             <tr>
                 {#<th scope="col">{{ thead('networkfunction', 'id', 'form.networkfunction.field.label.id'|trans({}, 'networkfunction')) }}</th>#}
+                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
                 <th scope="col">{{ thead('networkfunction', 'name', 'form.networkfunction.field.label.name'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ thead('networkfunction', 'role', 'form.networkfunction.field.label.role'|trans({}, 'networkfunction')) }}</th>
                 <th scope="col">{{ thead('networkfunction', 'attributes', 'form.networkfunction.field.label.attributes'|trans({}, 'networkfunction')) }}</th>
-                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
+
             </tr>
         </thead>
         <tbody>

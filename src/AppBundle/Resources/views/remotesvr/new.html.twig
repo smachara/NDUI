@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.remotesvr.title'|trans({}, 'remotesvr') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'form.remotesvr.new.title'|trans({}, 'remotesvr') }}</h1>
+
+    {{ form_start(form, {action: path('rsvr_new')}) }}
+        {{ form_widget(form) }}
+        <p>
+            <button class="btn btn-primary" type="submit">{{ 'action.new.submit'|trans({}, 'global') }}</button>
+        </p>
+    {{ form_end(form) }}
+
+            <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('rsvr') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.remotesvr.title'|trans({}, 'remotesvr') }} - {{ parent() }}{% endblock %}{% block boton_new %}
+    <ul class="new_entry list-unstyled">
+        <li>
+            <a class="btn btn-info" href="{{ path('rsvr_new') }}">
+                <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'form.remotesvr.index.title'|trans({}, 'remotesvr') }}</h1>        {{ block ('boton_new') }}
+    
+    <table class="table table-responsive table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                <th scope="col">{{ 'form.remotesvr.field.label.id'|trans({}, 'remotesvr') }}</th>
+                <th scope="col">{{ 'form.remotesvr.field.label.name'|trans({}, 'remotesvr') }}</th>
+                <th scope="col">{{ 'form.remotesvr.field.label.lastConfig'|trans({}, 'remotesvr') }}</th>
+                <th scope="col">{{ 'form.remotesvr.field.label.url'|trans({}, 'remotesvr') }}</th>
+                <th scope="col">{{ 'form.remotesvr.field.label.lastConfigDate'|trans({}, 'remotesvr') }}</th>
+                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for remotesvr in entities %}
+                <tr>
+                    <td>
+                                                        <a href="{{ path('rsvr_show', {id: remotesvr.id}) }}">{{ remotesvr.id }}</a>
+                                                    {{ remotesvr.id }}
+                                            </td>
+                    <td>{{ remotesvr.name }}</td>
+                    <td>{{ remotesvr.lastConfig }}</td>
+                    <td>{{ remotesvr.url }}</td>
+                    <td>{% if remotesvr.lastConfigDate %}{{ remotesvr.lastConfigDate|date('Y-m-d H:i:s P') }}{% endif %}</td>
+                    <td>                        <div class="btn-group">
+                        
+                            <a class="btn btn-default btn-sm" href="{{ path('rsvr_show', {id: remotesvr.id}) }}">
+                                <i class="fa fa-file-o"></i>
+                                {{ 'action.show.submit'|trans({}, 'global') }}
+                            </a>
+
+                        
+                        
+                            <a class="btn btn-default btn-sm" href="{{ path('rsvr_edit', {id: remotesvr.id}) }}">
+                                <i class="fa fa-edit"></i>
+                                {{ 'action.edit.submit'|trans({}, 'global') }}
+                            </a>
+
+                                                </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+            {{ block ('boton_new') }}
+    
+{% endblock %}
+

@@ -1,5 +1,5 @@
 system.title: 'End-To-End SFC Orchestrator'
-system.sub-title: ETSO-UI
+system.sub-title: ETSO-GUI
 action.goToCatalog: 'Service Calalog'
 action.goToDescriptor: 'Network Service Descriptors'
 action.goToNsType: 'Network Service Types'

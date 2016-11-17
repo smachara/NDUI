@@ -72,6 +72,12 @@
                                 cursor: "pointer"  // show a different cursor to indicate potential link point
                             });
                 }
+
+                function theInfoTextConverter(info) {
+                    //alert(JSON.stringify(info, null, 4));
+                    return  info.text + info.key;
+                }
+
                 // define the Node templates for regular nodes
                 {% for nf in networkFunctions  %}
                     myDiagram.nodeTemplateMap.add("{{ nf.role.name }}",  // the default category
@@ -99,6 +105,7 @@
                                                     editable: true
                                                 },
                                                 new go.Binding("text").makeTwoWay()
+
                                         )
                                         {#,
                                         {% set str = '' %}
@@ -231,7 +238,7 @@
                         var fromInfo = myDiagram.model.findNodeDataForKey(info);
                         //alert(fromInfo);
                         if (fromInfo !== null) {
-                            str =  fromInfo.text;
+                            str =  fromInfo.name;
                         }
                     }
                     return str;

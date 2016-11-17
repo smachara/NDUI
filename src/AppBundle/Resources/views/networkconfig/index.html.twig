@@ -14,44 +14,77 @@
 
 {% block body %}
     <h1>{{ 'form.networkconfig.index.title'|trans({}, 'networkconfig') }}</h1>        {{ block ('boton_new') }}
-    
     <table class="table table-responsive table-striped table-hover table-bordered records_list">
         <thead>
             <tr>
-                {#<th scope="col">{{ 'form.networkconfig.field.label.id'|trans({}, 'networkconfig') }}</th>#}
+                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
                 <th scope="col">{{ 'form.networkconfig.field.label.name'|trans({}, 'networkconfig') }}</th>
                 <th scope="col">{{ 'form.networkconfig.field.label.description'|trans({}, 'networkconfig') }}</th>
                 {#<th scope="col">{{ 'form.networkconfig.field.label.config_value'|trans({}, 'networkconfig') }}</th>#}
-                <th scope="col">{{ 'action.title'|trans({}, 'global') }}</th>
+
             </tr>
         </thead>
         <tbody>
             {% for networkconfig in entities %}
                 <tr>
-                    {#<td>#}
-                        {#<a href="{{ path('nconfig_show', {id: networkconfig.id}) }}">{{ networkconfig.id }}</a>#}
-                        {#&#123;&#35;{{ networkconfig.id }}&#35;&#125;#}
-                    {#</td>#}
                     <td>
                         <div class="btn-group">
-                            {#<a class="btn btn-default btn-sm" href="{{ path('nconfig_show', {id: networkconfig.id}) }}">#}
-                            {#<i class="fa fa-file-o"></i>#}
-                            {#{{ 'action.show.submit'|trans({}, 'global') }}#}
-                            {#</a>#}
                             <a class="btn btn-warning btn-sm" href="{{ path('nconfig_edit', {id: networkconfig.id}) }}">
                                 <i class="fa fa-2x fa-edit"></i>
                                 {{ 'action.edit.submit'|trans({}, 'global') }}
                             </a>
+
+                            <a class="btn btn-danger btn-sm" href="{{ path('nconfig_send', {id: networkconfig.id}) }}">
+                                <i class="fa fa-2x fa-send-o"></i>
+                                {{ 'action.send'|trans({}, 'global') }}
+                            </a>
+
+{#
+                            {{ form_start(send_form, {action: path('nconfig_post', {id: networkconfig.id})} ) }}
+                            {{ form_widget(send_form) }}
+                            <button class="btn btn-danger" type="submit">
+                                <i class="fa fa-send-o"></i>
+                                {{ 'action.send'|trans({}, 'global') }}
+                            </button>
+                            {{ form_end(send_form) }}
+#}
+
+
                         </div>
+
                     </td>
+{#
+                    <td>
+                        &#123;&#35;{{ form_start(send_form, {action: path('nconfig_send')}) }}&#35;&#125;
+                        &#123;&#35;{{ form_widget(send_form) }}&#35;&#125;
+                        &#123;&#35;<td>{{ networkconfig.ymlvalue }}</td>&#35;&#125;
+                            <div id="send-config">
+                                <form name="send-config_{{ networkconfig.id }}" method="post" >
+                                    <div>
+                                        <label for="send-config_config_name" > form.remotesvr.field.label.name</label>
+                                        <select id="send-config_config_name_{{ networkconfig.id }}" name="send-config_{{ networkconfig.id }}[config_name]">
+                                            <option value="1">localhost</option>
+                                        </select>
+                                    </div>
+                                    <a class="btn btn-danger" href="{{ path('nconfig_send', {id: networkconfig.id}) }}">
+                                        <i class="fa fa-send-o"></i>
+                                        {{ 'action.send.submit'|trans({}, 'global') }}
+                                    </a >
+                                </form>
+                            </div>
+
+
+                    </td>
+#}
+
                     <td>{{ networkconfig.name }}</td>
                     <td>{{ networkconfig.description }}</td>
-                    {#<td>{{ networkconfig.configvalue }}</td>#}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    {#{{ form_end(send_form) }}#}
             {{ block ('boton_new') }}
     
 {% endblock %}

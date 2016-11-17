@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.remotesvr.title'|trans({}, 'remotesvr') }} - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+    <h1>{{ 'form.remotesvr.show.title'|trans({}, 'remotesvr') }}</h1>
+    <table class="table table-responsive table-striped table-hover table-bordered record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">
+                    {{ 'form.remotesvr.field.label.id' |trans({}, 'remotesvr') }}
+                </th>
+                <td>{{ remotesvr.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.remotesvr.field.label.name' |trans({}, 'remotesvr') }}
+                </th>
+                <td>{{ remotesvr.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.remotesvr.field.label.lastconfig' |trans({}, 'remotesvr') }}
+                </th>
+                <td>{{ remotesvr.lastConfig }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.remotesvr.field.label.url' |trans({}, 'remotesvr') }}
+                </th>
+                <td>{{ remotesvr.url }}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {{ 'form.remotesvr.field.label.lastconfigdate' |trans({}, 'remotesvr') }}
+                </th>
+                <td>{{ remotesvr.lastConfigDate|date('Y-m-d H:i:s P') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="btn-group record_actions">
+                <a class="btn btn-info" href="{{ path('rsvr') }}">
+                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+            </a>
+    
+                <a class="btn btn-primary" href="{{ path('rsvr_edit', {id: remotesvr.id}) }}">
+                <i class="fa fa-edit"></i>
+                {{ 'action.edit.submit'|trans({}, 'global') }}
+            </a>
+                    <a class="btn btn-danger" href="{{ path('rsvr_delete_confirmation', {id: remotesvr.id}) }}">
+                <i class="fa fa-trash-o"></i>
+                {{ 'action.delete.submit'|trans({}, 'global') }}
+            </a>
+    
+
+    </div>
+
+{% endblock %}

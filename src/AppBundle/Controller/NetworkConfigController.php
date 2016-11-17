@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SendConfigType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -12,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\Serializer\SerializerBuilder as Serializer;
 use AppBundle\Model\NetworkConfigModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * NetworkConfig controller.
@@ -20,6 +23,78 @@ use AppBundle\Model\NetworkConfigModel;
  */
 class NetworkConfigController extends Controller
 {
+
+    /**
+     * Lists all NetworkConfig entities.
+     *
+     * @Route("/{id}/send", name="nconfig_post")
+     * @Method({"GET", "POST"})
+     */
+    public function postAction(NetworkConfig $networkconfig, Request $request)
+    {
+
+        $req = new Request();
+        $svrId = $request->get('send-config')['config_name'];
+        $svr =  $this->getDoctrine()->getRepository('AppBundle:RemoteSvr')->findOneById($svrId)->getUrl();
+        $contentYml = $request->get('networkconfig')->getYmlValue();
+
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $svr );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $response = curl_exec($ch);
+
+// If using JSON...
+        //$data = json_decode($response);
+
+        dump($ch, $response ); die();
+        //$req->create($svr->getUrl(),'POST');
+        //dump($req); die();
+
+                    $response = new Response();
+                    $response->setContent($contentYml);
+                    $response->headers->set("Location",$svr);
+
+                    return $response->send();
+
+
+            //, , $svr , $request
+            //$response = $this->redirect($svr->getUrl(),302);
+
+
+
+
+
+
+
+            /*  $send_form = $this->createForm(SendConfigType::class);
+                return $this->render('AppBundle:networkconfig:send.html.twig', [
+                'networkconfig' => $networkconfig,
+                'send_form' =>$send_form->createView(),
+        ]);
+        */
+    }
+
+
+    /**
+     * Lists all NetworkConfig entities.
+     *
+     * @Route("/{id}/send-confirmation", name="nconfig_send")
+     * @Method({"GET", "POST"})
+     */
+    public function sendAction(NetworkConfig $networkconfig, Request $request)
+    {
+        $send_form = $this->createForm(SendConfigType::class);
+        return $this->render('AppBundle:networkconfig:send.html.twig', [
+            'networkconfig' => $networkconfig,
+            'send_form' =>$send_form->createView(),
+        ]);
+    }
+
+
     /**
      * Lists all NetworkConfig entities.
      *
@@ -29,8 +104,10 @@ class NetworkConfigController extends Controller
     public function indexAction()
     {
         $entities = $this->getDoctrine()->getRepository('AppBundle:NetworkConfig')->findAll();
+    //    $send_form = $this->createForm(SendConfigType::class);
         return $this->render('AppBundle:networkconfig:index.html.twig', [
             'entities' => $entities,
+    //        'send_form' =>$send_form->createView(),
         ]);
     }
 

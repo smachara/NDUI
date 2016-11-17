@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkconfig_send.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+    <h1>{{ 'form.networkconfig_send.show.title'|trans({}, 'networkconfig') }}</h1>
+
+    {{ form_start(send_form, {action: path('nconfig_post', {id: networkconfig.id})} ) }}
+        {{ form_widget(send_form) }}
+        <button class="btn btn-danger" type="submit">
+            <i class="fa fa-send-o"></i>
+            {{ 'action.send'|trans({}, 'global') }}
+        </button>
+    {{ form_end(send_form) }}
+
+{% endblock %}
