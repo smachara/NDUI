@@ -13,7 +13,33 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body {% block body_events %} onload="" {% endblock %}>
-        <div class="container-fluid">
+    <div class="container-fluid">
+        <div class="section">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-2">
+                        <a class="btn" href="{{ path('homepage') }}">
+                            <img src="{{ asset('bundles/app/image/link.png') }}"
+                                 class="img-responsive">
+                        </a>
+                    </div>
+                    <div class="col-md-10">
+                        <h1>End-To-End SFC Orchestrator </h1>
+                        <h3>ETSO-GUI</h3>
+                      {#  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+                            ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+                            dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+                            nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                            Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
+                            enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+                            felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
+                            elementum semper nisi.</p>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <div class="col-lg-offset-1">
             {% block flashbag %}
                 {% include 'flashbag.html.twig' %}
@@ -21,8 +47,27 @@
 
             {% block body %}{% endblock %}
             </div>
-        </div>
 
+
+        <footer class="section section-primary">
+
+                <div class="row ">
+                    <div class="col-md-offset-1 col-sm-6 ">
+                        <h1>Footer header</h1>
+
+                    </div>
+            {#        <div class="col-sm-6">
+                        <p class="text-info text-right">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+                           <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+                           <br>Ut enim ad minim veniam, quis nostrud</p>
+                            <br>
+                            <br>
+                        </p>
+                    </div>#}
+                </div>
+        </footer>
+    </div>
         {% block javascripts %}
                 <script src="//code.jquery.com/jquery-2.1.1.js"></script>
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

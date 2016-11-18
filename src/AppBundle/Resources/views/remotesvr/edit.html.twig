@@ -5,28 +5,31 @@
 {% block body %}
     <h1>{{ 'form.remotesvr.edit.title'|trans({}, 'remotesvr') }}</h1>
 
+
     {{ form_start(edit_form) }}
+    <div class="btn-group record_actions">
+        <a class="btn btn-info" href="{{ path('rsvr') }}">
+            <i class="fa   fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
+        </a>
+        <a class="btn btn-success" href="{{ path('rsvr_new') }}">
+            <i class="fa fa-plus"></i> {{ 'action.new.submit'|trans({}, 'global') }}
+        </a>
+        <button class="btn btn-primary" type="submit">
+            <i class="fa fa-edit"></i>
+            {{ 'action.save.submit'|trans({}, 'global') }}
+        </button>
+        <a class="btn btn-danger" href="{{ path('rsvr_delete_confirmation', {id: remotesvr.id}) }}">
+            <i class="fa fa-trash-o"></i>
+            {{ 'action.delete.submit'|trans({}, 'global') }}
+        </a>
+
+    </div>
+    <hr>
         {{ form_widget(edit_form) }}
             <p>
-            <button class="btn btn-primary" type="submit">
-                <i class="fa fa-edit"></i>
-                {{ 'action.edit.submit'|trans({}, 'global') }}
-            </button>
         </p>
     
     {{ form_end(edit_form) }}
 
-        <div class="btn-group record_actions">
-                <a class="btn btn-info" href="{{ path('rsvr') }}">
-                <i class="fa fa-list"></i> {{ 'action.back_to_list'|trans({}, 'global') }}
-            </a>
-    
-                <a class="btn btn-danger" href="{{ path('rsvr_delete_confirmation', {id: remotesvr.id}) }}">
-                <i class="fa fa-trash-o"></i>
-                {{ 'action.delete.submit'|trans({}, 'global') }}
-            </a>
-    
-
-    </div>
 
 {% endblock %}

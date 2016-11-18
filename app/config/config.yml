@@ -71,7 +71,13 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+circle_rest_client:
+    curl:
+      defaults:
+        CURLOPT_HTTPHEADER:     [ 'Content-Type: application/json' ]
+        CURLOPT_FOLLOWLOCATION: true
 
+        
 ###################################################################################
 #  Internationalization
 #           php bin/console translation:extract --config=AppBundle

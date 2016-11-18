@@ -5,7 +5,7 @@ topology_template:
 {% for node in object.nodeDataArray %}
     {% if node.category ==  'virtual_machine' %}
 
-        {{node.text}}{{node.key}}:
+        VM{{node.key}}:
             type: tosca.nodes.Compute
             capabilities:
                 # Host container properties
@@ -24,7 +24,7 @@ topology_template:
     {% endif %}
     {% if node.category ==  'network' %}
 
-        {{node.text}}:
+        NET{{node.key}}:
                 type: tosca.nodes.network.Network
                 properties:
                     ip_version: {{ node.ip_version }}
@@ -40,9 +40,9 @@ topology_template:
             type: tosca.nodes.network.Port
             requirements:
                 - binding:
-                    node: {{ link.from }}
+                    node: VM{{ link.from }}
                 - link:
-                    node: {{ link.to }}
+                    node: NET{{ link.to }}
 {% endfor %}
 
     {#VNF1:#}
@@ -141,7 +141,7 @@ topology_template:
 {% for node in object.nodeDataArray %}
     {% if node.category ==  'virtual_machine' %}
 
-            {{node.text}}_ip:
-                        value: { get_attribute: [{{node.text}}{{node.key}}, private_address] }
+            VM{{node.key}}_ip:
+                        value: { get_attribute: [VM{{node.key}}, private_address] }
     {% endif %}
 {% endfor %}

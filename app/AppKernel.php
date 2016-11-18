@@ -20,9 +20,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-
-
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Circle\RestClientBundle\CircleRestClientBundle(),
 
 //Internationalization
 //            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),

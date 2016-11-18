@@ -31,25 +31,8 @@
 
 
     <div class="section">
-        <div class="container">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1>
-                        {% block title %}
-                            {{ 'system.title'|trans({}, 'global') }}
-                        {% endblock %}
-                    </h1>
-                    <h2>
-                        {{ 'system.sub-title'|trans({}, 'global') }}
-                    </h2>
-
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-6" align="center">
+                <div class="col-md-4" align="center">
                     <div class="glyph">
                         <div class="glyph-icon flaticon-catalog-of-rectangular-pieces-outlines"></div>
                     </div><br>
@@ -57,12 +40,21 @@
                         {{ 'action.goToCatalog'|trans({}, 'global') }}
                     </a>
                 </div>
-                <div class="col-md-6" align="center">
+                <div class="col-md-4" align="center">
                     <div class="glyph">
                         <div class="glyph-icon glyph-icon flaticon-business-2"></div>
                     </div> <br>
                     <a class="btn btn-info" href="{{ path('nconfig') }}">
                         {{ 'action.goToDescriptor'|trans({}, 'global') }}
+                    </a>
+                </div>
+
+                <div class="col-md-4" align="center">
+                    <div class="glyph">
+                        <div class="glyph-icon glyph-icon flaticon-symbols"></div>
+                    </div> <br>
+                    <a class="btn btn-info" href="{{ path('rsvr') }}">
+                        {{ 'action.RemoteSvrs'|trans({}, 'global') }}
                     </a>
                 </div>
             </div>

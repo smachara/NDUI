@@ -38,44 +38,11 @@ class NetworkConfigController extends Controller
         $svr =  $this->getDoctrine()->getRepository('AppBundle:RemoteSvr')->findOneById($svrId)->getUrl();
         $contentYml = $request->get('networkconfig')->getYmlValue();
 
+        $restClient = $this->container->get('circle.restclient');
 
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $svr );
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $response = curl_exec($ch);
-
-// If using JSON...
-        //$data = json_decode($response);
-
-        dump($ch, $response ); die();
-        //$req->create($svr->getUrl(),'POST');
-        //dump($req); die();
-
-                    $response = new Response();
-                    $response->setContent($contentYml);
-                    $response->headers->set("Location",$svr);
-
-                    return $response->send();
-
-
-            //, , $svr , $request
-            //$response = $this->redirect($svr->getUrl(),302);
-
-
-
-
-
-
-
-            /*  $send_form = $this->createForm(SendConfigType::class);
-                return $this->render('AppBundle:networkconfig:send.html.twig', [
-                'networkconfig' => $networkconfig,
-                'send_form' =>$send_form->createView(),
-        ]);
-        */
+        //$restClient->get('http://www.someUrl.com');
+        $response = $restClient->post( $svr, $contentYml );
+        return $response;
     }
 
 
