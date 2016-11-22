@@ -43,8 +43,8 @@ class NetworkConfigController extends Controller
         $restClient = $this->container->get('circle.restclient');
        // dump($rsvr); die();
         //$restClient->get('http://www.someUrl.com');
-        $response = "132456789";
-        //$response = $restClient->post( $svr, $contentYml );
+        //$response = "132456789";
+        $response = $restClient->post( $svr, $contentYml );
 
 
         $request->getSession()->getFlashBag()
