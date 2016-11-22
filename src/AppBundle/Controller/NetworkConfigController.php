@@ -47,8 +47,9 @@ class NetworkConfigController extends Controller
         $response = $restClient->post( $svr, $contentYml );
 
 
+
         $request->getSession()->getFlashBag()
-            ->add('success', $this->get('translator')->trans('form.networkconfig.send.message.success', ["%id%" =>$response, "%svr%"=>$rsvr->getName()], 'networkconfig'));
+            ->add('success', $this->get('translator')->trans('form.networkconfig.send.message.success', ["%id%" =>$response->getContent(), "%svr%"=>$rsvr->getName()], 'networkconfig'));
 
         return $this->redirect($this->generateUrl('nconfig'));
 

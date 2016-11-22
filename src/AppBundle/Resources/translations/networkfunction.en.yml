@@ -14,7 +14,7 @@ form.networkfunction.field.label.name: name
 form.networkfunction.field.label.role: 'resource type'
 form.networkfunction.index.title: 'Network Services Catalog'
 form.networkfunction.new.message.error: form.networkfunction.new.message.error
-form.networkfunction.new.message.success: form.networkfunction.new.message.success
+form.networkfunction.new.message.success: Network Function successfully created
 form.networkfunction.new.title: 'Network Service (New)'
 form.networkfunction.show.title: 'Network Function Details'
 form.networkfunction.title: 'Network Services Catalog'
