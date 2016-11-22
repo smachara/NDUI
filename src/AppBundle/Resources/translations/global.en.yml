@@ -18,6 +18,8 @@ action.edit.submit: edit
 action.new.submit: new
 action.show.submit: show
 action.title: actions
+action.RemoteSvrs: Orchestrator Servers
+action.send: send
 filter.reset: reset
 filter.select_items_per_page: 'select items per page'
 filter.show_hide_btn: filter
