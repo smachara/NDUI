@@ -35,14 +35,25 @@ class NetworkConfigController extends Controller
 
         $req = new Request();
         $svrId = $request->get('send-config')['config_name'];
-        $svr =  $this->getDoctrine()->getRepository('AppBundle:RemoteSvr')->findOneById($svrId)->getUrl();
+
+        $rsvr =  $this->getDoctrine()->getRepository('AppBundle:RemoteSvr')->findOneById($svrId);
+        $svr = $rsvr->getUrl();
         $contentYml = $request->get('networkconfig')->getYmlValue();
 
         $restClient = $this->container->get('circle.restclient');
-
+       // dump($rsvr); die();
         //$restClient->get('http://www.someUrl.com');
-        $response = $restClient->post( $svr, $contentYml );
-        return $response;
+        $response = "132456789";
+        //$response = $restClient->post( $svr, $contentYml );
+
+
+        $request->getSession()->getFlashBag()
+            ->add('success', $this->get('translator')->trans('form.networkconfig.send.message.success', ["%id%" =>$response, "%svr%"=>$rsvr->getName()], 'networkconfig'));
+
+        return $this->redirect($this->generateUrl('nconfig'));
+
+        //return $response;
+
     }
 
 

@@ -14,4 +14,5 @@ form.networkconfig.new.title: 'Network Service Descriptor (New)'
 form.networkconfig.show.title: form.networkconfig.show.title
 form.networkconfig.title: 'Network Service Descriptor'
 form.networkconfig_send.title: __form.networkconfig_send.title
-form.networkconfig_send.show.title: __form.networkconfig_send.show.title
+form.networkconfig_send.show.title:
+form.networkconfig.send.message.success: 'SCF succesfully created on %svr%. The sfc request id is: %id%'

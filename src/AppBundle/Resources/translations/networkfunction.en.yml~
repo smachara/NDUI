@@ -11,7 +11,7 @@ form.networkfunction.field.label.attribute.value: value
 form.networkfunction.field.label.attributes: attributes
 form.networkfunction.field.label.id: id
 form.networkfunction.field.label.name: name
-form.networkfunction.field.label.role: resource type
+form.networkfunction.field.label.role: 'resource type'
 form.networkfunction.index.title: 'Network Services Catalog'
 form.networkfunction.new.message.error: form.networkfunction.new.message.error
 form.networkfunction.new.message.success: form.networkfunction.new.message.success

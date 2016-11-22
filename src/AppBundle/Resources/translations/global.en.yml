@@ -10,8 +10,8 @@ action.network_function_list: 'Service Catalog'
 action.nconfig_list: 'Network Service Descriptor List'
 action.delete.question: 'Are you sure you want to delete this record?'
 action.delete.submit: delete
-action.delete.confirm: Do you want to delete this item?
-action.delete.warning: Once you delete this item, there in not getting it back.
+action.delete.confirm: 'Do you want to delete this item?'
+action.delete.warning: 'Once you delete this item, there in not getting it back.'
 action.save.submit: save
 action.edit.submit: edit
 action.new.submit: new

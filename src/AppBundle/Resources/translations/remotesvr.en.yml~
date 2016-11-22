@@ -1,11 +1,11 @@
 form.remotesvr.title: 'Orchestrator Servers'
-form.remotesvr.delete.title: 'Orchestrator Servers (delete)'
-form.remotesvr.edit.title: 'Orchestrator Servers (edit)'
-form.remotesvr.index.title: 'Orchestrator Servers (list)'
+form.remotesvr.delete.title: Orchestrator Servers (delete)
+form.remotesvr.edit.title: Orchestrator Servers (edit)
+form.remotesvr.index.title: Orchestrator Servers (list)
 form.remotesvr.field.label.name: server
 form.remotesvr.field.label.url: url
-form.remotesvr.new.title: 'Orchestrator Servers (new)'
-form.remotesvr.show.title: 'Orchestrator Servers (show)'
+form.remotesvr.new.title: Orchestrator Servers (new)
+form.remotesvr.show.title: Orchestrator Servers (show)
 form.remotesvr.field.label.id: id
 form.remotesvr.field.label.lastconfig: __form.remotesvr.field.label.lastconfig
 form.remotesvr.field.label.lastconfigdate: __form.remotesvr.field.label.lastconfigdate
