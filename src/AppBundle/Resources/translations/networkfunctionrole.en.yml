@@ -1,18 +1,11 @@
-form:
-  networkfunctionrole:
-    title:          Network Service Type #fixme
-    delete:
-        title:      Network Service Type (delete) #fixme
-    edit:
-        title:      Network Service Type (edit) #fixme
-    index:
-        title:      Network Service Type  #fixme
-    field:
-        label:
-            name:   name
-            color:  shape background color
-            stroke: shape border color
-            shape:  shape
-            id:     id
-    new.title:      Network Service Type (new)
-    show.title:     Network Service Type (show)
+form.networkfunctionrole.title: 'Network Service Type'
+form.networkfunctionrole.delete.title: 'Network Service Type (delete)'
+form.networkfunctionrole.edit.title: 'Network Service Type (edit)'
+form.networkfunctionrole.index.title: 'Network Service Type'
+form.networkfunctionrole.field.label.name: name
+form.networkfunctionrole.field.label.color: 'shape background color'
+form.networkfunctionrole.field.label.stroke: 'shape border color'
+form.networkfunctionrole.field.label.shape: shape
+form.networkfunctionrole.field.label.id: id
+form.networkfunctionrole.new.title: 'Network Service Type (new)'
+form.networkfunctionrole.show.title: 'Network Service Type (show)'
