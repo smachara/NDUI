@@ -46,8 +46,6 @@ class NetworkConfigController extends Controller
         //$response = "132456789";
         $response = $restClient->post( $svr, $contentYml );
 
-
-
         $request->getSession()->getFlashBag()
             ->add('success', $this->get('translator')->trans('form.networkconfig.send.message.success', ["%id%" =>$response->getContent(), "%svr%"=>$rsvr->getName()], 'networkconfig'));
 
@@ -160,13 +158,20 @@ class NetworkConfigController extends Controller
     {
         $editForm = $this->createForm(NetworkConfigType::class, $networkconfig, ['method' => 'PUT']);
         if ($editForm->handleRequest($request)->isValid()) {
-            try{
+            //try{
 
                 $jsonData = $request->get('networkconfig')->getConfigValue();
-
                 $object = json_decode($jsonData);
-               // dump($object);die();
-                $networkconfig->setYmlValue( $this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object])->getContent() );
+
+                /*********************************************************/
+                $links = $this->getLinks($object);
+                /*********************************************************/
+                //dump($links);
+                //return $this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object, 'links'=> $links]);//->getContent();
+                //die();
+                $networkconfig->setYmlValue(
+                    $this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object, 'links'=> $links])->getContent()
+                );
 
                 $this->getDoctrine()->getManager()->flush();
 
@@ -175,11 +180,11 @@ class NetworkConfigController extends Controller
 
                 return $this->redirect($this->generateUrl('nconfig_edit', ['id' => $networkconfig->getId()]));
 
-                } catch(\Exception $e){
+                /*} catch(\Exception $e){
                     $request->getSession()->getFlashBag()
                     ->add('error',  $this->get('translator')->trans('form.nconfig.edit.message.error', [], 'nconfig'));
                     $this->get('logger')->error($e->getMessage());
-                }
+                }*/
 
     }
 
@@ -199,6 +204,58 @@ class NetworkConfigController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
+    }
+
+    public function getLinks($jsonObj){
+
+        $nodes = [];
+        foreach($jsonObj->{'nodeDataArray'} as $item){
+            $nodes[$item->{'key'}] = $item;
+        }
+        //dump($nodes);
+
+        $links=[
+            "services"=>[],
+            "ports"=>[],
+        ];
+        foreach($jsonObj->{'linkDataArray'} as $item){
+            $category_a = $nodes[$item->{'from'}]->{'category'};
+            $category_b = $nodes[$item->{'to'}]->{'category'};
+            //Case 1 extract ports
+            if ($category_a == 'network' || $category_b == 'network') {
+                $port = [];
+                if ($category_a == "virtual_machine"){
+                    $port['binding'] =  $nodes[$item->{'from'}];
+                    $port['link'] =  $nodes[$item->{'to'}];
+                }
+                else{
+                    $port['binding'] =  $nodes[$item->{'to'}];
+                    $port['link'] =  $nodes[$item->{'from'}];
+
+                }
+                array_push($links['ports'],$port);
+            }
+            // Case 2 extract service VM
+            if ( strpos($category_a ."-". $category_b, 'network') === false){
+                $service = [];
+                if (strpos($category_a ."-". $category_b, "virtual_machine") !== false){
+                    if ($category_a == "virtual_machine"){
+                        $service ['virtual_machine'] = $nodes[$item->{'from'}];
+                        $service ['service'] = $nodes[$item->{'to'}];
+                    }
+                    else{
+                        $service ['service'] = $nodes[$item->{'from'}];
+                        $service ['virtual_machine'] = $nodes[$item->{'to'}];
+                    }
+                    array_push($links['services'],$service);
+                    //dump('to deploy: ' . $category_a ."-". $category_b);
+                }
+
+            }
+        }
+
+        //die();
+        return $links;
     }
 
 
