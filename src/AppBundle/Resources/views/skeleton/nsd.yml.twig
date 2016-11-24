@@ -4,12 +4,16 @@ description: example for a NSD.
 topology_template:
 
     inputs:
-        odl:
-#              type: string
-#              default: 192.168.111.28:8181
+{% for node in object.nodeDataArray %}
+    {% if node.category ==  'input' %}
+
+            {{ node.name }}:
+                      type: {{ node.type }}
+                      default: {{ node.default }}
+    {% endif %}
+{% endfor %}
 
     node_templates:
-
 {% for node in object.nodeDataArray %}
     {% if node.category ==  'virtual_machine' %}
 
@@ -59,10 +63,11 @@ topology_template:
             type: tosca.nodes.nfv.VNF
             properties:
             attributes:
-                type: {{ service.service.category }}
-#                address:
-#                port: 40000
-#                nsh_aware: true
+                    type: {{ service.service.category }}
+                    address: {{ service.service.address }}
+                    port: {{ service.service.port }}
+                    nsh_aware: {{ service.service.nsh_aware }}
+
             requirements:
                 - host: VM{{ service.virtual_machine.key }}
 
@@ -107,7 +112,7 @@ topology_template:
 {% set cpList ='' %}
  {% set data = '' %}
  {% for service in links.services %}
-    CP-{{ service.service.category }}{{ service.service.key }}-VM{{ service.virtual_machine.key }},
+    {#CP-{{ service.service.category }}{{ service.service.key }}-VM{{ service.virtual_machine.key }},#}
     {% set data = data ~ 'CP-'~service.service.category~service.service.key ~'-VM'~service.virtual_machine.key~',' %}
  {% endfor %}
  {% set cpList  = cpList  ~ (data |slice(0, (data|length)-1))  %}
