@@ -158,7 +158,7 @@ class NetworkConfigController extends Controller
     {
         $editForm = $this->createForm(NetworkConfigType::class, $networkconfig, ['method' => 'PUT']);
         if ($editForm->handleRequest($request)->isValid()) {
-            //try{
+            try{
 
                 $jsonData = $request->get('networkconfig')->getConfigValue();
                 $object = json_decode($jsonData);
@@ -180,12 +180,11 @@ class NetworkConfigController extends Controller
 
                 return $this->redirect($this->generateUrl('nconfig_edit', ['id' => $networkconfig->getId()]));
 
-                /*} catch(\Exception $e){
+            } catch(\Exception $e){
                     $request->getSession()->getFlashBag()
                     ->add('error',  $this->get('translator')->trans('form.nconfig.edit.message.error', [], 'nconfig'));
                     $this->get('logger')->error($e->getMessage());
-                }*/
-
+            }
     }
 
         $deleteForm = $this->createDeleteForm($networkconfig->getId(), 'nconfig_delete');
@@ -207,30 +206,35 @@ class NetworkConfigController extends Controller
     }
 
     public function getLinks($jsonObj){
+        $jsonArray = (array) $jsonObj;
 
+        $nodeDataArray = (array) $jsonArray['nodeDataArray'];
         $nodes = [];
-        foreach($jsonObj->{'nodeDataArray'} as $item){
-            $nodes[$item->{'key'}] = $item;
+        foreach($nodeDataArray as $item){
+            $item = (array) $item;
+            $nodes[$item['key']] = $item;
         }
-        //dump($nodes);
 
+        $linkDataArray = (array) $jsonArray['linkDataArray'];
         $links=[
             "services"=>[],
             "ports"=>[],
         ];
-        foreach($jsonObj->{'linkDataArray'} as $item){
-            $category_a = $nodes[$item->{'from'}]->{'category'};
-            $category_b = $nodes[$item->{'to'}]->{'category'};
+
+        foreach($linkDataArray as $item){
+            $item = (array) $item;
+            $category_a = $nodes[$item['from']]['category'];
+            $category_b = $nodes[$item['to']]['category'];
             //Case 1 extract ports
             if ($category_a == 'network' || $category_b == 'network') {
                 $port = [];
                 if ($category_a == "virtual_machine"){
-                    $port['binding'] =  $nodes[$item->{'from'}];
-                    $port['link'] =  $nodes[$item->{'to'}];
+                    $port['binding'] =  $nodes[$item['from']];
+                    $port['link'] =  $nodes[$item['to']];
                 }
                 else{
-                    $port['binding'] =  $nodes[$item->{'to'}];
-                    $port['link'] =  $nodes[$item->{'from'}];
+                    $port['binding'] =  $nodes[$item['to']];
+                    $port['link'] =  $nodes[$item['from']];
 
                 }
                 array_push($links['ports'],$port);
@@ -240,21 +244,36 @@ class NetworkConfigController extends Controller
                 $service = [];
                 if (strpos($category_a ."-". $category_b, "virtual_machine") !== false){
                     if ($category_a == "virtual_machine"){
-                        $service ['virtual_machine'] = $nodes[$item->{'from'}];
-                        $service ['service'] = $nodes[$item->{'to'}];
+                        $service ['virtual_machine'] = $nodes[$item['from']];
+                        $service ['service']/*[$nodes[$item['from']]['key']]*/ = $nodes[$item['to']];
                     }
                     else{
-                        $service ['service'] = $nodes[$item->{'from'}];
-                        $service ['virtual_machine'] = $nodes[$item->{'to'}];
+                        $service ['service']/*[$nodes[$item['from']]['key']]*/ = $nodes[$item['from']];
+                        $service ['virtual_machine'] = $nodes[$item['to']];
                     }
-                    array_push($links['services'],$service);
-                    //dump('to deploy: ' . $category_a ."-". $category_b);
+                    $links['services'][$nodes[$item['from']]['key']]=$service;
                 }
 
             }
         }
-
-        //die();
+        //case 3 extract service VL
+        foreach($linkDataArray as $item){
+            $item = (array) $item;
+            $category_a = $nodes[$item['from']]['category'];
+            $category_b = $nodes[$item['to']]['category'];
+            $vl = [];
+            if ( strpos($category_a ."-". $category_b, 'virtual_link') === 0 ||
+                strpos($category_a ."-". $category_b, 'virtual_link') === true){
+                if ($category_a == "virtual_link"){
+                    $vl = $nodes[$item['from']];
+                    $links["services"][$item['to']]["service"]/*[$item['to']]*/['virtual_link']= $vl;
+                }
+                else{
+                    $vl  = $nodes[$item['to']];
+                    $links["services"][$item['from']]["service"]/*[$item['from']]*/['virtual_link']= $vl;
+                }
+            }
+        }
         return $links;
     }
 
