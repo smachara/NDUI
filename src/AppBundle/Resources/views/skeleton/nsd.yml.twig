@@ -81,17 +81,24 @@ topology_template:
 #                    port: 30000
               requirements:
                     - virtualBinding: VNF-{{ service.service.category }}{{ service.service.key }}-VM{{ service.virtual_machine.key }}
-#                    - virtualLink: VL1
+                    - virtualLink: VL{{ service.service.virtual_link.key }}
 
 
 {% endfor %}
-#        VL1:
-#              type: tosca.nodes.nfv.VL
-#              properties:
-#                    vendor: HP
-#              attributes:
-#                    type: ip
-#                    transport_type: vxlan-gpe
+{% for node in object.nodeDataArray %}
+    {% if node.category ==  'virtual_link' %}
+
+        VL{{node.key}}:
+
+              type: tosca.nodes.nfv.VL
+              properties:
+                    vendor: {{ node.vendor == '~' ? '' : node.vendor }}
+              attributes:
+                    type: {{ node.type == '~' ? '' : node.type }}
+                    transport_type: {{ node.transport_type == '~' ? '' : node.transport_type}}
+
+    {% endif %}
+{% endfor %}
         Forwarding_{% for service in links.services %}CP{{ service.service.category }}{{ service.service.key }}VM{{ service.virtual_machine.key }}{% endfor %}:
               type: tosca.nodes.nfv.FP
               description: the path ({% for service in links.services %}->CP-{{ service.service.category }}{{ service.service.key }}-VM{{ service.virtual_machine.key }}{% endfor %})

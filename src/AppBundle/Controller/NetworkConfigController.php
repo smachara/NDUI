@@ -283,6 +283,9 @@ class NetworkConfigController extends Controller
 
         $jsonData = $request->get('networkconfig')["config_value"];//->getConfigValue();
         $object = json_decode($jsonData);
+        /*********************************************************/
+        $links = $this->getLinks($object);
+        /*********************************************************/
         return($this->render('AppBundle:skeleton:nsd.yml.twig',['object'=>$object])->getContent());
     }
 
