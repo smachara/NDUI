@@ -11,6 +11,8 @@
         {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block head %} {% endblock %}
+
     </head>
     <body {% block body_events %} onload="" {% endblock %}>
     <div class="container-fluid">
