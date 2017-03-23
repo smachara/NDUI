@@ -30,7 +30,6 @@
 
             return result;
         })(window.location.href);
-
         // Default resources are included in grapheditor resources
         mxLoadResources = false;
     </script>
@@ -38,10 +37,10 @@
 
     <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/js/Init.js') }}"></script>
 
-    <!-- Sets the basepath for the library if not in same directory -->
+{#    <!-- Sets the basepath for the library if not in same directory -->
     <script type="text/javascript">
         mxBasePath = '{{ asset('bundles/app/js/mxgraph/javascript/src') }}';
-    </script>
+    </script>#}
     <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}jscolor/jscolor.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}sanitizer/sanitizer.min.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/mxgraph/javascript/src/js/mxClient.js') }}"></script>
@@ -90,7 +89,6 @@
             mxResources.loadDefaultBundle = false;
             var bundle = mxResources.getDefaultBundle(RESOURCE_BASE, mxLanguage) ||
                     mxResources.getSpecialBundle(RESOURCE_BASE, mxLanguage);
-
             // Fixes possible asynchronous requests
             mxUtils.getAll([bundle, STYLE_PATH + '/default.xml'], function(xhr)
             {

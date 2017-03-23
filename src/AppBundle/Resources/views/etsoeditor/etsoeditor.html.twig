@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <style type="text/css" media="screen">
+       hr{
+           margin: 3px;
+           padding: 0;
+           border: 0;
+           height: 1px;
+           background: #333;
+       }
+       div.base {
+            position: absolute;
+            overflow: hidden;
+            font-family: Arial;
+            font-size: 8pt;
+        }
+        div.base#graph {
+            border-style: solid;
+            border-color: #F2F2F2;
+            border-width: 1px;
+            background: url('{{ asset('bundles/app/js/etsoeditor/') }}images/grid.gif');
+        }
+    </style>
+    <script type="text/javascript">
+       var mxBasePath = '/bundles/app/js/mxgraph/javascript/src';
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/mxgraph/javascript/src/js/mxClient.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}js/app.js"></script>
+    <script type="text/javascript">
+        mxGraph.prototype.htmlLabels = true;
+
+        mxGraph.prototype.isWrapping = function(cell)
+        {
+            return true;
+        };
+
+        mxConstants.DEFAULT_HOTSPOT = 1;
+
+        // Enables guides
+        mxGraphHandler.prototype.guidesEnabled = true;
+
+        // Alt disables guides
+        mxGuide.prototype.isEnabledForEvent = function(evt)
+        {
+            return !mxEvent.isAltDown(evt);
+        };
+
+        // Enables snapping waypoints to terminals
+        mxEdgeHandler.prototype.snapToTerminals = true;
+
+        window.onbeforeunload = function() { return mxResources.get('changesLost'); };
+    </script>
+{% endblock %}
+
+
+{% block body_events %}
+    onload="createEditor('/conf-workfloweditor.xml');"
+{% endblock %}
+{% block body %}
+
+    <table id="splash" width="100%" height="100%"
+           style="background:white;position:absolute;top:100px;left:0px;z-index:4;">
+        <tr>
+            <td align="center" valign="middle">
+                <img src="{{ asset('bundles/app/js/etsoeditor/') }}images/loading.gif">
+            </td>
+        </tr>
+    </table>
+
+    <div id="graph" class="base">
+        <!-- Graph Here -->
+    </div>
+    <div id="status" class="base" align="right" style="white-space:nowrap;">
+        <!-- Status Here -->
+    </div>
+{% endblock %}

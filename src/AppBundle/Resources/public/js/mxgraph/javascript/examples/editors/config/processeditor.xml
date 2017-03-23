@@ -3,7 +3,7 @@
 	swimlaneRequired="1" forcedInserting="1"
 	helpWindowImage="images/help.gif"
 	tasksWindowImage="images/tasks.gif">
-	<include name="config/editor-commons.xml"/>
+	<include name="config-editor-commons.xml"/>
 	<add as="onInit"><![CDATA[
 		function ()
 		{

@@ -1,5 +1,5 @@
 <mxEditor defaultGroup="group" defaultEdge="connector">
-	<include name="config/editor-commons.xml"/>
+	<include name="config-editor-commons.xml"/>
 	<add as="onInit"><![CDATA[
 		function ()
 		{

@@ -19,15 +19,4 @@ class DefaultController extends Controller
         ]);
     }
 
-
-    /**
-     * @Route("/mxgraph-test", name="mxgraph")
-     */
-    public function testAction(Request $request)
-    {
-        // replace this example code with whatever you need
-        return $this->render('test/etsoeditor.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
-    }
 }

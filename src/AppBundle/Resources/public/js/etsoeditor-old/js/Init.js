@@ -17,7 +17,7 @@ window.IMAGE_PATH = window.IMAGE_PATH || '/bundles/app/js/etsoeditor/images';
 window.STYLE_PATH = window.STYLE_PATH || '/bundles/app/js/etsoeditor/styles';
 window.CSS_PATH = window.CSS_PATH || '/bundles/app/js/etsoeditor/styles';
 window.OPEN_FORM = window.OPEN_FORM || '/bundles/app/js/etsoeditor/open.html';
-
+window.mxBasePath = window.mxBasePath || '/bundles/app/js/mxgraph/javascript/src';
 // Sets the base path, the UI language via URL param and configures the
 // supported languages to avoid 404s. The loading of all core language
 // resources is disabled as all required resources are in grapheditor.

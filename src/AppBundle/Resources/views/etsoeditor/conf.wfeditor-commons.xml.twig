@@ -1,9 +1,9 @@
 <mxEditor defaultGroup="group" defaultEdge="edge"
-	helpWindowImage="images/help.gif"
-	tasksWindowImage="images/tasks.gif"
+	helpWindowImage="{{ asset('bundles/app/js/etsoeditor/') }}images/help.gif"
+	tasksWindowImage="{{ asset('bundles/app/js/etsoeditor/') }}images/tasks.gif"
 	forcedInserting="0"
 	swimlaneRequired="0">
-	<include name="config-editor-commons.xml"/>
+	<include name="/config-editor-commons.xml"/>
 	<add as="onInit">
 		function ()
 		{
@@ -60,7 +60,7 @@
 		</add>
 		<add as="symbol">
 			<Symbol label="Symbol" description="" href="">
-				<mxCell vertex="1" style="symbol;image=images/symbols/event.png">		
+				<mxCell vertex="1" style="symbol;image={{ asset('bundles/app/js/etsoeditor/') }}images/symbols/event.png">
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Symbol>
@@ -76,13 +76,13 @@
 				var layer = this.graph.model.root.getChildAt(0);
 				mxUtils.para(div,  mxResources.get('examples'));
 				mxUtils.linkInvoke(div, mxResources.get('newDiagram'), this,
-					'open', 'diagrams/empty.xml', off);
+					'open', '{{ asset('bundles/app/js/etsoeditor/') }}diagrams/empty.xml', off);
 				mxUtils.br(div);
 				mxUtils.linkInvoke(div, mxResources.get('swimlanes'), this,
-					'open', 'diagrams/swimlanes.xml', off);
+					'open', '{{ asset('bundles/app/js/etsoeditor/') }}diagrams/swimlanes.xml', off);
 				mxUtils.br(div);
 				mxUtils.linkInvoke(div, mxResources.get('travelBooking'), this,
-					'open', 'diagrams/travel-booking.xml', off);
+					'open', '{{ asset('bundles/app/js/etsoeditor/') }}diagrams/travel-booking.xml', off);
 				mxUtils.br(div);
 				
 				if (!this.graph.isSelectionEmpty())
