@@ -41,7 +41,6 @@
 			{
 				mxObjectCodec.allowEval = true;
 				var node = mxUtils.load(config).getDocumentElement();
-                console.debug(node);
 				editor = new mxEditor(node);
 				mxObjectCodec.allowEval = false;
 				
