@@ -12,6 +12,9 @@
     <script type="text/javascript">
         var mxBasePath = '{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src';
 
+
+
+/*
         var urlParams = (function(url)
         {
             var result = new Object();
@@ -31,9 +34,11 @@
         })(window.location.href);
 
         var mxLanguage = urlParams['lang'];
+*/
     </script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/mxClient.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src/js/mxClient.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}js/app.js"></script>
+
     <script type="text/javascript">
         // Program starts here. The document.onLoad executes the
         // createEditor function with a given configuration.
@@ -42,8 +47,9 @@
         // last step in the editor constructor.
         function onInit(editor)
         {
+
             // Enables rotation handle
-            mxVertexHandler.prototype.rotationEnabled = true;
+            mxVertexHandler.prototype.rotationEnabled = false;
 
             // Enables guides
             mxGraphHandler.prototype.guidesEnabled = true;
@@ -67,8 +73,8 @@
             editor.graph.setConnectable(true);
 
             // Clones the source if new connection has no target
-            editor.graph.connectionHandler.setCreateTarget(true);
-
+            editor.graph.connectionHandler.setCreateTarget(false);
+            /*
             // Updates the title if the root changes
             var title = document.getElementById('title');
 
@@ -82,7 +88,8 @@
                 editor.addListener(mxEvent.ROOT, f);
                 f(editor);
             }
-
+            */
+            /*
             // Changes the zoom on mouseWheel events
             mxEvent.addMouseWheelListener(function (evt, up)
             {
@@ -100,6 +107,8 @@
                     mxEvent.consume(evt);
                 }
             });
+            */
+
 
             // Defines a new action to switch between
             // XML and graphical display
@@ -160,7 +169,7 @@
             // Create select actions in page
             var node = document.getElementById('mainActions');
             var buttons = ['group', 'ungroup', 'cut', 'copy', 'paste', 'delete', 'undo', 'redo', 'print', 'show'];
-
+            /*
             // Only adds image and SVG export if backend is available
             // NOTE: The old image export in mxEditor is not used, the urlImage is used for the new export.
             if (editor.urlImage != null)
@@ -262,7 +271,7 @@
                 buttons.push('exportImage');
                 buttons.push('exportSvg');
             };
-
+            */
             for (var i = 0; i < buttons.length; i++)
             {
                 var button = document.createElement('button');
@@ -279,6 +288,8 @@
                 mxEvent.addListener(button, 'click', factory(buttons[i]));
                 node.appendChild(button);
             }
+
+
 
             // Create select actions in page
             var node = document.getElementById('selectActions');
@@ -301,6 +312,7 @@
             mxUtils.linkAction(node, 'Actual', editor, 'actualSize');
             mxUtils.write(node, ', ');
             mxUtils.linkAction(node, 'Fit', editor, 'fit');
+
         }
 
         window.onbeforeunload = function() { return mxResources.get('changesLost'); };
@@ -310,7 +322,7 @@
 
 
 {% block body_events %}
-    onload="createEditor('{{ asset('bundles/app/js/etsoeditor/') }}config/diagrameditor.xml');"
+    onload="createEditor('config/diagrameditor.xml');"
 {% endblock %}
 
 {% block body %}
