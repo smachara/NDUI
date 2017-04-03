@@ -2,6 +2,7 @@
 	<ui>
 		<resource basename="{{ asset('bundles/app/js/etsoeditor/') }}resources/app"/>
 	</ui>
+{#
 	<mxDefaultPopupMenu as="popupHandler">
 		<add as="cut" action="cut" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/cut.gif"/>
 		<add as="copy" action="copy" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/copy.gif"/>
@@ -47,7 +48,9 @@
 		<separator/>
 		<add as="openHref" action="openHref" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/link.gif"/>
 	</mxDefaultPopupMenu>
+#}
 	<include name="config/keyhandler-commons.xml"/>
+{#
 	<Array as="actions">
 		<add as="open"><![CDATA[
 			function (editor)
@@ -264,4 +267,5 @@
 			}
 		]]></add>
 	</Array>
+#}
 </mxEditor>

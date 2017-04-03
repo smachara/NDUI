@@ -1,0 +1,76 @@
+
+
+#header {
+    /*border: 1px solid gray;*/
+}
+#footer{
+    /*border: 1px solid gray;*/
+}
+#mainActions
+{
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    cursor: auto;
+}
+#selectActions{
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    cursor: auto;
+}
+
+#zoomActions{
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    cursor: auto;
+}
+#toolbar{
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    height: 720px;
+    cursor: auto;
+}
+#graph{
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    height: 720px;
+    cursor: auto;
+}
+#xml{
+    margin: 10px;
+
+}
+#inspector{
+
+    position: relative;
+
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+
+    height: 720px;
+    cursor: auto;
+
+
+    display: inline-block;
+    vertical-align: top;
+}
