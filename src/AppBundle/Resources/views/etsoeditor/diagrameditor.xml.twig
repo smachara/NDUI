@@ -12,11 +12,13 @@
 		<add as="toolbar" element="toolbar"/>
 	</ui>
 	<Array as="templates">
+
 		<add as="group">
 			<Group label="" href="">
 				<mxCell vertex="1" style="group" connectable="0"/>
 			</Group>
 		</add>
+{#
 		<add as="connector">
 			<Connector label="" href="">
 				<mxCell edge="1">
@@ -87,7 +89,10 @@
 				</mxCell>
 			</Shape>
 		</add>
+#}
 	</Array>
+
+{#
 	<mxGraph as="graph" alternateEdgeStyle="verticalConnector" allowLoops="1" dropEnabled="1">
 		<add as="isAutoSizeCell"><![CDATA[
 			function(cell)
@@ -286,6 +291,8 @@
 			</root>
 		</mxGraphModel>
 	</mxGraph>
+#}
+{#
 	<mxDefaultToolbar as="toolbar">
 		<add as="connect" mode="connect" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/connect.gif"><![CDATA[
 			function (editor)
@@ -330,4 +337,5 @@
 		<add as="Line" template="hline" style="hline" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/hline.gif"/>
 		<add as="Image" template="image" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/image.gif"/>
 	</mxDefaultToolbar>
+#}
 </mxEditor>
