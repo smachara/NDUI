@@ -48,5 +48,14 @@ class EtsoEditorController extends Controller
         return $this->render('AppBundle:etsoeditor:keyhandler-commons.xml.twig',[]);
     }
 
+    /**
+     * @Route("dia/template.xml", name="dia-template.xml")
+     */
+    public function diagramsTemplateXmlAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('AppBundle:etsoeditor:dia-template.xml.twig',[]);
+    }
+
 }
 
