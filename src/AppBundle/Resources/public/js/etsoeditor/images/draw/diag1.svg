@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="3cm" height="4cm" viewBox="106 155 55 61" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="107.645" y="157" width="38.7097" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="107.645" y="157" width="38.7097" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="107.645" y="157" width="38.7097" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="120.645" y="175" width="38.7097" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="120.645" y="175" width="38.7097" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="120.645" y="175" width="38.7097" height="40"/>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="107.645" y1="157" x2="120.645" y2="175"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="146.355" y1="157" x2="159.355" y2="175"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="107.645" y1="197" x2="120.645" y2="215"/>
+</svg>
+
