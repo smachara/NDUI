@@ -10,3 +10,10 @@
      style="symbol;image={{ asset('bundles/app/image/symbols/') }}fire.svg"
      icon="{{ asset('bundles/app/image/symbols/') }}fire.svg"
 /><hr/>
+
+{% for nf in networkFunctions  %}
+     <add as="{{ nf.name }}" template="{{ nf.role.name }}"
+          style="{{ nf.role.name }};image={{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
+          icon="{{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
+     />
+{% endfor %}

@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ 'form.networkconfig.title'|trans({}, 'networkconfig') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {{ dump(networkFunctionRoles) }}
+    {{  dump (networkFunctions) }}
+    {{ dump (networkconfig) }}
+    <h1>{{ 'form.networkconfig.new.title'|trans({}, 'networkconfig') }}</h1>
+
+    {{ form_start(form, {action: path('nconfig_new')}) }}
+
+        <div class="btn-group record_actions">
+            <a class="btn btn-info" href="{{ path('nconfig') }}">
+                <i class="fa fa-list"></i> {{ 'action.goToDescriptor'|trans({}, 'global') }}
+            </a>
+            <button class="btn btn-primary" type="submit" onclick="save();"><i class="fa fa-plus"> </i>{{ 'action.save.submit'|trans({}, 'global') }}</button>
+        </div>
+        <hr>
+        {{ form_widget(form) }}
+
+        {% block grafic_editor %}
+            {% include 'AppBundle:etsoeditor:etsoeditor.html.twig' %}
+        {% endblock %}
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block body_events %}
+    onload="createEditor('config/diagrameditor.xml');"
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/js/etsoeditor/') }}css/etso-editor.css" type="text/css" media="screen" />
+
+    <script type="text/javascript">
+        var mxBasePath = '{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src';
+    </script>
+
+    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src/js/mxClient.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}js/app.js"></script>
+
+    <script type="text/javascript">
+        {% include 'AppBundle:etsoeditor:onInit.js.twig' %}
+    </script>
+
+{% endblock %}

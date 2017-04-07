@@ -1,26 +1,3 @@
-{% extends 'base.html.twig' %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ asset('bundles/app/js/etsoeditor/') }}css/etso-editor.css" type="text/css" media="screen" />
-
-    <script type="text/javascript">
-        var mxBasePath = '{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src';
-    </script>
-
-    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}mxgraph/javascript/src/js/mxClient.js"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/etsoeditor/') }}js/app.js"></script>
-
-    <script type="text/javascript">
-        {% include 'AppBundle:etsoeditor:onInit.js.twig' %}
-    </script>
-
-{% endblock %}
-
-{% block body_events %}
-    onload="createEditor('config/diagrameditor.xml');"
-{% endblock %}
-
-{% block body %}
     <div  class="row">
         <div id="header" class="col-md-12">
 
@@ -61,5 +38,3 @@
             <br/>
         </div>
     </div>
-
-{% endblock %}

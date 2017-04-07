@@ -1,7 +1,9 @@
-<add as="symbol">
-    <Symbol label="Symbol" description="" href="">
+{% for nf in networkFunctions  %}
+<add as="{{ nf.role.name }}">
+    <{{ nf.role.name }} label="{{ nf.name }}" description="" href="">
         <mxCell vertex="1">
             <mxGeometry as="geometry" width="60" height="60"/>
         </mxCell>
-    </Symbol>
+    </{{ nf.role.name }}>
 </add>
+{% endfor %}

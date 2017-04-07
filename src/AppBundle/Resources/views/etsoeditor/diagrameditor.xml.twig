@@ -13,7 +13,7 @@
 	</ui>
 
     <Array as="templates">
-        {% include 'AppBundle:etsoeditor:shape-symbol-template.xml.twig' %}
+        {% include 'AppBundle:etsoeditor:shape-symbol-template.xml.twig'  with { 'networkFunctions' : networkFunctions } %}
     </Array>
 
 	<mxGraph as="graph" alternateEdgeStyle="verticalEdge" allowLoops="1" dropEnabled="1">
@@ -96,7 +96,7 @@
             <add as="verticalEdge">
                 <add as="elbow" value="vertical"/>
             </add>
-            {% include 'AppBundle:etsoeditor:shape-symbol-stylesheet.xml.twig' %}
+            {% include 'AppBundle:etsoeditor:shape-symbol-stylesheet.xml.twig'  with { 'networkFunctions' : networkFunctions } %}
         </mxStylesheet>
     </mxGraph>
 
@@ -104,6 +104,6 @@
         <add as="select" mode="select" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/select.gif"/>
         <add as="pan" mode="pan" icon="{{ asset('bundles/app/js/etsoeditor/') }}images/pan.gif"/>
         <hr/>
-        {% include 'AppBundle:etsoeditor:shape-symbol-toolbar.xml.twig' %}
+        {% include 'AppBundle:etsoeditor:shape-symbol-toolbar.xml.twig' with { 'networkFunctions' : networkFunctions } %}
     </mxDefaultToolbar>
 </mxEditor>
