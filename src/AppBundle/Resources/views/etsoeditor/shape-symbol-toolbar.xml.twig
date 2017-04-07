@@ -1,19 +1,6 @@
-<add as="network" template="symbol"
-     style="symbol;image={{ asset('bundles/app/image/symbols/') }}network.svg"
-     icon="{{ asset('bundles/app/image/symbols/') }}network.svg"
-/>
-<add as="Virtual Machine" template="symbol"
-     style="symbol;image={{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
-     icon="{{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
-/>
-<add as="Firewall" template="symbol"
-     style="symbol;image={{ asset('bundles/app/image/symbols/') }}fire.svg"
-     icon="{{ asset('bundles/app/image/symbols/') }}fire.svg"
-/><hr/>
-
 {% for nf in networkFunctions  %}
      <add as="{{ nf.name }}" template="{{ nf.role.name }}"
           style="{{ nf.role.name }};image={{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
-          icon="{{ asset('bundles/app/image/symbols/') }}virtual_machine.svg"
+          icon="/etso/shapes/0/0/ff86b3/ffccff/60/60/VM/cube.svg"
      />
 {% endfor %}

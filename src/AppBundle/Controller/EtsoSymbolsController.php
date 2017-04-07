@@ -10,35 +10,22 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/etso/shapes/")
  */
-class DefaultController extends Controller
+class EtsoSymbolsController extends Controller
 {
-/*
-    rectangle
-    trapezoide
-    square
-    circle
-    triangleRight
-    triangleDown
-    triangleLeft
-    triangleUp
-    Diamond
-    Pentagon
-    Hexagon
-    Octagon
-    FivePointedStar
-    SixPointedStar
-    Paralelograme
-
-*/
-
     /**
-     * @Route("/{shape}/{bc}/{sc}", name="homepage")
+     * @Route("{tb}/{tc}/{sc}/{bg}/{w}/{h}/{label}/{shape}.svg", name="shape")
      */
-    public function indexAction(Request $request)
+    public function renderShapeAction(Request $request, $shape, $bg, $sc, $w, $h, $label, $tc, $tb)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        return $this->render('AppBundle:symbols:'.$shape.'.svg.twig', [
+            'label' => $label,
+            'shape' => $shape,
+            'tc'    =>  $tc,
+            'tb'    =>  $tb,
+            'bg'    =>  $bg,
+            'sc'    => $sc,
+            'w'     => $w,
+            'h'     => $h,
         ]);
     }
 
