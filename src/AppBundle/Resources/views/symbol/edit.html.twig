@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% trans_default_domain 'AppBundle' %}
+
+{% block body %}
+    <h1>{{ 'form.title.symbol'|trans }}</h1>
+    <div class="row">
+        <div class="col-md-2">
+        <div id="fileList">
+            <img src="{{ asset( symbol.webPath ) }}"   class="profile-image img-rounded" > <br>
+        </div>
+    </div>
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input class="button button-default" type="submit" value="{{ 'form.submit'|trans }}" />
+    {{ form_end(edit_form) }}
+
+
+    <div class="row">
+        <div class="col-md-6" align="left">
+            <a class="button button-bck"  href="{{ path('networkfunctionrole', { 'tab': 'n3' }) }}">
+                <span class="glyphicon glyphicon-arrow-left"></span> {{ 'form.back_profil'|trans }}
+            </a>
+        </div>
+        <div class="col-md-6"  align="right">
+            {{ form_start(delete_form) }}
+            <input class="button button-danger" type="submit" value="{{ 'form.action.delete'|trans }}">
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {%  include "AppBundle:symbol:preview.picture.js.twig" %}
+{% endblock %}

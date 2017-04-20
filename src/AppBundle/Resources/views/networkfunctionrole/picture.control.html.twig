@@ -1,0 +1,12 @@
+{% trans_default_domain 'AppBundle' %}
+{% if networkfunctionrole.symbol != null  %}
+        <a class="button button-edt" href="{{ path('symbol_edit', { 'id':networkfunctionrole.id }) }}">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <img src="{{ asset( networkfunctionrole.symbol.webPath ) }}"  class="profile-image img-rounded">
+      </a>
+    {% else %}
+        <a class="button button-add" href="{{ path('symbol_new',  { 'id':networkfunctionrole.id }) }}">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            <img src="{{ asset('assets/base/images/profile.png') }}"  class="profile-image img-rounded">
+        </a>
+{% endif %}

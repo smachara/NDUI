@@ -22,7 +22,6 @@ class NetworkFunctionRoleType extends AbstractType
             ->add('shape', null, ['label' => 'form.networkfunctionrole.field.label.shape', 'translation_domain' => 'networkfunctionrole'])
         ;
     }
-
     /**
      * {@inheritdoc}
      */

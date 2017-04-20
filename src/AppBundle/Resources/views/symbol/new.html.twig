@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% trans_default_domain 'AppBundle' %}
+
+
+{% block body %}
+
+    <h1>{{ 'form.title.symbol'|trans }}</h1>
+
+    <div id="fileList">
+    </div>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <input class="button button-default" type="submit" value="{{ 'form.submit'|trans }}" />
+    {{ form_end(form) }}
+
+
+    <div align="right">
+        <a class="button button-bck"  href="{{ path('networkfunctionrole', { }) }}">
+            <span class="glyphicon glyphicon-arrow-left"></span> {{ 'form.back_profil'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+        {% include "AppBundle:symbol:preview.picture.js.twig"%}
+
+{% endblock %}

@@ -25,6 +25,7 @@
                 <th scope="col">{{ 'form.networkfunctionrole.field.label.color'|trans({}, 'networkfunctionrole') }}</th>
                 <th scope="col">{{ 'form.networkfunctionrole.field.label.stroke'|trans({}, 'networkfunctionrole') }}</th>
                 <th scope="col">{{ 'form.networkfunctionrole.field.label.shape'|trans({}, 'networkfunctionrole') }}</th>
+                <th scope="col">{{ 'form.networkfunctionrole.field.label.symbol'|trans({}, 'networkfunctionrole') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +51,9 @@
                     <td>{{ networkfunctionrole.color }}</td>
                     <td>{{ networkfunctionrole.stroke }}</td>
                     <td>{{ networkfunctionrole.shape }}</td>
+                    <td>
+                        {% include "AppBundle:networkfunctionrole:picture.control.html.twig" %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -58,4 +62,3 @@
             {{ block ('boton_new') }}
     
 {% endblock %}
-

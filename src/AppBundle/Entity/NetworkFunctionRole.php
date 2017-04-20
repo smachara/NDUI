@@ -43,13 +43,37 @@ class NetworkFunctionRole
      */
     private $stroke;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="shape", type="string", length=255, unique=false)
-     */
-    private $shape;
 
+
+    /**
+     * @ORM\OneToOne(targetEntity="Symbol", mappedBy="networkFunctionRole", cascade={"persist"})
+     * @var Symbol
+     */
+    protected $symbol;
+
+    /**
+     * Set symbol
+     *
+     * @param Symbol $symbol
+     *
+     * @return NetworkFunctionRole
+     */
+    public function setSymbol(Symbol $symbol = null)
+    {
+        $this->symbol = $symbol;
+
+        return $this;
+    }
+
+    /**
+     * Get symbol
+     *
+     * @return Symbol
+     */
+    public function getSymbol()
+    {
+        return $this->symbol;
+    }
 
     /**
      * Get id
@@ -118,20 +142,25 @@ class NetworkFunctionRole
     }
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="shape", type="string", length=255, unique=false)
+     */
+    private $shape;
+
+    /**
      * @return string
      */
     public function getShape()
     {
         return $this->shape;
     }
-
-    /**
+     /**
      * @param string $shape
      */
     public function setShape($shape)
     {
         $this->shape = $shape;
     }
-
 }
 
