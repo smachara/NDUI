@@ -77,7 +77,6 @@ circle_rest_client:
         CURLOPT_HTTPHEADER:     [ 'Content-Type: application/json' ]
         CURLOPT_FOLLOWLOCATION: true
 
-        
 ###################################################################################
 #  Internationalization
 #           php bin/console translation:extract --config=AppBundle
