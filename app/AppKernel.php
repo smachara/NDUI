@@ -22,10 +22,11 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Circle\RestClientBundle\CircleRestClientBundle(),
-
 //Internationalization
-//            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
+
+
+//            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
 //            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
 //            new JMS\AopBundle\JMSAopBundle(),
         ];
